@@ -1,0 +1,4 @@
+#ifndef LINEFOLLOWER_H
+#define LINEFOLLOWER_H
+
+#endif // LINEFOLLOWER_H

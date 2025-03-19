@@ -1,5 +1,5 @@
-#ifndef HMC5883L_H
-#define HMC5883L_H
+#ifndef __HMC5883L_H__
+#define __HMC5883L_H__
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -47,4 +47,4 @@ void hmc5883l_read_data(HMC5883L_Data* data);
 float hmc5883l_cal_xy_angle(const HMC5883L_Data* const data, const HMC5883L_Calibration* const cali_data);
 void hmc5883l_calibrate(HMC5883L_Calibration* cali_data);
 
-#endif  // HMC5883L_H
+#endif  // __HMC5883L_H__

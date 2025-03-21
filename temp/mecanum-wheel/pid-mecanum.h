@@ -1,19 +1,28 @@
 #ifndef __PID_MECANUM_H__
 #define __PID_MECANUM_H__
 
+#include <stdint.h>
+
 #include "movement.h"
+
+typedef struct {
+    float kp;
+    float ki;
+    float kd;
+    float sum_error;
+    float previous_error;
+    uint32_t last_time;
+} PID_Data;
 
 /**
  * @brief Calculate PID control for a single mecanum wheel
  *
- * Note: MecanumWheel wheel is for sperating tuning for each wheel, not necessary
- *
- * @param wheel mecanum wheel to calculate PID for
+ * @param pid_data data of pid calculation
  * @param target_vel target angular velocity for the wheel, in rad/s
  * @param current_vel current angular velocity for the wheel, in rad/s
  * @return float angular velocity for the wheel, in rad/s
  */
-float calculate_pid(MecanumWheel wheel, float target_vel, float current_vel);
+float calculate_pid(PID_Data* pid_data, float target_vel, float current_vel);
 
 /**
  * @brief Perform PID control for the mecanum wheel system

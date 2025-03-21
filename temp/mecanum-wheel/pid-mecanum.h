@@ -11,7 +11,7 @@ typedef struct {
     float kd;
     float sum_error;
     float previous_error;
-    uint32_t last_time;
+    uint32_t last_time;  // in ms
 } PID_Data;
 
 /**

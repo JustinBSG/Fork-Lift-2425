@@ -79,4 +79,6 @@ void wheels_control(WheelPWM pwm);
  */
 void movement_control(BaseVelocity base_vel);
 
+void movement_rotation(int degree);
+
 #endif  // __MOVEMENT_H__

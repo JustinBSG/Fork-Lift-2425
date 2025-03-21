@@ -59,3 +59,13 @@ void movement_control(BaseVelocity base_vel) {
   WheelPWM target_pwm = wheel2pwm(result_vel);
   wheels_control(target_pwm);
 }
+
+void movement_rotation(int degree) {
+  // TODO: rotate the robot by degree
+  // if degree is positive, rotate clockwise
+  // if degree is negative, rotate counterclockwise
+  // if degree is 0, do nothing
+  // call movement_control with the appropriate base velocity
+  // check current angle of the robot
+  // if current angle is close to the target angle, stop the robot by calling movement_control with zero base velocity
+}

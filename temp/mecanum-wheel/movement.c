@@ -3,13 +3,6 @@
 #include "encoder.h"
 #include "pid-mecanum.h"
 
-// void cal_wheel_velocity(const float x_vel, const float y_vel, const float z_vel, float* wheel_vel) {
-//   wheel_vel[FRONT_LEFT] = (x_vel - y_vel - (LENGTH_CENTER_WHEEL_X + LENGTH_CENTER_WHEEL_Y) * z_vel) / RADIUS_WHEEL;
-//   wheel_vel[FRONT_RIGHT] = (x_vel + y_vel + (LENGTH_CENTER_WHEEL_X + LENGTH_CENTER_WHEEL_Y) * z_vel) / RADIUS_WHEEL;
-//   wheel_vel[REAR_LEFT] = (x_vel + y_vel - (LENGTH_CENTER_WHEEL_X + LENGTH_CENTER_WHEEL_Y) * z_vel) / RADIUS_WHEEL;
-//   wheel_vel[REAR_RIGHT] = (x_vel - y_vel + (LENGTH_CENTER_WHEEL_X + LENGTH_CENTER_WHEEL_Y) * z_vel) / RADIUS_WHEEL;
-// }
-
 WheelVelocity base2wheel(BaseVelocity base_vel) {
   float front_left = (base_vel.x_vel - base_vel.y_vel - (LENGTH_CENTER_WHEEL_X + LENGTH_CENTER_WHEEL_Y) * base_vel.z_vel) / RADIUS_WHEEL;
   float front_right = (base_vel.x_vel + base_vel.y_vel + (LENGTH_CENTER_WHEEL_X + LENGTH_CENTER_WHEEL_Y) * base_vel.z_vel) / RADIUS_WHEEL;

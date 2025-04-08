@@ -1,0 +1,59 @@
+/**
+ * Bluepad32 API Reference:
+ * ControllerPtr ctl;
+ * 
+ * ctrl->dpad(), returns the D-pad state as a bitmask, uint8_t
+ *   - 0x0: no direction pressed
+ *   - 0x1: Up
+ *   - 0x2: Down
+ *   - 0x4: Right
+ *   - 0x8: Left
+ * ctl->buttons(), returns the state of all buttons as a bitmask, uin16_t
+ *   - 0x000: no button pressed
+ *   - 0x001: Cross
+ *   - 0x002: Circle
+ *   - 0x004: Square
+ *   - 0x008: Triangle
+ *   - 0x010: L1
+ *   - 0x020: R1
+ *   - 0x040: L2
+ *   - 0x080: R2
+ *   - 0x100: L3 
+ *   - 0x200: R3
+ * ctl->axisX(), return the left joystick X-axis value (-ve Left, +ve Right), (-511 - 512), int32_t
+ * ctl->axisY(), return the left joystick Y-axis value (-ve Up, +ve Down), (-511 - 512), int32_t
+ * ctl->axisRX(), return the right joystick X-axis value (-ve Left, +ve Right), (-511 - 512), int32_t
+ * ctl->axisRY(), return the right joystick Y-axis value (-ve Up, +ve Down), (-511 - 512), int32_t
+ * ctl->brake(), return the pressure on L2 button (0 - 1023), int32_t
+ * ctl->throttle(), return the pressure on R2 button (0 - 1023), int32_t
+ * ctl->miscButtons(), returns the state of misc buttons as a bitmask, uint16_t
+ *   - 0x0: no misc button pressed
+ *   - 0x1: PS Button
+ *   - 0x2: Share Button
+ *   - 0x4: Options Button
+ * 
+ * ctl->setColorLED(r, g, b), change the color of the LED under the panel
+ * ctl->playDualRumble(startDelayMs, durationMs, weakMagnitude, strongMagnitude)
+ *   - startDelayMs: a delayed start measured in milliseconds. Use 0 to start rumble immediately
+ *   - durationMs: duration of rumble in milliseconds. The controller might limit the max duration
+ *   - weakMagnitude: The magnitude for the "weak motor"
+ *   - strongMagnitude: The magnitude for the "strong motor"
+ * ctl->battery(), returns the battery level as a percentage, uint8_t
+ *   - 0: Unkowm Battery State
+ *   - 1: Battery Empty
+ *   - 100: Battery Full 
+ */
+
+/**
+ * output string format:
+ * "c:_,____,____,____,____,____,____,____,_"
+ * 1. dpad(): D-pad state as a bitmask (1 hex digit)
+ * 2. buttons(): State of all buttons as a bitmask (4 hex digits)
+ * 3. axisX(): Left joystick X-axis value (signed value) (-100 to +100)
+ * 4. axisY(): Left joystick Y-axis value (signed value) (-100 to +100)
+ * 5. axisRX(): Right joystick X-axis value (signed value) (-100 to +100)
+ * 6. axisRY(): Right joystick Y-axis value (signed value) (-100 to +100)
+ * 7. brake(): Pressure on L2 button (0 - 1023)
+ * 8. throttle(): Pressure on R2 button (0 - 1023)
+ * 9. miscButtons(): State of misc buttons as a bitmask (1 hex digit)
+ */

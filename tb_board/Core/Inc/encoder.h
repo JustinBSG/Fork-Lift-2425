@@ -51,7 +51,7 @@ void update_encoder(EncoderData* encoder);
  * @return WheelVelocity A structure containing the current angular velocity of all wheels
  *                       in radians per second.
  */
-WheelVelocity read_current_velocity(EncoderData** encoders);
+WheelVelocity read_current_velocity(EncoderData* encoders);
 
 extern EncoderData encoders[4];
 

@@ -40,7 +40,7 @@ void update_encoder(EncoderData* encoder) {
 }
 
 // TODO: need to test
-WheelVelocity read_current_velocity(EncoderData** encoders) {
+WheelVelocity read_current_velocity(EncoderData* encoders) {
   if (encoders == NULL)
     return (WheelVelocity){0, 0, 0, 0};
 
@@ -48,10 +48,10 @@ WheelVelocity read_current_velocity(EncoderData** encoders) {
   for (int i = FRONT_LEFT; i <= REAR_RIGHT; i++)
     update_encoder(&(encoders[i]));
 
-  velocities.front_left = encoders[FRONT_LEFT]->velocity;
-  velocities.front_right = encoders[FRONT_RIGHT]->velocity;
-  velocities.rear_left = encoders[REAR_LEFT]->velocity;
-  velocities.rear_right = encoders[REAR_RIGHT]->velocity;
+  velocities.front_left = encoders[FRONT_LEFT].velocity;
+  velocities.front_right = encoders[FRONT_RIGHT].velocity;
+  velocities.rear_left = encoders[REAR_LEFT].velocity;
+  velocities.rear_right = encoders[REAR_RIGHT].velocity;
 
   return velocities;
 }

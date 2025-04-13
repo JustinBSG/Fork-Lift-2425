@@ -50,9 +50,10 @@
 
 /* USER CODE BEGIN PV */
 int stage = 0;
-WheelPWM test_target_pwm = {0, 0, 0, 0};
+WheelPWM test_target_pwm = {16800/2, 0, 0, 0};
 WheelPWM test_read_pwm = {0, 0, 0, 0};
 WheelVelocity test_read_vel = {0, 0, 0, 0};
+int test_count = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -180,6 +181,10 @@ void SystemClock_Config(void) {
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK) {
     Error_Handler();
   }
+
+  /** Enables the Clock Security System
+   */
+  HAL_RCC_EnableCSS();
 }
 
 /* USER CODE BEGIN 4 */

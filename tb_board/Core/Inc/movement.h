@@ -6,6 +6,9 @@
 #include "main.h"
 #include "robot.h"
 
+// MOTOR_A > MOTOT_B: move forward
+// MOTOR_A < MOTOT_B: move backward
+
 #define FL_MOTOR_A_TIMER TIM10
 #define FL_MOTOR_B_TIMER TIM11
 #define FR_MOTOR_A_TIMER TIM9

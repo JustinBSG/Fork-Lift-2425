@@ -15,19 +15,19 @@ void onConnectedController(ControllerPtr ctl) {
   bool foundEmptySlot = false;
   for (int i = 0; i < BP32_MAX_GAMEPADS; i++) {
     if (myControllers[i] == nullptr) {
-      Serial.printf("CALLBACK: Controller is connected, index=%d\n", i);
+      // Serial.printf("CALLBACK: Controller is connected, index=%d\n", i);
       // Additionally, you can get certain gamepad properties like:
       // Model, VID, PID, BTAddr, flags, etc.
       ControllerProperties properties = ctl->getProperties();
-      Serial.printf("Controller model: %s, VID=0x%04x, PID=0x%04x\n", ctl->getModelName().c_str(), properties.vendor_id,
-                      properties.product_id);
+      // Serial.printf("Controller model: %s, VID=0x%04x, PID=0x%04x\n", ctl->getModelName().c_str(), properties.vendor_id,
+      //                 properties.product_id);
       myControllers[i] = ctl;
       foundEmptySlot = true;
       break;
     }
   }
   if (!foundEmptySlot) {
-    Serial.println("CALLBACK: Controller connected, but could not found empty slot");
+    // Serial.println("CALLBACK: Controller connected, but could not found empty slot");
   }
 }
 
@@ -36,7 +36,7 @@ void onDisconnectedController(ControllerPtr ctl) {
 
   for (int i = 0; i < BP32_MAX_GAMEPADS; i++) {
     if (myControllers[i] == ctl) {
-      Serial.printf("CALLBACK: Controller disconnected from index=%d\n", i);
+      // Serial.printf("CALLBACK: Controller disconnected from index=%d\n", i);
       myControllers[i] = nullptr;
       foundController = true;
       break;
@@ -44,7 +44,7 @@ void onDisconnectedController(ControllerPtr ctl) {
   }
 
   if (!foundController) {
-    Serial.println("CALLBACK: Controller disconnected, but not found in myControllers");
+    // Serial.println("CALLBACK: Controller disconnected, but not found in myControllers");
   }
 }
 
@@ -99,8 +99,8 @@ void processControllers() {
   if (myControllers[0] && myControllers[0]->isConnected() && myControllers[0]->hasData()) 
     if (myControllers[0]->isGamepad()) 
       processGamepad(myControllers[0]);
-    else 
-      Serial.println("Unsupported controller");
+    // else 
+      // Serial.println("Unsupported controller");
 }
 
 // Arduino setup function. Runs in CPU 1

@@ -53,7 +53,9 @@ int stage = 0;
 WheelPWM test_target_pwm = {16800/2, 0, 0, 0};
 WheelPWM test_read_pwm = {0, 0, 0, 0};
 WheelVelocity test_read_vel = {0, 0, 0, 0};
-int test_var = 0;
+int test_var_1 = 0;
+int test_var_2 = 0;
+int test_var_3 = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

@@ -16,15 +16,11 @@ BaseVelocity wheel2base(WheelVelocity wheel_vel) {
   return (BaseVelocity){x_vel, y_vel, z_vel};
 }
 
-// TODO: need to test
 WheelPWM wheel2pwm(WheelVelocity wheel_vel) {
-  // rad/s *2 * pi * 60 = rpm
-  // rpm / max rpm * 100 = duty cycle
-  // duty cycle * ARR = CCR = pwm signal
-  int front_left = (int)(wheel_vel.front_left * 2 * M_PI * 60 / MOTOR_MAX_VELOCITY * 100 * FL_MOTOR_A_ARR);
-  int front_right = (int)(wheel_vel.front_right * 2 * M_PI * 60 / MOTOR_MAX_VELOCITY * 100 * FR_MOTOR_A_ARR);
-  int rear_left = (int)(wheel_vel.rear_left * 2 * M_PI * 60 / MOTOR_MAX_VELOCITY * 100 * RL_MOTOR_A_ARR);
-  int rear_right = (int)(wheel_vel.rear_right * 2 * M_PI * 60 / MOTOR_MAX_VELOCITY * 100 * RR_MOTOR_A_ARR);
+  int front_left = (int)(wheel_vel.front_left * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * FL_MOTOR_A_ARR / 100.0);
+  int front_right = (int)(wheel_vel.front_left * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * FR_MOTOR_A_ARR / 100.0);
+  int rear_left = (int)(wheel_vel.front_left * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * RL_MOTOR_A_ARR / 100.0);
+  int rear_right = (int)(wheel_vel.front_left * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * RR_MOTOR_A_ARR / 100.0);
   return (WheelPWM){front_left, front_right, rear_left, rear_right};
 }
 

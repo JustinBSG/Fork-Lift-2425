@@ -36,8 +36,7 @@
 #define RR_MOTOR_A_CCR RR_MOTOR_A_TIMER->CCR3
 #define RR_MOTOR_B_CCR RR_MOTOR_B_TIMER->CCR4
 
-// TODO: need to test
-#define MOTOR_MAX_VELOCITY 123.0  // max angular velocity of the motor, in rad/s
+#define MOTOR_MAX_VELOCITY 199.0  // max angular velocity of the motor, in rad/s
 
 typedef enum {
   FRONT_LEFT,

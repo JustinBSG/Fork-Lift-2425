@@ -18,9 +18,9 @@ BaseVelocity wheel2base(WheelVelocity wheel_vel) {
 
 WheelPWM wheel2pwm(WheelVelocity wheel_vel) {
   int front_left = (int)(wheel_vel.front_left * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * FL_MOTOR_A_ARR / 100.0);
-  int front_right = (int)(wheel_vel.front_left * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * FR_MOTOR_A_ARR / 100.0);
-  int rear_left = (int)(wheel_vel.front_left * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * RL_MOTOR_A_ARR / 100.0);
-  int rear_right = (int)(wheel_vel.front_left * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * RR_MOTOR_A_ARR / 100.0);
+  int front_right = (int)(wheel_vel.front_right * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * FR_MOTOR_A_ARR / 100.0);
+  int rear_left = (int)(wheel_vel.rear_left * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * RL_MOTOR_A_ARR / 100.0);
+  int rear_right = (int)(wheel_vel.rear_right * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * RR_MOTOR_A_ARR / 100.0);
   return (WheelPWM){front_left, front_right, rear_left, rear_right};
 }
 

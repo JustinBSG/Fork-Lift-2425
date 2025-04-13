@@ -1079,9 +1079,9 @@ void update_encoder(EncoderData* encoder) {
   int num_pulse = 0;
  8000d68:	2300      	movs	r3, #0
  8000d6a:	617b      	str	r3, [r7, #20]
-  if (duration <= 3)  // delay for encode to update, in ms
+  if (duration <= 1)  // delay for encode to update, in ms
  8000d6c:	68fb      	ldr	r3, [r7, #12]
- 8000d6e:	2b03      	cmp	r3, #3
+ 8000d6e:	2b01      	cmp	r3, #1
  8000d70:	f240 8095 	bls.w	8000e9e <update_encoder+0x156>
     return;
 
@@ -1244,7 +1244,6 @@ void update_encoder(EncoderData* encoder) {
 
 08000eb4 <read_current_velocity>:
 
-// TODO: need to test
 WheelVelocity read_current_velocity(EncoderData* encoders) {
  8000eb4:	b590      	push	{r4, r7, lr}
  8000eb6:	b095      	sub	sp, #84	@ 0x54

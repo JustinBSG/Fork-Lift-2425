@@ -22,24 +22,26 @@ void update_encoder(EncoderData* encoder) {
   if (duration <= 1)
     return;
 
-  if (current_counter == encoder->last_counter_value)
+  if (current_counter == encoder->last_counter_value) {
     num_pulse = 0;
-  else if (current_counter > encoder->last_counter_value)  // move forward
-    if (__HAL_TIM_IS_TIM_COUNTING_DOWN(encoder->htim)) {
+    test_var = 1;
+  } else if (current_counter > encoder->last_counter_value) {
+    if (__HAL_TIM_IS_TIM_COUNTING_DOWN(encoder->htim)) {  // move backward, count down, overflow
       num_pulse = (__HAL_TIM_GET_AUTORELOAD(encoder->htim) - current_counter + encoder->last_counter_value) * -1;
-      test_var = 1;
-    } else {
-      num_pulse = current_counter - encoder->last_counter_value;
       test_var = 2;
-    }
-  else  // move backward
-    if (__HAL_TIM_IS_TIM_COUNTING_DOWN(encoder->htim)) {
-      num_pulse = (encoder->last_counter_value - current_counter) * -1;
+    } else {  // move forward, count up, no overflow
+      num_pulse = current_counter - encoder->last_counter_value;
       test_var = 3;
-    } else {
-      num_pulse = __HAL_TIM_GET_AUTORELOAD(encoder->htim) - encoder->last_counter_value + current_counter;
-      test_var = 4;
     }
+  } else {
+    if (__HAL_TIM_IS_TIM_COUNTING_DOWN(encoder->htim)) {  // move up, count up, overflow
+      num_pulse = (encoder->last_counter_value - current_counter) * -1;
+      test_var = 4;
+    } else {  // move backward, count down, no overflow
+      num_pulse = __HAL_TIM_GET_AUTORELOAD(encoder->htim) - encoder->last_counter_value + current_counter;
+      test_var = 5;
+    }
+  }
 
   float temp_displacement = (float)num_pulse / encoder->_ppr * 2.0 * M_PI;
   encoder->last_counter_value = current_counter;

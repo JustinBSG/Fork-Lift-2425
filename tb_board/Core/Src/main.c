@@ -22,7 +22,6 @@
 #include "gpio.h"
 #include "tim.h"
 
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "encoder.h"
@@ -50,12 +49,13 @@
 
 /* USER CODE BEGIN PV */
 int stage = 0;
-WheelPWM test_target_pwm = {-16800/2, 0, 0, 0};
+WheelPWM test_target_pwm = {0, 0, 0, 0};
 WheelPWM test_read_pwm = {0, 0, 0, 0};
 WheelVelocity test_read_vel = {0, 0, 0, 0};
 int test_var_1 = 0;
 int test_var_2 = 0;
 int test_var_3 = 0;
+int start_time = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -135,7 +135,15 @@ int main(void) {
     /* USER CODE BEGIN 3 */
     if (HAL_GPIO_ReadPin(USER_SWITCH_GPIO_Port, USER_SWITCH_Pin) == GPIO_PIN_RESET) {
       HAL_Delay(100);
-      wheels_control(test_target_pwm);
+      if (HAL_GPIO_ReadPin(USER_SWITCH_GPIO_Port, USER_SWITCH_Pin) == GPIO_PIN_RESET) {
+        HAL_GPIO_WritePin(BUZZ_GPIO_Port, BUZZ_Pin, GPIO_PIN_SET);
+        HAL_Delay(100);
+        HAL_GPIO_WritePin(BUZZ_GPIO_Port, BUZZ_Pin, GPIO_PIN_RESET);
+
+        stage++;
+        if (stage > 5)
+          stage = 0;
+      }
     }
 
     test_read_vel = read_current_velocity(encoders);

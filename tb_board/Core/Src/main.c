@@ -49,12 +49,16 @@
 
 /* USER CODE BEGIN PV */
 int stage = 0;
-WheelPWM test_target_pwm = {0, 0, 0, 0};
+// BaseVelocity test_target_vel = {0, 0, 0};
+WheelVelocity test_target_vel = {0, 0, 0, 0};
 WheelPWM test_read_pwm = {0, 0, 0, 0};
 WheelVelocity test_read_vel = {0, 0, 0, 0};
-int test_var_1 = 0;
-int test_var_2 = 0;
-int test_var_3 = 0;
+BaseVelocity test_base_vel = {0, 0, 0};
+WheelVelocity test_pid_value = {0, 0, 0, 0};
+float test_var_1 = 0;
+float test_var_2 = 0;
+float test_var_3 = 0;
+float test_var_4 = 0;
 int start_time = 0;
 /* USER CODE END PV */
 
@@ -141,13 +145,32 @@ int main(void) {
         HAL_GPIO_WritePin(BUZZ_GPIO_Port, BUZZ_Pin, GPIO_PIN_RESET);
 
         stage++;
-        if (stage > 5)
+        if (stage > 1)
           stage = 0;
       }
     }
 
+    switch (stage) {
+      case 1:
+        test_target_vel.front_left = MOTOR_MAX_VELOCITY / 2;
+        test_target_vel.front_right = -MOTOR_MAX_VELOCITY / 2;
+        test_target_vel.rear_left = -MOTOR_MAX_VELOCITY / 2;
+        test_target_vel.rear_right = MOTOR_MAX_VELOCITY / 2;
+        break;
+      default:
+        test_target_vel.front_left = 0;
+        test_target_vel.front_right = 0;
+        test_target_vel.rear_left = 0;
+        test_target_vel.rear_right = 0;
+        break;
+    }
+
+    WheelPWM temp_target_vel = wheel2pwm(test_target_vel);
+    wheels_control(temp_target_vel);
+
     test_read_vel = read_current_velocity(encoders);
     test_read_pwm = wheel2pwm(test_read_vel);
+    test_base_vel = wheel2base(test_read_vel);
   }
   /* USER CODE END 3 */
 }

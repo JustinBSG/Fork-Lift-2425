@@ -9,6 +9,13 @@
 
 ControllerPtr myControllers[BP32_MAX_GAMEPADS];
 
+#define RXD2 16
+#define TXD2 17
+
+#define mainBoardBaud 115200
+
+HardwareSerial mainBoard(2);
+
 // This callback gets called any time a new gamepad is connected.
 // Up to 4 gamepads can be connected at the same time.
 void onConnectedController(ControllerPtr ctl) {
@@ -80,7 +87,7 @@ void processGamepad(ControllerPtr ctl) {
   handleAxisData(ctl->axisRX() - R_AXISX_OFFSET, temp[2]);
   handleAxisData(ctl->axisRY() - R_AXISY_OFFSET, temp[3]);
   char output[41] = "";
-  sprintf(output, "c:%1x,%03x,%s,%s,%s,%s,%04d,%04d,%1x",
+  sprintf(output, "c:%1x,%03x,%s,%s,%s,%s,%04d,%04d,%1x\n",
     ctl->dpad(),
     ctl->buttons(),
     temp[0],
@@ -91,8 +98,11 @@ void processGamepad(ControllerPtr ctl) {
     ctl->throttle(),
     ctl->miscButtons());
 
-  Serial.println(output);
+  // Serial.println(output);
+  Serial.write(output, strlen(output));
   Serial.flush();
+  mainBoard.write(output, strlen(output));
+  mainBoard.flush();
 }
 
 void processControllers() {
@@ -106,6 +116,7 @@ void processControllers() {
 // Arduino setup function. Runs in CPU 1
 void setup() {
   Serial.begin(115200);
+  mainBoard.begin(mainBoardBaud, SERIAL_8N1, RXD2, TXD2);
 
   // Setup the Bluepad32 callbacks
   BP32.setup(&onConnectedController, &onDisconnectedController);

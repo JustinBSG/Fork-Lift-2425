@@ -32,6 +32,17 @@ typedef struct {
   bool options_button;
 } ControllerState;
 
+/**
+ * @brief Parses the input string to extract controller state data.
+ * 
+ * This function takes an input string and parses it to populate the 
+ * provided ControllerState structure with relevant data. It returns 
+ * a status code indicating the success or failure of the operation.
+ * 
+ * @param input A pointer to the input string containing the controller data.
+ * @param data A pointer to the ControllerState structure to be populated.
+ * @return uint8_t Returns 0 on success, or an error code on failure.
+ */
 uint8_t parse_controller_data(const char* input, ControllerState* data);
 
 extern char controller_buffer[41];

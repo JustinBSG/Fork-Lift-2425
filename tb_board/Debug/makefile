@@ -60,8 +60,8 @@ all: main-build
 main-build: test_tb_board.elf secondary-outputs
 
 # Tool invocations
-test_tb_board.elf test_tb_board.map: $(OBJS) $(USER_OBJS) /Users/justin/Documents/Program/robotics_team/Fork-Lift-2425/tb_board/STM32F407VETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "test_tb_board.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/justin/Documents/Program/robotics_team/Fork-Lift-2425/tb_board/STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test_tb_board.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+test_tb_board.elf test_tb_board.map: $(OBJS) $(USER_OBJS) F:\Program\C\Fork-Lift-2425\tb_board\STM32F407VETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "test_tb_board.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"F:\Program\C\Fork-Lift-2425\tb_board\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test_tb_board.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

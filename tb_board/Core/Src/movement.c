@@ -33,11 +33,11 @@ void wheel_control(MecanumWheel wheel, int speed) {
   switch (wheel) {
     case FRONT_LEFT:
       if (speed > 0) {
-        FL_MOTOR_B_CCR = 0;
-        FL_MOTOR_A_CCR = speed;
-      } else if (speed < 0) {
-        FL_MOTOR_B_CCR = -speed;
         FL_MOTOR_A_CCR = 0;
+        FL_MOTOR_B_CCR = speed;
+      } else if (speed < 0) {
+        FL_MOTOR_A_CCR = -speed;
+        FL_MOTOR_B_CCR = 0;
       } else {
         FL_MOTOR_A_CCR = 0;
         FL_MOTOR_B_CCR = 0;
@@ -69,11 +69,11 @@ void wheel_control(MecanumWheel wheel, int speed) {
       break;
     case REAR_RIGHT:
       if (speed > 0) {
-        RR_MOTOR_B_CCR = speed;
-        RR_MOTOR_A_CCR = 0;
-      } else if (speed < 0) {
+        RR_MOTOR_A_CCR = speed;
         RR_MOTOR_B_CCR = 0;
-        RR_MOTOR_A_CCR = -speed;
+      } else if (speed < 0) {
+        RR_MOTOR_A_CCR = 0;
+        RR_MOTOR_B_CCR = -speed;
       } else {
         RR_MOTOR_A_CCR = 0;
         RR_MOTOR_B_CCR = 0;

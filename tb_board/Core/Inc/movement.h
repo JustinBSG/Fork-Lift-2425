@@ -39,6 +39,13 @@
 #define MOTOR_MAX_CCR FL_MOTOR_A_ARR
 #define MOTOR_MAX_VELOCITY 199.0  // max angular velocity of the motor, in rad/s
 
+/**
+ * (x,y,z): base velocity of robot
+ * x: forward(+ve), backward(-ve)
+ * y: right(+ve), left(-ve)
+ * z: clockwise(+ve), anticlockwise(-ve)
+ */
+
 typedef enum {
   FRONT_LEFT,
   FRONT_RIGHT,

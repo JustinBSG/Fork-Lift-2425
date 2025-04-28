@@ -3,5 +3,5 @@
 ../Core/Src/movement.c:19:10:wheel2pwm	1
 ../Core/Src/movement.c:27:6:wheel_control	17
 ../Core/Src/movement.c:97:6:wheels_control	1
-../Core/Src/movement.c:105:6:movement_control	1
-../Core/Src/movement.c:114:6:movement_rotation	1
+../Core/Src/movement.c:104:6:movement_control	1
+../Core/Src/movement.c:117:6:movement_rotation	1

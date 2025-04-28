@@ -10,4 +10,6 @@
 #define ROBOT_MAX_Y_VELOCITY 7.4625  // max linear velocity of the robot, in m/s
 #define ROBOT_MAX_Z_VELOCITY 72.1100 // max angular velocity of the robot, in rad/s
 
+#define PID_MODE 0
+
 #endif /* __ROBOT_H__ */

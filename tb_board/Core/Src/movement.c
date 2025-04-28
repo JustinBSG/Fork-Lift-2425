@@ -33,11 +33,11 @@ void wheel_control(MecanumWheel wheel, int speed) {
   switch (wheel) {
     case FRONT_LEFT:
       if (speed > 0) {
-        FL_MOTOR_A_CCR = 0;
-        FL_MOTOR_B_CCR = speed;
-      } else if (speed < 0) {
-        FL_MOTOR_A_CCR = -speed;
         FL_MOTOR_B_CCR = 0;
+        FL_MOTOR_A_CCR = speed;
+      } else if (speed < 0) {
+        FL_MOTOR_B_CCR = -speed;
+        FL_MOTOR_A_CCR = 0;
       } else {
         FL_MOTOR_A_CCR = 0;
         FL_MOTOR_B_CCR = 0;
@@ -45,11 +45,11 @@ void wheel_control(MecanumWheel wheel, int speed) {
       break;
     case FRONT_RIGHT:
       if (speed > 0) {
-        FR_MOTOR_A_CCR = speed;
-        FR_MOTOR_B_CCR = 0;
-      } else if (speed < 0) {
+        FR_MOTOR_B_CCR = speed;
         FR_MOTOR_A_CCR = 0;
-        FR_MOTOR_B_CCR = -speed;
+      } else if (speed < 0) {
+        FR_MOTOR_B_CCR = 0;
+        FR_MOTOR_A_CCR = -speed;
       } else {
         FR_MOTOR_A_CCR = 0;
         FR_MOTOR_B_CCR = 0;
@@ -57,11 +57,11 @@ void wheel_control(MecanumWheel wheel, int speed) {
       break;
     case REAR_LEFT:
       if (speed > 0) {
-        RL_MOTOR_A_CCR = 0;
-        RL_MOTOR_B_CCR = speed;
-      } else if (speed < 0) {
-        RL_MOTOR_A_CCR = -speed;
         RL_MOTOR_B_CCR = 0;
+        RL_MOTOR_A_CCR = speed;
+      } else if (speed < 0) {
+        RL_MOTOR_B_CCR = -speed;
+        RL_MOTOR_A_CCR = 0;
       } else {
         RL_MOTOR_A_CCR = 0;
         RL_MOTOR_B_CCR = 0;
@@ -69,11 +69,11 @@ void wheel_control(MecanumWheel wheel, int speed) {
       break;
     case REAR_RIGHT:
       if (speed > 0) {
-        RR_MOTOR_A_CCR = speed;
-        RR_MOTOR_B_CCR = 0;
-      } else if (speed < 0) {
+        RR_MOTOR_B_CCR = speed;
         RR_MOTOR_A_CCR = 0;
-        RR_MOTOR_B_CCR = -speed;
+      } else if (speed < 0) {
+        RR_MOTOR_B_CCR = 0;
+        RR_MOTOR_A_CCR = -speed;
       } else {
         RR_MOTOR_A_CCR = 0;
         RR_MOTOR_B_CCR = 0;
@@ -81,11 +81,11 @@ void wheel_control(MecanumWheel wheel, int speed) {
       break;
     default:
       if (speed > 0) {
-        FL_MOTOR_A_CCR = speed;
-        FL_MOTOR_B_CCR = 0;
-      } else if (speed < 0) {
+        FL_MOTOR_B_CCR = speed;
         FL_MOTOR_A_CCR = 0;
-        FL_MOTOR_B_CCR = -speed;
+      } else if (speed < 0) {
+        FL_MOTOR_B_CCR = 0;
+        FL_MOTOR_A_CCR = -speed;
       } else {
         FL_MOTOR_A_CCR = 0;
         FL_MOTOR_B_CCR = 0;
@@ -101,12 +101,15 @@ void wheels_control(WheelPWM pwm) {
   wheel_control(REAR_RIGHT, pwm.rear_right);
 }
 
-// TODO: need to test
 void movement_control(BaseVelocity base_vel) {
   WheelVelocity target_vel = base2wheel(base_vel);
-  WheelVelocity current_vel = read_current_velocity(encoders);
-  WheelVelocity result_vel = pid_system(target_vel, current_vel);
-  WheelPWM target_pwm = wheel2pwm(result_vel);
+  #if (PID_MODE == 1)
+    WheelVelocity current_vel = read_current_velocity(encoders);
+    WheelVelocity result_vel = pid_system(target_vel, current_vel);
+    WheelPWM target_pwm = wheel2pwm(result_vel);
+  #else 
+    WheelPWM target_pwm = wheel2pwm(target_vel);
+  #endif
   wheels_control(target_pwm);
 }
 

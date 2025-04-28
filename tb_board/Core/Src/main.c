@@ -55,10 +55,15 @@ WheelPWM test_read_pwm = {0, 0, 0, 0};
 WheelVelocity test_read_vel = {0, 0, 0, 0};
 BaseVelocity test_base_vel = {0, 0, 0};
 WheelVelocity test_pid_value = {0, 0, 0, 0};
+BaseVelocity target_base_vel = {0, 0, 0};
 float test_var_1 = 0;
 float test_var_2 = 0;
 float test_var_3 = 0;
 float test_var_4 = 0;
+float test_var_5 = 0;
+float test_var_6 = 0;
+float test_var_7 = 0;
+float test_var_8 = 0;
 int start_time = 0;
 /* USER CODE END PV */
 
@@ -152,21 +157,18 @@ int main(void) {
 
     switch (stage) {
       case 1:
-        test_target_vel.front_left = MOTOR_MAX_VELOCITY / 2;
-        test_target_vel.front_right = -MOTOR_MAX_VELOCITY / 2;
-        test_target_vel.rear_left = -MOTOR_MAX_VELOCITY / 2;
-        test_target_vel.rear_right = MOTOR_MAX_VELOCITY / 2;
+        target_base_vel.x_vel = ROBOT_MAX_X_VELOCITY * 0.75;
+        target_base_vel.y_vel = ROBOT_MAX_Y_VELOCITY * 0.5;
+        target_base_vel.z_vel = 0;
         break;
       default:
-        test_target_vel.front_left = 0;
-        test_target_vel.front_right = 0;
-        test_target_vel.rear_left = 0;
-        test_target_vel.rear_right = 0;
+        target_base_vel.x_vel = 0;
+        target_base_vel.y_vel = 0;
+        target_base_vel.z_vel = 0;
         break;
     }
 
-    WheelPWM temp_target_vel = wheel2pwm(test_target_vel);
-    wheels_control(temp_target_vel);
+    movement_control(target_base_vel);
 
     test_read_vel = read_current_velocity(encoders);
     test_read_pwm = wheel2pwm(test_read_vel);

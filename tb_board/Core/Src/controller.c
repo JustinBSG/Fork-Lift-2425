@@ -13,6 +13,7 @@ ControllerState controller_state = {.r1 = false, .r2 = false, .r3 = false,
                                     .ps_button = false, .share_button = false,
                                     .options_button = false};
 
+// TODO: need to modify
 uint8_t parse_controller_data(const char* input, ControllerState* data) {
   if (input == NULL || data == NULL) {
     printf("Invalid input or data pointer\n");

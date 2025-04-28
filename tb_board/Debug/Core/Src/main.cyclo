@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 ../Core/Src/main.c:85:5:main	5
 ../Core/Src/main.c:184:6:SystemClock_Config	3
 ../Core/Src/main.c:233:6:Error_Handler	1
+=======
+../Core/Src/main.c:76:5:main	4
+../Core/Src/main.c:159:6:SystemClock_Config	3
+../Core/Src/main.c:208:6:Error_Handler	1
+>>>>>>> ff9b385113a8f1a2a70f319dd7118be8a8c6115d

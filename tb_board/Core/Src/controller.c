@@ -2,18 +2,8 @@
 
 char controller_buffer[41] = "";
 
-ControllerState controller_state = {.r1 = false, .r2 = false, .r3 = false,
-                                    .l1 = false, .l2 = false, .l3 = false,
-                                    .cross = false, .circle = false, .triangle = false,
-                                    .square = false, .up = false, .down = false,
-                                    .left = false, .right = false,
-                                    .l_stick_x = 0, .l_stick_y = 0,
-                                    .r_stick_x = 0, .r_stick_y = 0,
-                                    .l2_pressure = 0, .r2_pressure = 0,
-                                    .ps_button = false, .share_button = false,
-                                    .options_button = false};
+ControllerState controller_state = {.r1 = false, .r2 = false, .r3 = false, .l1 = false, .l2 = false, .l3 = false, .cross = false, .circle = false, .triangle = false, .square = false, .up = false, .down = false, .left = false, .right = false, .l_stick_x = 0, .l_stick_y = 0, .r_stick_x = 0, .r_stick_y = 0, .l2_pressure = 0, .r2_pressure = 0, .ps_button = false, .share_button = false, .options_button = false};
 
-// TODO: need to modify
 uint8_t parse_controller_data(const char* input, ControllerState* data) {
   if (input == NULL || data == NULL) {
     printf("Invalid input or data pointer\n");
@@ -26,8 +16,8 @@ uint8_t parse_controller_data(const char* input, ControllerState* data) {
   int l2_pressure, r2_pressure;
   int misc_buttons;
 
-  int parse_num = sscanf(input, "c:%1x,%03x,%4s,%4s,%4s,%4s,%d,%d,%1x", &dpad_value, &buttons_value, l_stick_x_str, l_stick_y_str, r_stick_x_str, r_stick_y_str, &l2_pressure, &r2_pressure, &misc_buttons);
-  
+  int parse_num = sscanf(input, "c:%1x,%03x,%4s,%4s,%4s,%4s,%d,%d,%1x", &dpad_value, &buttons_value, l_stick_y_str, l_stick_x_str, r_stick_y_str, r_stick_x_str, &l2_pressure, &r2_pressure, &misc_buttons);
+
   if (parse_num != 9) {
     printf("Error parsing input string\n");
     return 2;
@@ -49,10 +39,10 @@ uint8_t parse_controller_data(const char* input, ControllerState* data) {
   data->l3 = buttons_value & 0x100;
   data->r3 = buttons_value & 0x200;
 
-  data->l_stick_x = (int8_t)strtol(l_stick_x_str, NULL, 10);
   data->l_stick_y = (int8_t)strtol(l_stick_y_str, NULL, 10);
-  data->r_stick_x = (int8_t)strtol(r_stick_x_str, NULL, 10);
+  data->l_stick_x = (int8_t)strtol(l_stick_x_str, NULL, 10);
   data->r_stick_y = (int8_t)strtol(r_stick_y_str, NULL, 10);
+  data->r_stick_x = (int8_t)strtol(r_stick_x_str, NULL, 10);
 
   data->l2_pressure = (uint16_t)l2_pressure;
   data->r2_pressure = (uint16_t)r2_pressure;

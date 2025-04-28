@@ -82,18 +82,18 @@ void handleAxisData(int32_t input, char* axisData) {
 
 void processGamepad(ControllerPtr ctl) {
   char temp[4][5] = {""};
-  handleAxisData(ctl->axisX() - L_AXISX_OFFSET, temp[0]);
-  handleAxisData(ctl->axisY() - L_AXISY_OFFSET, temp[1]);
-  handleAxisData(ctl->axisRX() - R_AXISX_OFFSET, temp[2]);
-  handleAxisData(ctl->axisRY() - R_AXISY_OFFSET, temp[3]);
+  handleAxisData((ctl->axisX() - L_AXISX_OFFSET) * -1, temp[0]);
+  handleAxisData((ctl->axisY() - L_AXISY_OFFSET) * -1, temp[1]);
+  handleAxisData((ctl->axisRX() - R_AXISX_OFFSET) * -1, temp[2]);
+  handleAxisData((ctl->axisRY() - R_AXISY_OFFSET) * -1, temp[3]);
   char output[41] = "";
   sprintf(output, "c:%1x,%03x,%s,%s,%s,%s,%04d,%04d,%1x\n",
     ctl->dpad(),
     ctl->buttons(),
-    temp[0],
     temp[1],
-    temp[2],
+    temp[0],
     temp[3],
+    temp[2],
     ctl->brake(),
     ctl->throttle(),
     ctl->miscButtons());

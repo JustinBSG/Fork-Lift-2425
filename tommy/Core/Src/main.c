@@ -27,6 +27,13 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <string.h>
+
+#include "controller.h"
+#include "encoder.h"
+#include "movement.h"
+#include "pid-mecanum.h"
+#include "robot.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,11 +54,17 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-char controller_msg[41];
-char test_msg[41];
+char test_controller_msg[41];
 int test_stage = 0;
 int test_time_stamp = 0;
 int test_encoder[4] = {0, 0, 0, 0};
+float test_var_1 = 0;
+float test_var_2 = 0;
+float test_var_3 = 0;
+float test_var_4 = 0;
+float test_var_5 = 0;
+WheelVelocity test_wheel_vel = {0, 0, 0, 0};
+BaseVelocity test_target_base_vel = {0, 0, 0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -113,6 +126,12 @@ int main(void) {
   HAL_TIM_Encoder_Start_IT(&htim5, TIM_CHANNEL_ALL);
   HAL_TIM_Base_Start_IT(&htim8);
   HAL_TIM_Encoder_Start_IT(&htim8, TIM_CHANNEL_ALL);
+  // enable both sides of motor driver IC
+  HAL_GPIO_WritePin(MOTOR_LEFT_ENABLE_GPIO_Port, MOTOR_LEFT_ENABLE_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(MOTOR_RIGHT_ENABLE_GPIO_Port, MOTOR_RIGHT_ENABLE_Pin, GPIO_PIN_SET);
+
+  HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -121,53 +140,63 @@ int main(void) {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    // HAL_UART_Receive(&huart1, controller_msg, sizeof(controller_msg), 0xFFFF);
-    // HAL_UART_Transmit(&huart4, controller_msg, sizeof(controller_msg), 0xFFFF);
-    // if (HAL_GetTick() - test_time_stamp > 5000) {
+    HAL_Delay(1);
+    HAL_UART_Receive(&huart1, controller_buffer, sizeof(controller_buffer), 0xFFFF);
+    // HAL_UART_Transmit(&huart4, controller_buffer, sizeof(controller_buffer), 0xFFFF);
+    parse_controller_data(controller_buffer, &controller_state);
+
+    if (controller_state.options_button) {
+      turn_on = !turn_on;
+      HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, turn_on ? GPIO_PIN_RESET : GPIO_PIN_SET);
+    }
+
+    // TODO: dont know why the velocity of wheels are unbalanced when x base velocity is involed
+    if (turn_on) {
+      float rotation_vel = (controller_state.l2_pressure / -1024.0 + controller_state.r2_pressure / 1024.0) * 100.0;
+      test_var_1 = rotation_vel;
+      if (controller_state.l_stick_x == 0 && controller_state.l_stick_y == 0 && rotation_vel != 0) {
+        BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY};
+        movement_control(target_vel);
+      } else {
+        BaseVelocity target_vel = {controller_state.l_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY,
+                                  controller_state.l_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY,
+                                  0};
+        movement_control(target_vel);
+      }
+    }
+
+    // if (HAL_GetTick() - test_time_stamp > 10000) {
     //   test_time_stamp = HAL_GetTick();
     //   test_stage++;
+    //   if (test_stage > 3)
+    //     test_stage = 0;
     // }
 
     // switch (test_stage) {
-    //   case 0:
-    //     HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_SET);
-    //     HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_RESET);
-    //     TIM2->CCR1 = 0;
-    //     break;
     //   case 1:
-    //     HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_RESET);
-    //     HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_RESET);
-    //     TIM2->CCR1 = 16800;
+    //     test_target_base_vel.x_vel = 75 / 100.0 * ROBOT_MAX_X_VELOCITY;
+    //     test_target_base_vel.y_vel = 0;
+    //     test_target_base_vel.z_vel = 0;
     //     break;
     //   case 2:
-    //     HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_RESET);
-    //     HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_SET);
-    //     TIM2->CCR1 = 16800;
+    //     test_target_base_vel.x_vel = 0;
+    //     test_target_base_vel.y_vel = 75 / 100.0 * ROBOT_MAX_Y_VELOCITY;
+    //     test_target_base_vel.z_vel = 0;
     //     break;
     //   default:
+    //     test_target_base_vel.x_vel = 0;
+    //     test_target_base_vel.y_vel = 0;
+    //     test_target_base_vel.z_vel = 0;
     //     test_stage = 0;
     //     break;
     // }
-    HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(MOTOR_LEFT_ENABLE_GPIO_Port, MOTOR_LEFT_ENABLE_Pin, GPIO_PIN_SET);
-    TIM2->CCR1 = 16800;
-    HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(MOTOR_LEFT_ENABLE_GPIO_Port, MOTOR_LEFT_ENABLE_Pin, GPIO_PIN_SET);
-    TIM2->CCR2 = 16800;
-    HAL_GPIO_WritePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(MOTOR_RIGHT_ENABLE_GPIO_Port, MOTOR_RIGHT_ENABLE_Pin, GPIO_PIN_SET);
-    TIM3->CCR1 = 16800;
-    HAL_GPIO_WritePin(MOTOR_FR_IN1_GPIO_Port, MOTOR_FR_IN1_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(MOTOR_FR_IN2_GPIO_Port, MOTOR_FR_IN2_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(MOTOR_RIGHT_ENABLE_GPIO_Port, MOTOR_RIGHT_ENABLE_Pin, GPIO_PIN_SET);
-    TIM3->CCR2 = 16800;
-    test_encoder[0] = __HAL_TIM_GET_AUTORELOAD(&htim1);
-    test_encoder[1] = __HAL_TIM_GET_AUTORELOAD(&htim8);
-    test_encoder[2] = __HAL_TIM_GET_AUTORELOAD(&htim5);
-    test_encoder[3] = __HAL_TIM_GET_AUTORELOAD(&htim4);
+    // movement_control(test_target_base_vel);
+
+    test_encoder[0] = __HAL_TIM_GET_COUNTER(&htim1);
+    test_encoder[1] = __HAL_TIM_GET_COUNTER(&htim8);
+    test_encoder[2] = __HAL_TIM_GET_COUNTER(&htim5);
+    test_encoder[3] = __HAL_TIM_GET_COUNTER(&htim4);
+    test_wheel_vel = read_current_velocity(encoders);
   }
   /* USER CODE END 3 */
 }

@@ -1,6 +1,6 @@
 #include "movement.h"
-#include "pid-mecanum.h"
 
+#include "pid-mecanum.h"
 
 WheelVelocity base2wheel(BaseVelocity base_vel) {
   float front_left = (base_vel.x_vel - base_vel.y_vel - (LENGTH_CENTER_WHEEL_X + LENGTH_CENTER_WHEEL_Y) * base_vel.z_vel) / RADIUS_WHEEL;
@@ -49,7 +49,7 @@ void wheel_control(MecanumWheel wheel, int speed) {
         HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_RESET);
       }
-      FL_MOTOR_CCR = speed;
+      FL_MOTOR_CCR = abs(speed);
       break;
     case FRONT_RIGHT:
       if (speed < 0) {
@@ -68,7 +68,7 @@ void wheel_control(MecanumWheel wheel, int speed) {
         HAL_GPIO_WritePin(MOTOR_FR_IN1_GPIO_Port, MOTOR_FR_IN1_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(MOTOR_FR_IN2_GPIO_Port, MOTOR_FR_IN2_Pin, GPIO_PIN_RESET);
       }
-      FR_MOTOR_CCR = speed;
+      FR_MOTOR_CCR = abs(speed);
       break;
     case REAR_LEFT:
       if (speed > 0) {
@@ -87,7 +87,7 @@ void wheel_control(MecanumWheel wheel, int speed) {
         HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_RESET);
       }
-      RL_MOTOR_CCR = speed;
+      RL_MOTOR_CCR = abs(speed);
       break;
     case REAR_RIGHT:
       if (speed < 0) {
@@ -106,7 +106,7 @@ void wheel_control(MecanumWheel wheel, int speed) {
         HAL_GPIO_WritePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin, GPIO_PIN_RESET);
       }
-      RR_MOTOR_CCR = speed;
+      RR_MOTOR_CCR = abs(speed);
       break;
     default:
       if (speed > 0) {
@@ -125,7 +125,7 @@ void wheel_control(MecanumWheel wheel, int speed) {
         HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_RESET);
       }
-      FL_MOTOR_CCR = speed;
+      FL_MOTOR_CCR = abs(speed);
       break;
   }
 }
@@ -139,13 +139,13 @@ void wheels_control(WheelPWM pwm) {
 
 void movement_control(BaseVelocity base_vel) {
   WheelVelocity target_vel = base2wheel(base_vel);
-  #if (PID_MODE == 1)
-    WheelVelocity current_vel = read_current_velocity(encoders);
-    WheelVelocity result_vel = pid_system(target_vel, current_vel);
-    WheelPWM target_pwm = wheel2pwm(result_vel);
-  #else 
-    WheelPWM target_pwm = wheel2pwm(target_vel);
-  #endif
+#if (PID_MODE == 1)
+  WheelVelocity current_vel = read_current_velocity(encoders);
+  WheelVelocity result_vel = pid_system(target_vel, current_vel);
+  WheelPWM target_pwm = wheel2pwm(result_vel);
+#else
+  WheelPWM target_pwm = wheel2pwm(target_vel);
+#endif
   wheels_control(target_pwm);
 }
 

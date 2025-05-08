@@ -23,7 +23,6 @@
 #include "tim.h"
 #include "usart.h"
 
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <string.h>
@@ -150,17 +149,16 @@ int main(void) {
       HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, turn_on ? GPIO_PIN_RESET : GPIO_PIN_SET);
     }
 
-    // TODO: dont know why the velocity of wheels are unbalanced when x base velocity is involed
     if (turn_on) {
-      float rotation_vel = (controller_state.l2_pressure / -1024.0 + controller_state.r2_pressure / 1024.0) * 100.0;
+      float rotation_vel = (controller_state.l2_pressure / 1024.0 + controller_state.r2_pressure / -1024.0) * 100.0;
       test_var_1 = rotation_vel;
       if (controller_state.l_stick_x == 0 && controller_state.l_stick_y == 0 && rotation_vel != 0) {
         BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY};
         movement_control(target_vel);
       } else {
         BaseVelocity target_vel = {controller_state.l_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY,
-                                  controller_state.l_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY,
-                                  0};
+                                   controller_state.l_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY,
+                                   0};
         movement_control(target_vel);
       }
     }
@@ -173,15 +171,20 @@ int main(void) {
     // }
 
     // switch (test_stage) {
-    //   case 1:
+    //   case 2: // move forward
     //     test_target_base_vel.x_vel = 75 / 100.0 * ROBOT_MAX_X_VELOCITY;
     //     test_target_base_vel.y_vel = 0;
     //     test_target_base_vel.z_vel = 0;
     //     break;
-    //   case 2:
+    //   case 1: // move to the left
     //     test_target_base_vel.x_vel = 0;
     //     test_target_base_vel.y_vel = 75 / 100.0 * ROBOT_MAX_Y_VELOCITY;
     //     test_target_base_vel.z_vel = 0;
+    //     break;
+    //   case 3: // rotate clockwise
+    //     test_target_base_vel.x_vel = 0;
+    //     test_target_base_vel.y_vel = 0;
+    //     test_target_base_vel.z_vel = 75 / 100.0 * ROBOT_MAX_Z_VELOCITY;
     //     break;
     //   default:
     //     test_target_base_vel.x_vel = 0;

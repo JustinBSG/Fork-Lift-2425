@@ -9,7 +9,7 @@
 #include "tim.h"
 
 // pulses per rovolution
-#define FL_ENCODER_PPR 1550 
+#define FL_ENCODER_PPR 1550
 #define FR_ENCODER_PPR 1550
 #define RL_ENCODER_PPR 1550
 #define RR_ENCODER_PPR 1550

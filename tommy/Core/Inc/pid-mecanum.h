@@ -25,7 +25,7 @@ typedef struct {
  * @param current_vel The current angular velocity of the wheel, in radians per second (rad/s).
  * @return float The computed control output for the wheel, in radians per second (rad/s).
  */
-void calculate_pid(MecanumWheel wheel , float target_vel, float current_vel, float *target_pid_value);
+void calculate_pid(MecanumWheel wheel, float target_vel, float current_vel, float *target_pid_value);
 
 /**
  * @brief Perform PID control for the mecanum wheel system

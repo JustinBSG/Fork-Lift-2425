@@ -5,6 +5,14 @@
 #include <stdint.h>
 #include <usart.h>
 
+typedef struct {
+    uint8_t servo_id;
+    uint16_t current_pos;
+    int16_t current_degree;
+} HTD45H_Servo;
+
+extern HTD45H_Servo servos[6];
+
 extern UART_HandleTypeDef huart5;
 
 #define GET_LOW_BYTE(x) ((uint8_t)((x) & 0x00FF))
@@ -19,7 +27,7 @@ extern UART_HandleTypeDef huart5;
 // TODO: need to find the shortest time to rotate based on current position
 #define SHORTEST_TIME_ROTATE(degree) (180 / 60 * abs(degree))
 #define SHORTEST_TIME_ROTATE_POS(pos)
-#define SHORTEST_TIME_ROTATE_DEGREE(degrees)
+#define SHORTEST_TIME_ROTATE_DEGREE(id, degrees) (180 / 60 * (servos[id - 1].current_degree - abs(degrees)))
 
 #define SERVO_ID1_MAX_POS 500 + 360
 #define SERVO_ID1_MIN_POS 500 - 400
@@ -68,19 +76,11 @@ extern UART_HandleTypeDef huart5;
      ? ((pos) - INITIAL_POS) * 90.0 / (SERVO_ID4_MAX_POS - INITIAL_POS) \
      : (INITIAL_POS - (pos)) * -90.0 / (INITIAL_POS - SERVO_ID4_MIN_POS))
 
-typedef struct {
-    uint8_t servo_id;
-    uint16_t current_pos;
-    int16_t current_degree;
-} HTD45H_Servo;
-
 void servo_update_current_pos(HTD45H_Servo* target_servo);
 void servo_move(HTD45H_Servo* target_servo, uint16_t target_pos, uint16_t time);
 void servo_unload(HTD45H_Servo* target_servo);
 
 uint16_t servo_get_current_pos(HTD45H_Servo* target_servo);
 void servo_reset_all(void);
-
-extern HTD45H_Servo servos[6];
 
 #endif  // __SERVO_H__

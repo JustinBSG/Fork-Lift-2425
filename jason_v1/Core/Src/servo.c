@@ -35,6 +35,27 @@ void servo_move(HTD45H_Servo* target_servo, uint16_t target_pos, uint16_t time) 
   send_buffer[9] = GET_HIGH_BYTE(target_pos);
   HAL_UART_Transmit(&huart5, send_buffer, sizeof(send_buffer), 0xFFFF);
   target_servo->current_pos = target_pos;
+
+  switch (target_servo->servo_id) {
+    case 1:
+      target_servo->current_degree = SERVO_ID1_POS_TO_ANGLE(target_pos);
+      break;
+    case 2:
+      target_servo->current_degree = SERVO_ID2_POS_TO_ANGLE(target_pos);
+      break;
+    case 3:
+      target_servo->current_degree = SERVO_ID3_POS_TO_ANGLE(target_pos);
+      break;
+    case 4:
+      target_servo->current_degree = SERVO_ID4_POS_TO_ANGLE(target_pos);
+      break;
+    case 5:
+      break;
+    case 6:
+      break;
+    default:
+      break;
+  }
 }
 
 // TODO: need to test

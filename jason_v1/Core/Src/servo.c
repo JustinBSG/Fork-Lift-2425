@@ -50,7 +50,7 @@ void servo_unload(HTD45H_Servo* target_servo) {
 
 // TODO: need to test
 uint16_t servo_get_current_pos(HTD45H_Servo* target_servo) {
-  servo_update_current_pos(&target_servo);
+  servo_update_current_pos(target_servo);
   return target_servo->current_pos;
 }
 

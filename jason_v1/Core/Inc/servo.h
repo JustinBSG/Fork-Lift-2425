@@ -15,7 +15,7 @@ extern UART_HandleTypeDef huart5;
 #define CMD_MULT_SERVO_POS_READ 0x21
 
 #define INITIAL_POS 500
-#define SHORTEST_TIME_ROTATE 0x0
+#define SHORTEST_TIME_ROTATE(degree) (180/60*degree)
 
 typedef struct {
     uint8_t servo_id;
@@ -29,7 +29,7 @@ void servo_unload(HTD45H_Servo* target_servo);
 uint16_t servo_get_current_pos(HTD45H_Servo* target_servo);
 void servo_reset_all(void);
 // move to movement.h
-void rotate_motor(void);
+// void rotate_motor(void);
 
 extern HTD45H_Servo servos[6];
 

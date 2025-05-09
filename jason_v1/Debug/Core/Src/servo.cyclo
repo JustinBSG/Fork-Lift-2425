@@ -1,0 +1,6 @@
+../Core/Src/servo.c:13:6:servo_update_current_pos	1
+../Core/Src/servo.c:26:6:servo_move	1
+../Core/Src/servo.c:41:6:servo_unload	1
+../Core/Src/servo.c:52:10:servo_get_current_pos	1
+../Core/Src/servo.c:58:6:servo_reset_all	2
+../Core/Src/servo.c:65:6:rotate_motor	1

@@ -9,6 +9,7 @@ HTD45H_Servo servos[6] = {
   {0x06, INITIAL_POS}   // Unload Ball
 };
 
+// TODO: need to test
 void servo_update_current_pos(HTD45H_Servo* target_servo) {
   uint8_t send_buffer[6], receive_buffer[8];
   send_buffer[0] = send_buffer[1] = FRAME_HEADER;
@@ -21,6 +22,7 @@ void servo_update_current_pos(HTD45H_Servo* target_servo) {
   target_servo->current_pos = (receive_buffer[8] << 8) + receive_buffer[7];
 }
 
+// TODO: need to test
 void servo_move(HTD45H_Servo* target_servo, uint16_t target_pos, uint16_t time) {
   uint8_t send_buffer[10];
   send_buffer[0] = send_buffer[1] = FRAME_HEADER;
@@ -35,11 +37,29 @@ void servo_move(HTD45H_Servo* target_servo, uint16_t target_pos, uint16_t time) 
   HAL_UART_Transmit(&huart5, send_buffer, sizeof(send_buffer), 0xFFFF);
 }
 
-void servo_unload(HTD45H_Servo* target_servo) {}
+// TODO: need to test
+void servo_unload(HTD45H_Servo* target_servo) {
+  uint8_t send_buffer[6];
+  send_buffer[0] = send_buffer[1] = FRAME_HEADER;
+  send_buffer[2] = 0x01 + 3;
+  send_buffer[3] = CMD_MULT_SERVO_UNLOAD;
+  send_buffer[4] = 0x01;
+  send_buffer[5] = target_servo->servo_id;
+  HAL_UART_Transmit(&huart5, send_buffer, sizeof(send_buffer), 0xFFFF);
+}
 
-uint16_t servo_get_current_pos(HTD45H_Servo* target_servo) {}
+// TODO: need to test
+uint16_t servo_get_current_pos(HTD45H_Servo* target_servo) {
+  servo_update_current_pos(&target_servo);
+  return target_servo->current_pos;
+}
 
-void servo_reset_all(void) {}
+// TODO: need to test
+void servo_reset_all(void) {
+for (int i = 0; i < 6; i++)
+  servo_move(&(servos[i]), INITIAL_POS, 1000);
+}
 
 // move to movement.c
-void rotate_motor(void) {}
+// // TODO: need to test
+// void rotate_motor(void) {}

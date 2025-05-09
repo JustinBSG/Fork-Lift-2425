@@ -45,7 +45,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+uint16_t test_servo_pos[6] = {0, 0, 0, 0, 0, 0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -95,7 +95,19 @@ int main(void)
   HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
 
-  servo_move(&(servos[0]), 500, 1000);
+  // servo_move(&(servos[0]), 500, 1000);
+  servo_move(&(servos[3]), 590, 1000);
+  servo_move(&(servos[1]), 590, 1000);
+
+  HAL_Delay(3000);
+
+  servo_move(&(servos[3]), 500, 1000);
+  servo_move(&(servos[1]), 500, SHORTEST_TIME_ROTATE(90));
+  // servo_move(&(servos[2]), 500, 1000);
+  // servo_move(&(servos[3]), 500, 1000);
+  // servo_move(&(servos[4]), 500, 1000);
+  // servo_move(&(servos[5]), 500, 1000);
+  // servo_move(&(servos[1]), 500, SHORTEST_TIME_ROTATE(500));
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_RESET);
   /* USER CODE END 2 */
 
@@ -106,6 +118,10 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    // test_servo_pos[0] = servo_get_current_pos(&(servos[0]));
+    // test_servo_pos[1] = servo_get_current_pos(&(servos[1]));
+    // test_servo_pos[2] = servo_get_current_pos(&(servos[2]));
+    // test_servo_pos[3] = servo_get_current_pos(&(servos[3]));
     HAL_Delay(1);
   }
   /* USER CODE END 3 */
@@ -154,10 +170,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-
-  /** Enables the Clock Security System
-  */
-  HAL_RCC_EnableCSS();
 }
 
 /* USER CODE BEGIN 4 */

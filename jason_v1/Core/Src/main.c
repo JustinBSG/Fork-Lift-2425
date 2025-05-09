@@ -98,12 +98,29 @@ int main(void) {
 
   servo_reset_all();
   HAL_Delay(2000);
-  BaseVelocity base_vel = {1, 1, 0};
+  BaseVelocity base_vel = {-1, 1, 0};
   rotate_motor(base_vel);
-  // HAL_Delay(2000);
-  // base_vel.x_vel = 0;
-  // base_vel.y_vel = 1;
-  // rotate_motor(base_vel);
+  HAL_Delay(2000);
+  base_vel.x_vel = 1;
+  base_vel.y_vel = 1;
+  base_vel.z_vel = 0;
+  rotate_motor(base_vel);
+  HAL_Delay(2000);
+  base_vel.x_vel = 1;
+  base_vel.y_vel = -1;
+  base_vel.z_vel = 0;
+  rotate_motor(base_vel);
+  HAL_Delay(2000);
+  base_vel.x_vel = -1;
+  base_vel.y_vel = -1;
+  base_vel.z_vel = 0;
+  rotate_motor(base_vel);
+  HAL_Delay(2000);
+  base_vel.x_vel = 0;
+  base_vel.y_vel = 0;
+  base_vel.z_vel = 1;
+  rotate_motor(base_vel);
+  HAL_Delay(2000);
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_RESET);
   /* USER CODE END 2 */
 

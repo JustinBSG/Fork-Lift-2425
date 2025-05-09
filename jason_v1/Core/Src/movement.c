@@ -143,6 +143,14 @@ void wheels_control(WheelPWM pwm) {
 
 // TODO: need to test
 void rotate_motor(BaseVelocity base_vel) {
+  if (base_vel.z_vel != 0) {
+    servo_move(&(servos[0]), SERVO_ID1_ANGLE_TO_POS(45), SHORTEST_TIME_ROTATE(45));
+    servo_move(&(servos[1]), SERVO_ID2_ANGLE_TO_POS(-45), SHORTEST_TIME_ROTATE(-45));
+    servo_move(&(servos[2]), SERVO_ID3_ANGLE_TO_POS(45), SHORTEST_TIME_ROTATE(45));
+    servo_move(&(servos[3]), SERVO_ID4_ANGLE_TO_POS(-45), SHORTEST_TIME_ROTATE(-45));
+    return;
+  }
+
   float angle = atan2(base_vel.y_vel, base_vel.x_vel) * 180 / M_PI;
 
   if (base_vel.x_vel == 0 && base_vel.y_vel != 0) {  // angle = 90 or 270

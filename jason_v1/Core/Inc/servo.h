@@ -71,6 +71,7 @@ extern UART_HandleTypeDef huart5;
 typedef struct {
     uint8_t servo_id;
     uint16_t current_pos;
+    int16_t current_degree;
 } HTD45H_Servo;
 
 void servo_update_current_pos(HTD45H_Servo* target_servo);

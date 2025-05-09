@@ -1,12 +1,12 @@
 #include "servo.h"
 
 HTD45H_Servo servos[6] = {
-  {0x01, INITIAL_POS},  // Front Left
-  {0x02, INITIAL_POS},  // Front Right
-  {0x03, INITIAL_POS},  // Rear Left
-  {0x04, INITIAL_POS},  // Rear Right
-  {0x05, INITIAL_POS},  // Catch Ball
-  {0x06, INITIAL_POS}   // Unload Ball
+  {0x01, INITIAL_POS, 0},  // Front Left
+  {0x02, INITIAL_POS, 0},  // Front Right
+  {0x03, INITIAL_POS, 0},  // Rear Left
+  {0x04, INITIAL_POS, 0},  // Rear Right
+  {0x05, INITIAL_POS, 0},  // Catch Ball
+  {0x06, INITIAL_POS, 0}   // Unload Ball
 };
 
 // TODO: need to test

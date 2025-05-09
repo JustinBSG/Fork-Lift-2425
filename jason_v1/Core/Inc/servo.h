@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <usart.h>
+#include <math.h>
 
 extern UART_HandleTypeDef huart5;
 
@@ -16,7 +17,7 @@ extern UART_HandleTypeDef huart5;
 
 #define INITIAL_POS 500
 // TODO: need to find the shortest time to rotate based on current position
-#define SHORTEST_TIME_ROTATE(degree) (180 / 60 * degree)
+#define SHORTEST_TIME_ROTATE(degree) (180 / 60 * abs(degree))
 #define SHORTEST_TIME_ROTATE_POS(pos)
 #define SHORTEST_TIME_ROTATE_DEGREE(degrees)
 

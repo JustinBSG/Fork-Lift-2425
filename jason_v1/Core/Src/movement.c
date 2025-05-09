@@ -146,8 +146,8 @@ void rotate_motor(BaseVelocity base_vel) {
   if (base_vel.z_vel != 0) {
     servo_move(&(servos[0]), SERVO_ID1_ANGLE_TO_POS(45), SHORTEST_TIME_ROTATE(45));
     servo_move(&(servos[1]), SERVO_ID2_ANGLE_TO_POS(-45), SHORTEST_TIME_ROTATE(-45));
-    servo_move(&(servos[2]), SERVO_ID3_ANGLE_TO_POS(45), SHORTEST_TIME_ROTATE(45));
-    servo_move(&(servos[3]), SERVO_ID4_ANGLE_TO_POS(-45), SHORTEST_TIME_ROTATE(-45));
+    servo_move(&(servos[3]), SERVO_ID4_ANGLE_TO_POS(45), SHORTEST_TIME_ROTATE(45));
+    servo_move(&(servos[2]), SERVO_ID3_ANGLE_TO_POS(-45), SHORTEST_TIME_ROTATE(-45));
     return;
   }
 

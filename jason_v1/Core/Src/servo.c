@@ -34,6 +34,7 @@ void servo_move(HTD45H_Servo* target_servo, uint16_t target_pos, uint16_t time) 
   send_buffer[8] = GET_LOW_BYTE(target_pos);
   send_buffer[9] = GET_HIGH_BYTE(target_pos);
   HAL_UART_Transmit(&huart5, send_buffer, sizeof(send_buffer), 0xFFFF);
+  target_servo->current_pos = target_pos;
 }
 
 // TODO: need to test

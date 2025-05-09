@@ -1,9 +1,9 @@
 #ifndef __SERVO_H__
 #define __SERVO_H__
 
+#include <math.h>
 #include <stdint.h>
 #include <usart.h>
-#include <math.h>
 
 extern UART_HandleTypeDef huart5;
 
@@ -34,22 +34,39 @@ extern UART_HandleTypeDef huart5;
 #define SERVO_ID6_MAX_POS 500
 #define SERVO_ID6_MIN_POS 500
 
-#define SERVO_ID1_ANGLE_TO_POS(angle)                                          \
-  ((angle) > 0                                                                 \
-       ? INITIAL_POS + angle / 90.0 * (SERVO_ID1_MAX_POS - INITIAL_POS)        \
-       : INITIAL_POS - angle / 90.0 * (INITIAL_POS - SERVO_ID1_MIN_POS))
-#define SERVO_ID2_ANGLE_TO_POS(angle)                                          \
-  ((angle) > 0                                                                 \
-       ? INITIAL_POS + angle / 90.0 * (SERVO_ID2_MAX_POS - INITIAL_POS)        \
-       : INITIAL_POS - angle / 90.0 * (INITIAL_POS - SERVO_ID2_MIN_POS))
-#define SERVO_ID3_ANGLE_TO_POS(angle)                                          \
-  ((angle) > 0                                                                 \
-       ? INITIAL_POS + angle / 90.0 * (SERVO_ID3_MAX_POS - INITIAL_POS)        \
-       : INITIAL_POS - angle / 90.0 * (INITIAL_POS - SERVO_ID3_MIN_POS))
-#define SERVO_ID4_ANGLE_TO_POS(angle)                                          \
-  ((angle) > 0                                                                 \
-       ? INITIAL_POS + angle / 90.0 * (SERVO_ID4_MAX_POS - INITIAL_POS)        \
-       : INITIAL_POS - angle / 90.0 * (INITIAL_POS - SERVO_ID4_MIN_POS))
+#define SERVO_ID1_ANGLE_TO_POS(angle)                                 \
+  ((angle) > 0                                                        \
+     ? INITIAL_POS + angle / 90.0 * (SERVO_ID1_MAX_POS - INITIAL_POS) \
+     : INITIAL_POS - angle / 90.0 * (INITIAL_POS - SERVO_ID1_MIN_POS))
+#define SERVO_ID2_ANGLE_TO_POS(angle)                                 \
+  ((angle) > 0                                                        \
+     ? INITIAL_POS + angle / 90.0 * (SERVO_ID2_MAX_POS - INITIAL_POS) \
+     : INITIAL_POS - angle / 90.0 * (INITIAL_POS - SERVO_ID2_MIN_POS))
+#define SERVO_ID3_ANGLE_TO_POS(angle)                                 \
+  ((angle) > 0                                                        \
+     ? INITIAL_POS + angle / 90.0 * (SERVO_ID3_MAX_POS - INITIAL_POS) \
+     : INITIAL_POS - angle / 90.0 * (INITIAL_POS - SERVO_ID3_MIN_POS))
+#define SERVO_ID4_ANGLE_TO_POS(angle)                                 \
+  ((angle) > 0                                                        \
+     ? INITIAL_POS + angle / 90.0 * (SERVO_ID4_MAX_POS - INITIAL_POS) \
+     : INITIAL_POS - angle / 90.0 * (INITIAL_POS - SERVO_ID4_MIN_POS))
+
+#define SERVO_ID1_POS_TO_ANGLE(pos)                                     \
+  ((pos) > INITIAL_POS                                                  \
+     ? ((pos) - INITIAL_POS) * 90.0 / (SERVO_ID1_MAX_POS - INITIAL_POS) \
+     : (INITIAL_POS - (pos)) * -90.0 / (INITIAL_POS - SERVO_ID1_MIN_POS))
+#define SERVO_ID2_POS_TO_ANGLE(pos)                                     \
+  ((pos) > INITIAL_POS                                                  \
+     ? ((pos) - INITIAL_POS) * 90.0 / (SERVO_ID2_MAX_POS - INITIAL_POS) \
+     : (INITIAL_POS - (pos)) * -90.0 / (INITIAL_POS - SERVO_ID2_MIN_POS))
+#define SERVO_ID3_POS_TO_ANGLE(pos)                                     \
+  ((pos) > INITIAL_POS                                                  \
+     ? ((pos) - INITIAL_POS) * 90.0 / (SERVO_ID3_MAX_POS - INITIAL_POS) \
+     : (INITIAL_POS - (pos)) * -90.0 / (INITIAL_POS - SERVO_ID3_MIN_POS))
+#define SERVO_ID4_POS_TO_ANGLE(pos)                                     \
+  ((pos) > INITIAL_POS                                                  \
+     ? ((pos) - INITIAL_POS) * 90.0 / (SERVO_ID4_MAX_POS - INITIAL_POS) \
+     : (INITIAL_POS - (pos)) * -90.0 / (INITIAL_POS - SERVO_ID4_MIN_POS))
 
 typedef struct {
     uint8_t servo_id;

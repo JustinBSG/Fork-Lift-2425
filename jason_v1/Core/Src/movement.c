@@ -141,7 +141,6 @@ void wheels_control(WheelPWM pwm) {
   wheel_control(REAR_RIGHT, pwm.rear_right);
 }
 
-// TODO: need to test
 void rotate_motor(BaseVelocity base_vel) {
   if (base_vel.z_vel != 0) {
     servo_move(&(servos[0]), SERVO_ID1_ANGLE_TO_POS(45), SHORTEST_TIME_ROTATE(45));

@@ -42,8 +42,6 @@ void servo_unload(HTD45H_Servo* target_servo);
 
 uint16_t servo_get_current_pos(HTD45H_Servo* target_servo);
 void servo_reset_all(void);
-// move to movement.h
-// void rotate_motor(void);
 
 extern HTD45H_Servo servos[6];
 

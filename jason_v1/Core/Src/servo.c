@@ -22,7 +22,6 @@ void servo_update_current_pos(HTD45H_Servo* target_servo) {
   target_servo->current_pos = (receive_buffer[8] << 8) + receive_buffer[7];
 }
 
-// TODO: need to test
 void servo_move(HTD45H_Servo* target_servo, uint16_t target_pos, uint16_t time) {
   uint8_t send_buffer[10];
   send_buffer[0] = send_buffer[1] = FRAME_HEADER;
@@ -54,12 +53,7 @@ uint16_t servo_get_current_pos(HTD45H_Servo* target_servo) {
   return target_servo->current_pos;
 }
 
-// TODO: need to test
 void servo_reset_all(void) {
-for (int i = 0; i < 6; i++)
-  servo_move(&(servos[i]), INITIAL_POS, 1000);
+  for (int i = 0; i < 6; i++)
+    servo_move(&(servos[i]), INITIAL_POS, 1000);
 }
-
-// move to movement.c
-// // TODO: need to test
-// void rotate_motor(void) {}

@@ -24,10 +24,7 @@ extern UART_HandleTypeDef huart5;
 #define CMD_MULT_SERVO_POS_READ 0x21
 
 #define INITIAL_POS 500
-// TODO: need to find the shortest time to rotate based on current position
-#define SHORTEST_TIME_ROTATE(degree) (180 / 60 * abs(degree))
-#define SHORTEST_TIME_ROTATE_POS(pos)
-#define SHORTEST_TIME_ROTATE_DEGREE(id, degrees) (180 / 60 * (servos[id - 1].current_degree - abs(degrees)))
+#define SHORTEST_TIME_ROTATE(id, degree) (180 / 60.0 * abs((servos[id - 1].current_degree + 90) - (degree + 90)))
 
 #define SERVO_ID1_MAX_POS 500 + 360
 #define SERVO_ID1_MIN_POS 500 - 400

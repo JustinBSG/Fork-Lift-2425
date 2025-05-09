@@ -17,6 +17,8 @@ extern UART_HandleTypeDef huart5;
 #define INITIAL_POS 500
 // TODO: need to find the shortest time to rotate based on current position
 #define SHORTEST_TIME_ROTATE(degree) (180 / 60 * degree)
+#define SHORTEST_TIME_ROTATE_POS(pos)
+#define SHORTEST_TIME_ROTATE_DEGREE(degrees)
 
 #define SERVO_ID1_MAX_POS 500 + 360
 #define SERVO_ID1_MIN_POS 500 - 400
@@ -30,6 +32,23 @@ extern UART_HandleTypeDef huart5;
 #define SERVO_ID5_MIN_POS 500
 #define SERVO_ID6_MAX_POS 500
 #define SERVO_ID6_MIN_POS 500
+
+#define SERVO_ID1_ANGLE_TO_POS(angle)                                          \
+  ((angle) > 0                                                                 \
+       ? INITIAL_POS + angle / 90.0 * (SERVO_ID1_MAX_POS - INITIAL_POS)        \
+       : INITIAL_POS - angle / 90.0 * (INITIAL_POS - SERVO_ID1_MIN_POS))
+#define SERVO_ID2_ANGLE_TO_POS(angle)                                          \
+  ((angle) > 0                                                                 \
+       ? INITIAL_POS + angle / 90.0 * (SERVO_ID2_MAX_POS - INITIAL_POS)        \
+       : INITIAL_POS - angle / 90.0 * (INITIAL_POS - SERVO_ID2_MIN_POS))
+#define SERVO_ID3_ANGLE_TO_POS(angle)                                          \
+  ((angle) > 0                                                                 \
+       ? INITIAL_POS + angle / 90.0 * (SERVO_ID3_MAX_POS - INITIAL_POS)        \
+       : INITIAL_POS - angle / 90.0 * (INITIAL_POS - SERVO_ID3_MIN_POS))
+#define SERVO_ID4_ANGLE_TO_POS(angle)                                          \
+  ((angle) > 0                                                                 \
+       ? INITIAL_POS + angle / 90.0 * (SERVO_ID4_MAX_POS - INITIAL_POS)        \
+       : INITIAL_POS - angle / 90.0 * (INITIAL_POS - SERVO_ID4_MIN_POS))
 
 typedef struct {
     uint8_t servo_id;

@@ -141,8 +141,41 @@ void wheels_control(WheelPWM pwm) {
   wheel_control(REAR_RIGHT, pwm.rear_right);
 }
 
-// TODO: need to update
-void rotate_motor(BaseVelocity base_vel) {}
+// TODO: need to test
+void rotate_motor(BaseVelocity base_vel) {
+  float angle = atan2(base_vel.y_vel, base_vel.x_vel) * 180 / M_PI;
+
+  if (base_vel.x_vel == 0 && base_vel.y_vel != 0) {  // angle = 90 or 270
+    servo_move(&(servos[0]), INITIAL_POS, SHORTEST_TIME_ROTATE(90));
+    servo_move(&(servos[1]), INITIAL_POS, SHORTEST_TIME_ROTATE(90));
+    servo_move(&(servos[2]), INITIAL_POS, SHORTEST_TIME_ROTATE(90));
+    servo_move(&(servos[3]), INITIAL_POS, SHORTEST_TIME_ROTATE(90));
+  } else if (base_vel.x_vel != 0 && base_vel.y_vel == 0) {  // angle = 0 or 180
+    servo_move(&(servos[0]), SERVO_ID1_MAX_POS, SHORTEST_TIME_ROTATE(90));
+    servo_move(&(servos[1]), SERVO_ID2_MAX_POS, SHORTEST_TIME_ROTATE(90));
+    servo_move(&(servos[2]), SERVO_ID3_MAX_POS, SHORTEST_TIME_ROTATE(90));
+    servo_move(&(servos[3]), SERVO_ID4_MAX_POS, SHORTEST_TIME_ROTATE(90));
+  } else if (base_vel.x_vel < 0 && base_vel.y_vel > 0 || base_vel.x_vel > 0 && base_vel.y_vel < 0) {    // quadrant 2 or 4
+    if (angle < 0)
+      angle += 180;
+    angle -= 90;
+    angle *= -1;
+
+    servo_move(&(servos[0]), SERVO_ID1_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(angle));
+    servo_move(&(servos[1]), SERVO_ID2_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(angle));
+    servo_move(&(servos[2]), SERVO_ID3_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(angle));
+    servo_move(&(servos[3]), SERVO_ID4_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(angle));
+  } else if (base_vel.x_vel < 0 && base_vel.y_vel < 0 || base_vel.x_vel > 0 && base_vel.y_vel > 0) {    // quadrant 1 or 3
+    if (angle < 0)
+      angle += 180;
+    angle = 90 - angle;
+    
+    servo_move(&(servos[0]), SERVO_ID1_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(angle));
+    servo_move(&(servos[1]), SERVO_ID2_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(angle));
+    servo_move(&(servos[2]), SERVO_ID3_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(angle));
+    servo_move(&(servos[3]), SERVO_ID4_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(angle));
+  }
+}
 
 // TODO: need to update
 void movement_control(BaseVelocity base_vel) {

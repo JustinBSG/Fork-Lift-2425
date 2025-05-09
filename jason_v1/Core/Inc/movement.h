@@ -6,6 +6,7 @@
 
 #include "main.h"
 // #include "robot.h"
+#include "servo.h"
 
 // #define FL_MOTOR_TIMER TIM3
 // #define FR_MOTOR_TIMER TIM3
@@ -115,6 +116,6 @@ void movement_control(BaseVelocity base_vel);
  */
 void movement_rotation(int degree);
 
-#include "encoder.h"
+// #include "encoder.h"
 
 #endif /* __MOVEMENT_H__ */

@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "servo.h"
+#include "movement.h"
 
 /* USER CODE END Includes */
 
@@ -97,9 +98,12 @@ int main(void) {
 
   servo_reset_all();
   HAL_Delay(2000);
-  int degree = 370;
-  // servo_move(&(servos[1]), SERVO_ID2_MAX_POS, SHORTEST_TIME_ROTATE(90));
-  servo_move(&(servos[2]), 500-degree, SHORTEST_TIME_ROTATE(90));
+  BaseVelocity base_vel = {1, 1, 0};
+  rotate_motor(base_vel);
+  // HAL_Delay(2000);
+  // base_vel.x_vel = 0;
+  // base_vel.y_vel = 1;
+  // rotate_motor(base_vel);
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_RESET);
   /* USER CODE END 2 */
 

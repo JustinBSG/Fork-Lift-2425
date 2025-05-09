@@ -15,17 +15,17 @@ extern UART_HandleTypeDef huart5;
 #define CMD_MULT_SERVO_POS_READ 0x21
 
 #define INITIAL_POS 500
+// TODO: need to find the shortest time to rotate based on current position
 #define SHORTEST_TIME_ROTATE(degree) (180 / 60 * degree)
 
-#define SERVO_ID1_MAX_POS 500
-#define SERVO_ID1_MIN_POS 500
+#define SERVO_ID1_MAX_POS 500 + 360
+#define SERVO_ID1_MIN_POS 500 - 400
 #define SERVO_ID2_MAX_POS 500 + 360
-#define SERVO_IN2_MID_POS 500 - 5
 #define SERVO_ID2_MIN_POS 500 - 390
 #define SERVO_ID3_MAX_POS 500
 #define SERVO_ID3_MIN_POS 500
-#define SERVO_ID4_MAX_POS 500
-#define SERVO_ID4_MIN_POS 500
+#define SERVO_ID4_MAX_POS 500 + 380
+#define SERVO_ID4_MIN_POS 500 - 360
 #define SERVO_ID5_MAX_POS 500
 #define SERVO_ID5_MIN_POS 500
 #define SERVO_ID6_MAX_POS 500

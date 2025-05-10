@@ -77,5 +77,5 @@ uint16_t servo_get_current_pos(HTD45H_Servo* target_servo) {
 
 void servo_reset_all(void) {
   for (int i = 0; i < 6; i++)
-    servo_move(&(servos[i]), INITIAL_POS, 1000);
+    servo_move(&(servos[i]), INITIAL_POS, 500);
 }

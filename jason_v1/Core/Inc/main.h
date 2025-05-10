@@ -57,6 +57,16 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define MOTOR_LEFT_ENABLE_Pin GPIO_PIN_3
+#define MOTOR_LEFT_ENABLE_GPIO_Port GPIOC
+#define MOTOR_FL_IN2_Pin GPIO_PIN_4
+#define MOTOR_FL_IN2_GPIO_Port GPIOA
+#define MOTOR_FL_IN1_Pin GPIO_PIN_5
+#define MOTOR_FL_IN1_GPIO_Port GPIOA
+#define MOTOR_RL_IN1_Pin GPIO_PIN_6
+#define MOTOR_RL_IN1_GPIO_Port GPIOA
+#define MOTOR_RL_IN2_Pin GPIO_PIN_7
+#define MOTOR_RL_IN2_GPIO_Port GPIOA
 #define LED_4_Pin GPIO_PIN_7
 #define LED_4_GPIO_Port GPIOE
 #define LED_3_Pin GPIO_PIN_8
@@ -65,6 +75,16 @@ void Error_Handler(void);
 #define LED_2_GPIO_Port GPIOE
 #define LED_1_Pin GPIO_PIN_10
 #define LED_1_GPIO_Port GPIOE
+#define MOTOR_RIGHT_ENABLE_Pin GPIO_PIN_15
+#define MOTOR_RIGHT_ENABLE_GPIO_Port GPIOD
+#define MOTOR_RR_IN2_Pin GPIO_PIN_8
+#define MOTOR_RR_IN2_GPIO_Port GPIOA
+#define MOTOR_RR_IN1_Pin GPIO_PIN_9
+#define MOTOR_RR_IN1_GPIO_Port GPIOA
+#define MOTOR_FR_IN1_Pin GPIO_PIN_10
+#define MOTOR_FR_IN1_GPIO_Port GPIOA
+#define MOTOR_FR_IN2_Pin GPIO_PIN_11
+#define MOTOR_FR_IN2_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 

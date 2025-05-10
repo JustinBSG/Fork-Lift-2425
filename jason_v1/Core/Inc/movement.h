@@ -5,26 +5,26 @@
 #include <stdlib.h>
 
 #include "main.h"
-// #include "robot.h"
+#include "robot.h"
 #include "servo.h"
 
-// #define FL_MOTOR_TIMER TIM3
-// #define FR_MOTOR_TIMER TIM3
-// #define RL_MOTOR_TIMER TIM2
-// #define RR_MOTOR_TIMER TIM2
+#define FL_MOTOR_TIMER TIM3
+#define FR_MOTOR_TIMER TIM3
+#define RL_MOTOR_TIMER TIM3
+#define RR_MOTOR_TIMER TIM3
 
-// #define FL_MOTOR_ARR FL_MOTOR_TIMER->ARR
-// #define FR_MOTOR_ARR FR_MOTOR_TIMER->ARR
-// #define RL_MOTOR_ARR RL_MOTOR_TIMER->ARR
-// #define RR_MOTOR_ARR RR_MOTOR_TIMER->ARR
+#define FL_MOTOR_ARR FL_MOTOR_TIMER->ARR
+#define FR_MOTOR_ARR FR_MOTOR_TIMER->ARR
+#define RL_MOTOR_ARR RL_MOTOR_TIMER->ARR
+#define RR_MOTOR_ARR RR_MOTOR_TIMER->ARR
 
-// #define FL_MOTOR_CCR FL_MOTOR_TIMER->CCR2
-// #define FR_MOTOR_CCR FR_MOTOR_TIMER->CCR1
-// #define RL_MOTOR_CCR RL_MOTOR_TIMER->CCR1
-// #define RR_MOTOR_CCR RR_MOTOR_TIMER->CCR2
+#define FL_MOTOR_CCR FL_MOTOR_TIMER->CCR4
+#define FR_MOTOR_CCR FR_MOTOR_TIMER->CCR1
+#define RL_MOTOR_CCR RL_MOTOR_TIMER->CCR3
+#define RR_MOTOR_CCR RR_MOTOR_TIMER->CCR2
 
-// #define MOTOR_MAX_CCR FL_MOTOR_ARR
-// #define MOTOR_MAX_VELOCITY 199.0  // max angular velocity of the motor, in rad/s
+#define MOTOR_MAX_CCR FL_MOTOR_ARR
+#define MOTOR_MAX_VELOCITY 199.0  // max angular velocity of the motor, in rad/s
 
 /**
  * (x,y,z): base velocity of robot
@@ -116,6 +116,6 @@ void movement_control(BaseVelocity base_vel);
  */
 void movement_rotation(int degree);
 
-// #include "encoder.h"
+#include "encoder.h"
 
 #endif /* __MOVEMENT_H__ */

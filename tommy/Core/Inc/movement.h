@@ -6,6 +6,7 @@
 
 #include "main.h"
 #include "robot.h"
+#include "hmc5883l.h"
 
 #define FL_MOTOR_TIMER TIM3
 #define FR_MOTOR_TIMER TIM3

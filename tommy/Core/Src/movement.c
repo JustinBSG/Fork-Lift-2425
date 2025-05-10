@@ -158,4 +158,16 @@ void movement_rotation(int degree) {
   // call movement_control with the appropriate base velocity
   // check current angle of the robot
   // if current angle is close to the target angle, stop the robot by calling movement_control with zero base velocity
+  if (degree == 0) 
+    return;
+  // hmc5883l_read_data(&hmc5883l_data);
+  // float current_angle = hmc5883l_cal_xy_angle(&hmc5883l_data, &hmc5883l_cali_data);
+  // float start_angle = current_angle;
+  // float target_angle = current_angle + degree;
+  // int count = 0;
+  // while (1) {
+  //   hmc5883l_read_data(&hmc5883l_data);
+  //   current_angle = hmc5883l_cal_xy_angle(&hmc5883l_data, &hmc5883l_cali_data);
+
+  // }
 }

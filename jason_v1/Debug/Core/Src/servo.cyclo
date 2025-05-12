@@ -1,5 +1,5 @@
 ../Core/Src/servo.c:13:6:servo_update_current_pos	1
-../Core/Src/servo.c:25:6:servo_move	9
-../Core/Src/servo.c:62:6:servo_unload	1
-../Core/Src/servo.c:73:10:servo_get_current_pos	1
-../Core/Src/servo.c:78:6:servo_reset_all	2
+../Core/Src/servo.c:25:6:servo_move	13
+../Core/Src/servo.c:64:6:servo_unload	1
+../Core/Src/servo.c:75:10:servo_get_current_pos	1
+../Core/Src/servo.c:80:6:servo_reset_all	2

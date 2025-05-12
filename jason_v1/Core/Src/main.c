@@ -130,6 +130,8 @@ int main(void) {
   servo_reset_all();
   HAL_Delay(1000);
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_RESET);
+  int degree = 390;
+  servo_move(&(servos[4]), 500 + degree, 1000);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -171,10 +173,11 @@ int main(void) {
     // test_base_vel.x_vel = ROBOT_MAX_X_VELOCITY;
     // test_base_vel.y_vel = 0;
     // test_base_vel.z_vel = 0;
-    test_base_vel.x_vel = ROBOT_MAX_X_VELOCITY;
-    test_base_vel.y_vel = 0;
-    test_base_vel.z_vel = 0;
-    movement_control(test_base_vel);
+    // test_base_vel.x_vel = ROBOT_MAX_X_VELOCITY;
+    // test_base_vel.y_vel = 0;
+    // test_base_vel.z_vel = 0;
+    // movement_control(test_base_vel);
+
     test_wheel_vel = read_current_velocity(encoders);
 #endif
   }

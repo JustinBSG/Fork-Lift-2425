@@ -34,7 +34,7 @@ extern UART_HandleTypeDef huart4;
 #define SERVO_ID3_MIN_POS 500 - 370
 #define SERVO_ID4_MAX_POS 500 + 380
 #define SERVO_ID4_MIN_POS 500 - 360
-#define SERVO_ID5_MAX_POS 500
+#define SERVO_ID5_MAX_POS 500 + 390
 #define SERVO_ID5_MIN_POS 500
 #define SERVO_ID6_MAX_POS 500
 #define SERVO_ID6_MIN_POS 500
@@ -55,6 +55,14 @@ extern UART_HandleTypeDef huart4;
   ((angle) > 0                                                        \
      ? INITIAL_POS + angle / 90.0 * (SERVO_ID4_MAX_POS - INITIAL_POS) \
      : INITIAL_POS - angle / 90.0 * (INITIAL_POS - SERVO_ID4_MIN_POS))
+#define SERVO_ID5_ANGLE_TO_POS(angle)                                 \
+  ((angle) > 0                                                        \
+     ? INITIAL_POS + angle / 90.0 * (SERVO_ID5_MAX_POS - INITIAL_POS) \
+     : INITIAL_POS - angle / 90.0 * (INITIAL_POS - SERVO_ID5_MIN_POS))
+#define SERVO_ID6_ANGLE_TO_POS(angle)                                 \
+  ((angle) > 0                                                        \
+     ? INITIAL_POS + angle / 90.0 * (SERVO_ID6_MAX_POS - INITIAL_POS) \
+     : INITIAL_POS - angle / 90.0 * (INITIAL_POS - SERVO_ID6_MIN_POS))
 
 #define SERVO_ID1_POS_TO_ANGLE(pos)                                     \
   ((pos) > INITIAL_POS                                                  \
@@ -72,6 +80,14 @@ extern UART_HandleTypeDef huart4;
   ((pos) > INITIAL_POS                                                  \
      ? ((pos) - INITIAL_POS) * 90.0 / (SERVO_ID4_MAX_POS - INITIAL_POS) \
      : (INITIAL_POS - (pos)) * -90.0 / (INITIAL_POS - SERVO_ID4_MIN_POS))
+#define SERVO_ID5_POS_TO_ANGLE(pos)                                     \
+  ((pos) > INITIAL_POS                                                  \
+     ? ((pos) - INITIAL_POS) * 90.0 / (SERVO_ID5_MAX_POS - INITIAL_POS) \
+     : (INITIAL_POS - (pos)) * -90.0 / (INITIAL_POS - SERVO_ID5_MIN_POS))
+#define SERVO_ID6_POS_TO_ANGLE(pos)                                     \
+  ((pos) > INITIAL_POS                                                  \
+     ? ((pos) - INITIAL_POS) * 90.0 / (SERVO_ID6_MAX_POS - INITIAL_POS) \
+     : (INITIAL_POS - (pos)) * -90.0 / (INITIAL_POS - SERVO_ID6_MIN_POS))
 
 void servo_update_current_pos(HTD45H_Servo* target_servo);
 void servo_move(HTD45H_Servo* target_servo, uint16_t target_pos, uint16_t time);

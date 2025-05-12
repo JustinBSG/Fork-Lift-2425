@@ -50,8 +50,10 @@ void servo_move(HTD45H_Servo* target_servo, uint16_t target_pos, uint16_t time) 
       target_servo->current_degree = SERVO_ID4_POS_TO_ANGLE(target_pos);
       break;
     case 5:
+      target_servo->current_degree = SERVO_ID5_POS_TO_ANGLE(target_pos);
       break;
     case 6:
+      target_servo->current_degree = SERVO_ID6_POS_TO_ANGLE(target_pos);
       break;
     default:
       break;

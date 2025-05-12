@@ -17,8 +17,8 @@ void servo_update_current_pos(HTD45H_Servo* target_servo) {
   send_buffer[3] = CMD_MULT_SERVO_POS_READ;
   send_buffer[4] = 0x01;
   send_buffer[5] = target_servo->servo_id;
-  HAL_UART_Transmit(&huart5, send_buffer, sizeof(send_buffer), 0xFFFF);
-  HAL_UART_Receive(&huart5, receive_buffer, sizeof(receive_buffer), 0xFFFF);
+  HAL_UART_Transmit(&huart4, send_buffer, sizeof(send_buffer), 0xFFFF);
+  HAL_UART_Receive(&huart4, receive_buffer, sizeof(receive_buffer), 0xFFFF);
   target_servo->current_pos = (receive_buffer[8] << 8) + receive_buffer[7];
 }
 
@@ -33,7 +33,7 @@ void servo_move(HTD45H_Servo* target_servo, uint16_t target_pos, uint16_t time) 
   send_buffer[7] = target_servo->servo_id;
   send_buffer[8] = GET_LOW_BYTE(target_pos);
   send_buffer[9] = GET_HIGH_BYTE(target_pos);
-  HAL_UART_Transmit(&huart5, send_buffer, sizeof(send_buffer), 0xFFFF);
+  HAL_UART_Transmit(&huart4, send_buffer, sizeof(send_buffer), 0xFFFF);
   target_servo->current_pos = target_pos;
 
   switch (target_servo->servo_id) {
@@ -66,7 +66,7 @@ void servo_unload(HTD45H_Servo* target_servo) {
   send_buffer[3] = CMD_MULT_SERVO_UNLOAD;
   send_buffer[4] = 0x01;
   send_buffer[5] = target_servo->servo_id;
-  HAL_UART_Transmit(&huart5, send_buffer, sizeof(send_buffer), 0xFFFF);
+  HAL_UART_Transmit(&huart4, send_buffer, sizeof(send_buffer), 0xFFFF);
 }
 
 // TODO: need to test

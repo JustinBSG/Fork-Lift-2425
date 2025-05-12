@@ -27,7 +27,6 @@
 #include "movement.h"
 #include "servo.h"
 
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,7 +48,7 @@
 
 /* USER CODE BEGIN PV */
 int test_encoder[4] = {0, 0, 0, 0};
-BaseVelocity test_base_vel = {ROBOT_MAX_X_VELOCITY, 0, 0};
+BaseVelocity test_base_vel = {ROBOT_MAX_Y_VELOCITY * 0.2, 0, 0};
 WheelVelocity test_wheel_vel = {0, 0, 0, 0};
 WheelPWM test_pwm = {16800, 16800, 16800, 16800};
 WheelVelocity test_read_vel = {0, 0, 0, 0};
@@ -96,13 +95,14 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_UART5_Init();
   MX_TIM1_Init();
   MX_TIM3_Init();
   MX_TIM4_Init();
   MX_TIM5_Init();
   MX_TIM8_Init();
   MX_TIM2_Init();
+  MX_UART4_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
@@ -127,7 +127,7 @@ int main(void)
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
 
   servo_reset_all();
-  HAL_Delay(2000);
+  HAL_Delay(1000);
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_RESET);
   /* USER CODE END 2 */
 
@@ -137,10 +137,12 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    movement_control(test_base_vel);
+    HAL_Delay(1);
+    HAL_UART_Transmit(&huart1, controller_buffer, sizeof(controller_buffer), 0xFFFF);
+    // movement_control(test_base_vel);
+
 
     test_wheel_vel = read_current_velocity(encoders);
-    HAL_Delay(1);
   }
   /* USER CODE END 3 */
 }

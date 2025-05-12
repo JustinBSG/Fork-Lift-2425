@@ -73,13 +73,13 @@ void wheel_control(Wheel wheel, int speed) {
       if (speed > 0) {
         // RL_MOTOR_B_CCR = 0;
         // RL_MOTOR_A_CCR = speed;
-        HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_SET);
       } else if (speed < 0) {
         // RL_MOTOR_B_CCR = -speed;
         // RL_MOTOR_A_CCR = 0;
-        HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_RESET);
       } else {
         // RL_MOTOR_A_CCR = 0;
         // RL_MOTOR_B_CCR = 0;
@@ -92,13 +92,13 @@ void wheel_control(Wheel wheel, int speed) {
       if (speed < 0) {
         // RR_MOTOR_A_CCR = speed;
         // RR_MOTOR_B_CCR = 0;
-        HAL_GPIO_WritePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin, GPIO_PIN_SET);
       } else if (speed > 0) {
         // RR_MOTOR_A_CCR = 0;
         // RR_MOTOR_B_CCR = -speed;
-        HAL_GPIO_WritePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin, GPIO_PIN_RESET);
       } else {
         // RR_MOTOR_A_CCR = 0;
         // RR_MOTOR_B_CCR = 0;
@@ -180,7 +180,7 @@ void rotate_motor(BaseVelocity base_vel) {
 }
 
 void movement_control(BaseVelocity base_vel) {
-  // rotate_motor(base_vel);
+  rotate_motor(base_vel);
   WheelVelocity target_vel = base2wheel(base_vel);
   WheelPWM target_pwm = wheel2pwm(target_vel);
   wheels_control(target_pwm);

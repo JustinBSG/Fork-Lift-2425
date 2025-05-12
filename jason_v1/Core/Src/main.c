@@ -130,9 +130,8 @@ int main(void) {
 
   servo_reset_all();
   HAL_Delay(5000);
-  servo_move(&(servos[4]), SERVO_ID5_MAX_POS, SHORTEST_TIME_ROTATE(5, 390));
-  HAL_Delay(5000);
-  servo_move(&(servos[4]), SERVO_ID5_MIN_POS, SHORTEST_TIME_ROTATE(5, 85));
+  int degree = 120;
+  servo_move(&(servos[5]), 500 - degree, SHORTEST_TIME_ROTATE(6, degree));
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_RESET);
   /* USER CODE END 2 */
 

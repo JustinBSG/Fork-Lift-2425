@@ -57,6 +57,7 @@ WheelVelocity test_read_vel = {0, 0, 0, 0};
 int test_count = 0;
 int stage = 0;
 int test_duration = 0;
+int test_var_1 = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -128,10 +129,11 @@ int main(void) {
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
 
   servo_reset_all();
-  HAL_Delay(1000);
+  HAL_Delay(5000);
+  servo_move(&(servos[4]), SERVO_ID5_MAX_POS, SHORTEST_TIME_ROTATE(5, 390));
+  HAL_Delay(5000);
+  servo_move(&(servos[4]), SERVO_ID5_MIN_POS, SHORTEST_TIME_ROTATE(5, 85));
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_RESET);
-  int degree = 390;
-  servo_move(&(servos[4]), 500 + degree, 1000);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -177,7 +179,18 @@ int main(void) {
     // test_base_vel.y_vel = 0;
     // test_base_vel.z_vel = 0;
     // movement_control(test_base_vel);
-
+    // if (HAL_GetTick() - test_duration > 5000) {
+    //   test_duration = HAL_GetTick();
+    //   test_count++;
+    //   if (test_count == 3)
+    //     test_count = 0;
+    // }
+    // if (test_count == 1) {
+    //   servo_move(&(servos[4]), 500 + 380, SHORTEST_TIME_ROTATE(5, 380));
+    //   test_var_1 = SHORTEST_TIME_ROTATE(5, 380);
+    // }
+    // else if (test_count == 2)
+    //   servo_reset_all();
     test_wheel_vel = read_current_velocity(encoders);
 #endif
   }

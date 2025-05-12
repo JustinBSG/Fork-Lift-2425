@@ -1,10 +1,18 @@
 #include "movement.h"
 
 WheelVelocity base2wheel(BaseVelocity base_vel) {
-  float front_left = sqrt(base_vel.x_vel * base_vel.x_vel + base_vel.y_vel * base_vel.y_vel) / RADIUS_WHEEL;
-  float front_right = sqrt(base_vel.x_vel * base_vel.x_vel + base_vel.y_vel * base_vel.y_vel) / RADIUS_WHEEL;
-  float rear_left = sqrt(base_vel.x_vel * base_vel.x_vel + base_vel.y_vel * base_vel.y_vel) / RADIUS_WHEEL;
-  float rear_right = sqrt(base_vel.x_vel * base_vel.x_vel + base_vel.y_vel * base_vel.y_vel) / RADIUS_WHEEL;
+  float front_left = 0, front_right = 0, rear_left = 0, rear_right = 0;
+  if (base_vel.z_vel == 0) {
+    front_left = sqrt(base_vel.x_vel * base_vel.x_vel + base_vel.y_vel * base_vel.y_vel) / RADIUS_WHEEL;
+    front_right = sqrt(base_vel.x_vel * base_vel.x_vel + base_vel.y_vel * base_vel.y_vel) / RADIUS_WHEEL;
+    rear_left = sqrt(base_vel.x_vel * base_vel.x_vel + base_vel.y_vel * base_vel.y_vel) / RADIUS_WHEEL;
+    rear_right = sqrt(base_vel.x_vel * base_vel.x_vel + base_vel.y_vel * base_vel.y_vel) / RADIUS_WHEEL;
+  } else {
+    front_left = base_vel.z_vel / RADIUS_WHEEL;
+    front_right = base_vel.z_vel / RADIUS_WHEEL;
+    rear_left = base_vel.z_vel / RADIUS_WHEEL;
+    rear_right = base_vel.z_vel / RADIUS_WHEEL;
+  }
   return (WheelVelocity){front_left, front_right, rear_left, rear_right};
 }
 

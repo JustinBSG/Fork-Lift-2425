@@ -1,6 +1,5 @@
 #include "movement.h"
 
-// TODO: need to update
 WheelVelocity base2wheel(BaseVelocity base_vel) {
   float front_left = sqrt(base_vel.x_vel * base_vel.x_vel + base_vel.y_vel * base_vel.y_vel) / RADIUS_WHEEL;
   float front_right = sqrt(base_vel.x_vel * base_vel.x_vel + base_vel.y_vel * base_vel.y_vel) / RADIUS_WHEEL;
@@ -17,16 +16,14 @@ BaseVelocity wheel2base(WheelVelocity wheel_vel) {
   // return (BaseVelocity){x_vel, y_vel, z_vel};
 }
 
-// TODO: need to update
 WheelPWM wheel2pwm(WheelVelocity wheel_vel) {
-  // int front_left = (int)(wheel_vel.front_left * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * FL_MOTOR_ARR / 100.0);
-  // int front_right = (int)(wheel_vel.front_right * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * FR_MOTOR_ARR / 100.0);
-  // int rear_left = (int)(wheel_vel.rear_left * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * RL_MOTOR_ARR / 100.0);
-  // int rear_right = (int)(wheel_vel.rear_right * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * RR_MOTOR_ARR / 100.0);
-  // return (WheelPWM){front_left, front_right, rear_left, rear_right};
+  int front_left = (int)(wheel_vel.front_left * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * FL_MOTOR_ARR / 100.0);
+  int front_right = (int)(wheel_vel.front_right * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * FR_MOTOR_ARR / 100.0);
+  int rear_left = (int)(wheel_vel.rear_left * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * RL_MOTOR_ARR / 100.0);
+  int rear_right = (int)(wheel_vel.rear_right * 60.0 / (2.0 * M_PI) / (MOTOR_MAX_VELOCITY * 60.0 / (2.0 * M_PI)) * 100.0 * RR_MOTOR_ARR / 100.0);
+  return (WheelPWM){front_left, front_right, rear_left, rear_right};
 }
 
-// TODO: need to update
 void wheel_control(Wheel wheel, int speed) {
   if (speed > 16800)
     speed = 16800;
@@ -182,9 +179,8 @@ void rotate_motor(BaseVelocity base_vel) {
   }
 }
 
-// TODO: need to update
 void movement_control(BaseVelocity base_vel) {
-  rotate_motor(base_vel);
+  // rotate_motor(base_vel);
   WheelVelocity target_vel = base2wheel(base_vel);
   WheelPWM target_pwm = wheel2pwm(target_vel);
   wheels_control(target_pwm);

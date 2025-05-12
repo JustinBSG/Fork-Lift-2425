@@ -10,7 +10,7 @@
 
 #define FL_MOTOR_TIMER TIM3
 #define FR_MOTOR_TIMER TIM3
-#define RL_MOTOR_TIMER TIM3
+#define RL_MOTOR_TIMER TIM2
 #define RR_MOTOR_TIMER TIM3
 
 #define FL_MOTOR_ARR FL_MOTOR_TIMER->ARR
@@ -20,11 +20,11 @@
 
 #define FL_MOTOR_CCR FL_MOTOR_TIMER->CCR4
 #define FR_MOTOR_CCR FR_MOTOR_TIMER->CCR1
-#define RL_MOTOR_CCR RL_MOTOR_TIMER->CCR3
+#define RL_MOTOR_CCR RL_MOTOR_TIMER->CCR4
 #define RR_MOTOR_CCR RR_MOTOR_TIMER->CCR2
 
 #define MOTOR_MAX_CCR FL_MOTOR_ARR
-#define MOTOR_MAX_VELOCITY 288.0  // max angular velocity of the motor, in rad/s
+#define MOTOR_MAX_VELOCITY 311.0 // max angular velocity of the motor, in rad/s
 
 /**
  * (x,y,z): base velocity of robot

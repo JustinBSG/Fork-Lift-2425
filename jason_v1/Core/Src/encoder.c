@@ -1,9 +1,9 @@
 #include "encoder.h"
 
-EncoderData encoders[4] = {{.displacement = 0.0, .velocity = 0.0, .last_counter_value = 0, .last_tick = 0, .htim = &htim1, ._ppr = 1550},
-                           {.displacement = 0.0, .velocity = 0.0, .last_counter_value = 0, .last_tick = 0, .htim = &htim8, ._ppr = 1550},
-                           {.displacement = 0.0, .velocity = 0.0, .last_counter_value = 0, .last_tick = 0, .htim = &htim5, ._ppr = 1550},
-                           {.displacement = 0.0, .velocity = 0.0, .last_counter_value = 0, .last_tick = 0, .htim = &htim4, ._ppr = 1550}};
+EncoderData encoders[4] = {{.displacement = 0.0, .velocity = 0.0, .last_counter_value = 0, .last_tick = 0, .htim = &htim1, ._ppr = FL_ENCODER_PPR},
+                           {.displacement = 0.0, .velocity = 0.0, .last_counter_value = 0, .last_tick = 0, .htim = &htim8, ._ppr = FR_ENCODER_PPR},
+                           {.displacement = 0.0, .velocity = 0.0, .last_counter_value = 0, .last_tick = 0, .htim = &htim5, ._ppr = RL_ENCODER_PPR},
+                           {.displacement = 0.0, .velocity = 0.0, .last_counter_value = 0, .last_tick = 0, .htim = &htim4, ._ppr = RR_ENCODER_PPR}};
 
 void reset_encoder(EncoderData* encoder) {
   __HAL_TIM_SET_COUNTER(encoder->htim, 0);

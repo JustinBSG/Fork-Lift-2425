@@ -24,7 +24,7 @@
 #define RR_MOTOR_CCR RR_MOTOR_TIMER->CCR2
 
 #define MOTOR_MAX_CCR FL_MOTOR_ARR
-#define MOTOR_MAX_VELOCITY 199.0  // max angular velocity of the motor, in rad/s
+#define MOTOR_MAX_VELOCITY 288.0  // max angular velocity of the motor, in rad/s
 
 /**
  * (x,y,z): base velocity of robot

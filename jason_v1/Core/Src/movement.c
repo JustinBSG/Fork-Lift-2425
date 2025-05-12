@@ -1,14 +1,12 @@
 #include "movement.h"
 
-// #include "pid-mecanum.h"
-
 // TODO: need to update
 WheelVelocity base2wheel(BaseVelocity base_vel) {
-  // float front_left = (base_vel.x_vel - base_vel.y_vel - (LENGTH_CENTER_WHEEL_X + LENGTH_CENTER_WHEEL_Y) * base_vel.z_vel) / RADIUS_WHEEL;
-  // float front_right = (base_vel.x_vel + base_vel.y_vel + (LENGTH_CENTER_WHEEL_X + LENGTH_CENTER_WHEEL_Y) * base_vel.z_vel) / RADIUS_WHEEL;
-  // float rear_left = (base_vel.x_vel + base_vel.y_vel - (LENGTH_CENTER_WHEEL_X + LENGTH_CENTER_WHEEL_Y) * base_vel.z_vel) / RADIUS_WHEEL;
-  // float rear_right = (base_vel.x_vel - base_vel.y_vel + (LENGTH_CENTER_WHEEL_X + LENGTH_CENTER_WHEEL_Y) * base_vel.z_vel) / RADIUS_WHEEL;
-  // return (WheelVelocity){front_left, front_right, rear_left, rear_right};
+  float front_left = sqrt(base_vel.x_vel * base_vel.x_vel + base_vel.y_vel * base_vel.y_vel) / RADIUS_WHEEL;
+  float front_right = sqrt(base_vel.x_vel * base_vel.x_vel + base_vel.y_vel * base_vel.y_vel) / RADIUS_WHEEL;
+  float rear_left = sqrt(base_vel.x_vel * base_vel.x_vel + base_vel.y_vel * base_vel.y_vel) / RADIUS_WHEEL;
+  float rear_right = sqrt(base_vel.x_vel * base_vel.x_vel + base_vel.y_vel * base_vel.y_vel) / RADIUS_WHEEL;
+  return (WheelVelocity){front_left, front_right, rear_left, rear_right};
 }
 
 // TODO: need to update
@@ -30,108 +28,108 @@ WheelPWM wheel2pwm(WheelVelocity wheel_vel) {
 
 // TODO: need to update
 void wheel_control(Wheel wheel, int speed) {
-  // if (speed > 16800)
-  //   speed = 16800;
-  // else if (speed < -16800)
-  //   speed = -16800;
+  if (speed > 16800)
+    speed = 16800;
+  else if (speed < -16800)
+    speed = -16800;
 
-  // switch (wheel) {
-  //   case FRONT_LEFT:
-  //     if (speed > 0) {
-  //       // FL_MOTOR_A_CCR = 0;
-  //       // FL_MOTOR_B_CCR = speed;
-  //       HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_SET);
-  //       HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_RESET);
-  //     } else if (speed < 0) {
-  //       // FL_MOTOR_A_CCR = -speed;
-  //       // FL_MOTOR_B_CCR = 0;
-  //       HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_RESET);
-  //       HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_SET);
-  //     } else {
-  //       // FL_MOTOR_A_CCR = 0;
-  //       // FL_MOTOR_B_CCR = 0;
-  //       HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_RESET);
-  //       HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_RESET);
-  //     }
-  //     FL_MOTOR_CCR = abs(speed);
-  //     break;
-  //   case FRONT_RIGHT:
-  //     if (speed < 0) {
-  //       // FR_MOTOR_B_CCR = speed;
-  //       // FR_MOTOR_A_CCR = 0;
-  //       HAL_GPIO_WritePin(MOTOR_FR_IN1_GPIO_Port, MOTOR_FR_IN1_Pin, GPIO_PIN_SET);
-  //       HAL_GPIO_WritePin(MOTOR_FR_IN2_GPIO_Port, MOTOR_FR_IN2_Pin, GPIO_PIN_RESET);
-  //     } else if (speed > 0) {
-  //       // FR_MOTOR_B_CCR = 0;
-  //       // FR_MOTOR_A_CCR = -speed;
-  //       HAL_GPIO_WritePin(MOTOR_FR_IN1_GPIO_Port, MOTOR_FR_IN1_Pin, GPIO_PIN_RESET);
-  //       HAL_GPIO_WritePin(MOTOR_FR_IN2_GPIO_Port, MOTOR_FR_IN2_Pin, GPIO_PIN_SET);
-  //     } else {
-  //       // FR_MOTOR_A_CCR = 0;
-  //       // FR_MOTOR_B_CCR = 0;
-  //       HAL_GPIO_WritePin(MOTOR_FR_IN1_GPIO_Port, MOTOR_FR_IN1_Pin, GPIO_PIN_RESET);
-  //       HAL_GPIO_WritePin(MOTOR_FR_IN2_GPIO_Port, MOTOR_FR_IN2_Pin, GPIO_PIN_RESET);
-  //     }
-  //     FR_MOTOR_CCR = abs(speed);
-  //     break;
-  //   case REAR_LEFT:
-  //     if (speed > 0) {
-  //       // RL_MOTOR_B_CCR = 0;
-  //       // RL_MOTOR_A_CCR = speed;
-  //       HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_SET);
-  //       HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_RESET);
-  //     } else if (speed < 0) {
-  //       // RL_MOTOR_B_CCR = -speed;
-  //       // RL_MOTOR_A_CCR = 0;
-  //       HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_RESET);
-  //       HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_SET);
-  //     } else {
-  //       // RL_MOTOR_A_CCR = 0;
-  //       // RL_MOTOR_B_CCR = 0;
-  //       HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_RESET);
-  //       HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_RESET);
-  //     }
-  //     RL_MOTOR_CCR = abs(speed);
-  //     break;
-  //   case REAR_RIGHT:
-  //     if (speed < 0) {
-  //       // RR_MOTOR_A_CCR = speed;
-  //       // RR_MOTOR_B_CCR = 0;
-  //       HAL_GPIO_WritePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin, GPIO_PIN_SET);
-  //       HAL_GPIO_WritePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin, GPIO_PIN_RESET);
-  //     } else if (speed > 0) {
-  //       // RR_MOTOR_A_CCR = 0;
-  //       // RR_MOTOR_B_CCR = -speed;
-  //       HAL_GPIO_WritePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin, GPIO_PIN_RESET);
-  //       HAL_GPIO_WritePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin, GPIO_PIN_SET);
-  //     } else {
-  //       // RR_MOTOR_A_CCR = 0;
-  //       // RR_MOTOR_B_CCR = 0;
-  //       HAL_GPIO_WritePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin, GPIO_PIN_RESET);
-  //       HAL_GPIO_WritePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin, GPIO_PIN_RESET);
-  //     }
-  //     RR_MOTOR_CCR = abs(speed);
-  //     break;
-  //   default:
-  //     if (speed > 0) {
-  //       // FL_MOTOR_A_CCR = 0;
-  //       // FL_MOTOR_B_CCR = speed;
-  //       HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_SET);
-  //       HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_RESET);
-  //     } else if (speed < 0) {
-  //       // FL_MOTOR_A_CCR = -speed;
-  //       // FL_MOTOR_B_CCR = 0;
-  //       HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_RESET);
-  //       HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_SET);
-  //     } else {
-  //       // FL_MOTOR_A_CCR = 0;
-  //       // FL_MOTOR_B_CCR = 0;
-  //       HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_RESET);
-  //       HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_RESET);
-  //     }
-  //     FL_MOTOR_CCR = abs(speed);
-  //     break;
-  // }
+  switch (wheel) {
+    case FRONT_LEFT:
+      if (speed > 0) {
+        // FL_MOTOR_A_CCR = 0;
+        // FL_MOTOR_B_CCR = speed;
+        HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_RESET);
+      } else if (speed < 0) {
+        // FL_MOTOR_A_CCR = -speed;
+        // FL_MOTOR_B_CCR = 0;
+        HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_SET);
+      } else {
+        // FL_MOTOR_A_CCR = 0;
+        // FL_MOTOR_B_CCR = 0;
+        HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_RESET);
+      }
+      FL_MOTOR_CCR = abs(speed);
+      break;
+    case FRONT_RIGHT:
+      if (speed < 0) {
+        // FR_MOTOR_B_CCR = speed;
+        // FR_MOTOR_A_CCR = 0;
+        HAL_GPIO_WritePin(MOTOR_FR_IN1_GPIO_Port, MOTOR_FR_IN1_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(MOTOR_FR_IN2_GPIO_Port, MOTOR_FR_IN2_Pin, GPIO_PIN_RESET);
+      } else if (speed > 0) {
+        // FR_MOTOR_B_CCR = 0;
+        // FR_MOTOR_A_CCR = -speed;
+        HAL_GPIO_WritePin(MOTOR_FR_IN1_GPIO_Port, MOTOR_FR_IN1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(MOTOR_FR_IN2_GPIO_Port, MOTOR_FR_IN2_Pin, GPIO_PIN_SET);
+      } else {
+        // FR_MOTOR_A_CCR = 0;
+        // FR_MOTOR_B_CCR = 0;
+        HAL_GPIO_WritePin(MOTOR_FR_IN1_GPIO_Port, MOTOR_FR_IN1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(MOTOR_FR_IN2_GPIO_Port, MOTOR_FR_IN2_Pin, GPIO_PIN_RESET);
+      }
+      FR_MOTOR_CCR = abs(speed);
+      break;
+    case REAR_LEFT:
+      if (speed > 0) {
+        // RL_MOTOR_B_CCR = 0;
+        // RL_MOTOR_A_CCR = speed;
+        HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_RESET);
+      } else if (speed < 0) {
+        // RL_MOTOR_B_CCR = -speed;
+        // RL_MOTOR_A_CCR = 0;
+        HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_SET);
+      } else {
+        // RL_MOTOR_A_CCR = 0;
+        // RL_MOTOR_B_CCR = 0;
+        HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_RESET);
+      }
+      RL_MOTOR_CCR = abs(speed);
+      break;
+    case REAR_RIGHT:
+      if (speed < 0) {
+        // RR_MOTOR_A_CCR = speed;
+        // RR_MOTOR_B_CCR = 0;
+        HAL_GPIO_WritePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin, GPIO_PIN_RESET);
+      } else if (speed > 0) {
+        // RR_MOTOR_A_CCR = 0;
+        // RR_MOTOR_B_CCR = -speed;
+        HAL_GPIO_WritePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin, GPIO_PIN_SET);
+      } else {
+        // RR_MOTOR_A_CCR = 0;
+        // RR_MOTOR_B_CCR = 0;
+        HAL_GPIO_WritePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin, GPIO_PIN_RESET);
+      }
+      RR_MOTOR_CCR = abs(speed);
+      break;
+    default:
+      if (speed > 0) {
+        // FL_MOTOR_A_CCR = 0;
+        // FL_MOTOR_B_CCR = speed;
+        HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_RESET);
+      } else if (speed < 0) {
+        // FL_MOTOR_A_CCR = -speed;
+        // FL_MOTOR_B_CCR = 0;
+        HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_SET);
+      } else {
+        // FL_MOTOR_A_CCR = 0;
+        // FL_MOTOR_B_CCR = 0;
+        HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_RESET);
+      }
+      FL_MOTOR_CCR = abs(speed);
+      break;
+  }
 }
 
 void wheels_control(WheelPWM pwm) {

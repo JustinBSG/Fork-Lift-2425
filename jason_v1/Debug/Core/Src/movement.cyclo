@@ -1,8 +1,8 @@
-../Core/Src/movement.c:6:15:base2wheel	1
-../Core/Src/movement.c:15:14:wheel2base	1
-../Core/Src/movement.c:23:10:wheel2pwm	1
-../Core/Src/movement.c:32:6:wheel_control	1
-../Core/Src/movement.c:137:6:wheels_control	1
-../Core/Src/movement.c:144:6:rotate_motor	24
-../Core/Src/movement.c:188:6:movement_control	1
-../Core/Src/movement.c:196:6:movement_rotation	1
+../Core/Src/movement.c:4:15:base2wheel	1
+../Core/Src/movement.c:13:14:wheel2base	1
+../Core/Src/movement.c:21:10:wheel2pwm	1
+../Core/Src/movement.c:30:6:wheel_control	17
+../Core/Src/movement.c:135:6:wheels_control	1
+../Core/Src/movement.c:142:6:rotate_motor	24
+../Core/Src/movement.c:186:6:movement_control	1
+../Core/Src/movement.c:194:6:movement_rotation	1

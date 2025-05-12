@@ -69,6 +69,7 @@ uint8_t test_hmc[3];
 float test_hmc_angle = 0;
 WheelVelocity test_wheel_vel = {0, 0, 0, 0};
 BaseVelocity test_target_base_vel = {0, 0, 0};
+int controller_stage = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -180,24 +181,27 @@ int main(void) {
       if (controller_state.l_stick_x == 0 && controller_state.l_stick_y == 0 && rotation_vel != 0 && !controller_state.r1 && !controller_state.l1) {  // rotate
         BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY};
         movement_control(target_vel);
+        controller_stage = 1;
       } else if (controller_state.r_stick_x == 0 && controller_state.r_stick_y == 0 && !controller_state.r1 && !controller_state.l1) {  // move fastly
         BaseVelocity target_vel = {controller_state.l_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY,
                                    controller_state.l_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY,
                                    0};
         movement_control(target_vel);
+        controller_stage = 2;
       } else if (!controller_state.r1 && !controller_state.l1) {  // move slowly
-        BaseVelocity target_vel = {controller_state.r_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.4,
-                                   controller_state.r_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.4,
+        BaseVelocity target_vel = {controller_state.r_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.5,
+                                   controller_state.r_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.5,
                                    0};
         movement_control(target_vel);
-      } else {  // rotate 90 degree, not neccessary
-        float degree = 0;
-        if (controller_state.l1) {
-          degree = -90;
-        } else if (controller_state.r1) {
-          degree = 90;
-        }
-        movement_rotation(degree);
+        controller_stage = 3;
+      } else if (controller_state.l1 || controller_state.r1) {  // rotate slowly
+        BaseVelocity target_vel = {0, 0, 0};
+        if (controller_state.l1)
+          target_vel.z_vel = ROBOT_MAX_Z_VELOCITY * 0.5;
+        else if (controller_state.r1)
+          target_vel.z_vel = ROBOT_MAX_Z_VELOCITY * -0.5;
+        movement_control(target_vel);
+        controller_stage = 4;
       }
 
       if (controller_state.cross && !controller_state.triangle) {  // down the lift

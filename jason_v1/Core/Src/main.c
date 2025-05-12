@@ -23,7 +23,6 @@
 #include "tim.h"
 #include "usart.h"
 
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "controller.h"
@@ -39,7 +38,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define TEST 0
+#define TEST 1
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -56,6 +55,8 @@ WheelVelocity test_wheel_vel = {0, 0, 0, 0};
 WheelPWM test_pwm = {16800, 16800, 16800, 16800};
 WheelVelocity test_read_vel = {0, 0, 0, 0};
 int test_count = 0;
+int stage = 0;
+int test_duration = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -138,7 +139,7 @@ int main(void) {
 
     /* USER CODE BEGIN 3 */
     HAL_Delay(1);
-    #if (TEST)
+#if (TEST == 0)
     HAL_UART_Transmit(&huart1, controller_buffer, sizeof(controller_buffer), 0xFFFF);
     parse_controller_data(controller_buffer, &controller_state);
     if (controller_state.options_button) {  // turn on/off the robot
@@ -161,16 +162,21 @@ int main(void) {
       } else if (!controller_state.r1 && !controller_state.l1) {  // move slowly, right joy stick
 
       } else {  // rotate slowly, l1 or r1
-
       }
     }
-    #else 
-    test_base_vel.x_vel = 0;
+#else
+    // test_base_vel.x_vel = 0;
+    // test_base_vel.y_vel = 0;
+    // test_base_vel.z_vel = ROBOT_MAX_Z_VELOCITY;
+    // test_base_vel.x_vel = ROBOT_MAX_X_VELOCITY;
+    // test_base_vel.y_vel = 0;
+    // test_base_vel.z_vel = 0;
+    test_base_vel.x_vel = ROBOT_MAX_X_VELOCITY;
     test_base_vel.y_vel = 0;
-    test_base_vel.z_vel = ROBOT_MAX_Z_VELOCITY;
+    test_base_vel.z_vel = 0;
     movement_control(test_base_vel);
     test_wheel_vel = read_current_velocity(encoders);
-    #endif
+#endif
   }
   /* USER CODE END 3 */
 }

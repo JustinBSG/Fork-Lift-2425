@@ -27,25 +27,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  000090f0  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00013abe  00000000  00000000  00009120  2**0
+ 12 .debug_info   00013ae0  00000000  00000000  00009120  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00002b03  00000000  00000000  0001cbde  2**0
+ 13 .debug_abbrev 00002b03  00000000  00000000  0001cc00  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 000010f0  00000000  00000000  0001f6e8  2**3
+ 14 .debug_aranges 000010f0  00000000  00000000  0001f708  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_rnglists 00000d30  00000000  00000000  000207d8  2**0
+ 15 .debug_rnglists 00000d30  00000000  00000000  000207f8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  000202f3  00000000  00000000  00021508  2**0
+ 16 .debug_macro  000202f3  00000000  00000000  00021528  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00015624  00000000  00000000  000417fb  2**0
+ 17 .debug_line   00015624  00000000  00000000  0004181b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000d9e48  00000000  00000000  00056e1f  2**0
+ 18 .debug_str    000d9e5f  00000000  00000000  00056e3f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  00130c67  2**0
+ 19 .comment      00000043  00000000  00000000  00130c9e  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00004b8c  00000000  00000000  00130cac  2**2
+ 20 .debug_frame  00004b8c  00000000  00000000  00130ce4  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000074  00000000  00000000  00135838  2**0
+ 21 .debug_line_str 00000074  00000000  00000000  00135870  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1822,22 +1822,22 @@ int main(void) {
     HAL_Delay(1);
  800135e:	2001      	movs	r0, #1
  8001360:	f002 faaa 	bl	80038b8 <HAL_Delay>
-      } else {  // rotate slowly, l1 or r1
-
-      }
-    }
-    #else 
-    test_base_vel.x_vel = 0;
+    // test_base_vel.y_vel = 0;
+    // test_base_vel.z_vel = ROBOT_MAX_Z_VELOCITY;
+    // test_base_vel.x_vel = ROBOT_MAX_X_VELOCITY;
+    // test_base_vel.y_vel = 0;
+    // test_base_vel.z_vel = 0;
+    test_base_vel.x_vel = ROBOT_MAX_X_VELOCITY;
  8001364:	4b20      	ldr	r3, [pc, #128]	@ (80013e8 <main+0x16c>)
- 8001366:	f04f 0200 	mov.w	r2, #0
- 800136a:	601a      	str	r2, [r3, #0]
+ 8001366:	4a21      	ldr	r2, [pc, #132]	@ (80013ec <main+0x170>)
+ 8001368:	601a      	str	r2, [r3, #0]
     test_base_vel.y_vel = 0;
- 800136c:	4b1e      	ldr	r3, [pc, #120]	@ (80013e8 <main+0x16c>)
- 800136e:	f04f 0200 	mov.w	r2, #0
- 8001372:	605a      	str	r2, [r3, #4]
-    test_base_vel.z_vel = ROBOT_MAX_Z_VELOCITY;
- 8001374:	4b1c      	ldr	r3, [pc, #112]	@ (80013e8 <main+0x16c>)
- 8001376:	4a1d      	ldr	r2, [pc, #116]	@ (80013ec <main+0x170>)
+ 800136a:	4b1f      	ldr	r3, [pc, #124]	@ (80013e8 <main+0x16c>)
+ 800136c:	f04f 0200 	mov.w	r2, #0
+ 8001370:	605a      	str	r2, [r3, #4]
+    test_base_vel.z_vel = 0;
+ 8001372:	4b1d      	ldr	r3, [pc, #116]	@ (80013e8 <main+0x16c>)
+ 8001374:	f04f 0200 	mov.w	r2, #0
  8001378:	609a      	str	r2, [r3, #8]
     movement_control(test_base_vel);
  800137a:	4b1b      	ldr	r3, [pc, #108]	@ (80013e8 <main+0x16c>)
@@ -1873,7 +1873,7 @@ int main(void) {
  80013e0:	48000c00 	.word	0x48000c00
  80013e4:	48001000 	.word	0x48001000
  80013e8:	2000010c 	.word	0x2000010c
- 80013ec:	3fbb4a23 	.word	0x3fbb4a23
+ 80013ec:	402f27bb 	.word	0x402f27bb
  80013f0:	20000000 	.word	0x20000000
  80013f4:	20000118 	.word	0x20000118
 
@@ -2536,13 +2536,13 @@ void wheel_control(Wheel wheel, int speed) {
  80019c0:	dd0c      	ble.n	80019dc <wheel_control+0x68>
         // FL_MOTOR_A_CCR = 0;
         // FL_MOTOR_B_CCR = speed;
-        HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_SET);
- 80019c2:	2201      	movs	r2, #1
+        HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_RESET);
+ 80019c2:	2200      	movs	r2, #0
  80019c4:	2120      	movs	r1, #32
  80019c6:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  80019ca:	f002 f9fd 	bl	8003dc8 <HAL_GPIO_WritePin>
-        HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_RESET);
- 80019ce:	2200      	movs	r2, #0
+        HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_SET);
+ 80019ce:	2201      	movs	r2, #1
  80019d0:	2110      	movs	r1, #16
  80019d2:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  80019d6:	f002 f9f7 	bl	8003dc8 <HAL_GPIO_WritePin>
@@ -2553,13 +2553,13 @@ void wheel_control(Wheel wheel, int speed) {
  80019e0:	da0c      	bge.n	80019fc <wheel_control+0x88>
         // FL_MOTOR_A_CCR = -speed;
         // FL_MOTOR_B_CCR = 0;
-        HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_RESET);
- 80019e2:	2200      	movs	r2, #0
+        HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_SET);
+ 80019e2:	2201      	movs	r2, #1
  80019e4:	2120      	movs	r1, #32
  80019e6:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  80019ea:	f002 f9ed 	bl	8003dc8 <HAL_GPIO_WritePin>
-        HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_SET);
- 80019ee:	2201      	movs	r2, #1
+        HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_RESET);
+ 80019ee:	2200      	movs	r2, #0
  80019f0:	2110      	movs	r1, #16
  80019f2:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  80019f6:	f002 f9e7 	bl	8003dc8 <HAL_GPIO_WritePin>
@@ -2593,13 +2593,13 @@ void wheel_control(Wheel wheel, int speed) {
  8001a28:	da0e      	bge.n	8001a48 <wheel_control+0xd4>
         // FR_MOTOR_B_CCR = speed;
         // FR_MOTOR_A_CCR = 0;
-        HAL_GPIO_WritePin(MOTOR_FR_IN1_GPIO_Port, MOTOR_FR_IN1_Pin, GPIO_PIN_SET);
- 8001a2a:	2201      	movs	r2, #1
+        HAL_GPIO_WritePin(MOTOR_FR_IN1_GPIO_Port, MOTOR_FR_IN1_Pin, GPIO_PIN_RESET);
+ 8001a2a:	2200      	movs	r2, #0
  8001a2c:	f44f 6180 	mov.w	r1, #1024	@ 0x400
  8001a30:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  8001a34:	f002 f9c8 	bl	8003dc8 <HAL_GPIO_WritePin>
-        HAL_GPIO_WritePin(MOTOR_FR_IN2_GPIO_Port, MOTOR_FR_IN2_Pin, GPIO_PIN_RESET);
- 8001a38:	2200      	movs	r2, #0
+        HAL_GPIO_WritePin(MOTOR_FR_IN2_GPIO_Port, MOTOR_FR_IN2_Pin, GPIO_PIN_SET);
+ 8001a38:	2201      	movs	r2, #1
  8001a3a:	f44f 6100 	mov.w	r1, #2048	@ 0x800
  8001a3e:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  8001a42:	f002 f9c1 	bl	8003dc8 <HAL_GPIO_WritePin>
@@ -2610,13 +2610,13 @@ void wheel_control(Wheel wheel, int speed) {
  8001a4c:	dd0e      	ble.n	8001a6c <wheel_control+0xf8>
         // FR_MOTOR_B_CCR = 0;
         // FR_MOTOR_A_CCR = -speed;
-        HAL_GPIO_WritePin(MOTOR_FR_IN1_GPIO_Port, MOTOR_FR_IN1_Pin, GPIO_PIN_RESET);
- 8001a4e:	2200      	movs	r2, #0
+        HAL_GPIO_WritePin(MOTOR_FR_IN1_GPIO_Port, MOTOR_FR_IN1_Pin, GPIO_PIN_SET);
+ 8001a4e:	2201      	movs	r2, #1
  8001a50:	f44f 6180 	mov.w	r1, #1024	@ 0x400
  8001a54:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  8001a58:	f002 f9b6 	bl	8003dc8 <HAL_GPIO_WritePin>
-        HAL_GPIO_WritePin(MOTOR_FR_IN2_GPIO_Port, MOTOR_FR_IN2_Pin, GPIO_PIN_SET);
- 8001a5c:	2201      	movs	r2, #1
+        HAL_GPIO_WritePin(MOTOR_FR_IN2_GPIO_Port, MOTOR_FR_IN2_Pin, GPIO_PIN_RESET);
+ 8001a5c:	2200      	movs	r2, #0
  8001a5e:	f44f 6100 	mov.w	r1, #2048	@ 0x800
  8001a62:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  8001a66:	f002 f9af 	bl	8003dc8 <HAL_GPIO_WritePin>
@@ -2650,13 +2650,13 @@ void wheel_control(Wheel wheel, int speed) {
  8001a9c:	dd0c      	ble.n	8001ab8 <wheel_control+0x144>
         // RL_MOTOR_B_CCR = 0;
         // RL_MOTOR_A_CCR = speed;
-        HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_RESET);
- 8001a9e:	2200      	movs	r2, #0
+        HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_SET);
+ 8001a9e:	2201      	movs	r2, #1
  8001aa0:	2140      	movs	r1, #64	@ 0x40
  8001aa2:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  8001aa6:	f002 f98f 	bl	8003dc8 <HAL_GPIO_WritePin>
-        HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_SET);
- 8001aaa:	2201      	movs	r2, #1
+        HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_RESET);
+ 8001aaa:	2200      	movs	r2, #0
  8001aac:	2180      	movs	r1, #128	@ 0x80
  8001aae:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  8001ab2:	f002 f989 	bl	8003dc8 <HAL_GPIO_WritePin>
@@ -2667,13 +2667,13 @@ void wheel_control(Wheel wheel, int speed) {
  8001abc:	da0c      	bge.n	8001ad8 <wheel_control+0x164>
         // RL_MOTOR_B_CCR = -speed;
         // RL_MOTOR_A_CCR = 0;
-        HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_SET);
- 8001abe:	2201      	movs	r2, #1
+        HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_RESET);
+ 8001abe:	2200      	movs	r2, #0
  8001ac0:	2140      	movs	r1, #64	@ 0x40
  8001ac2:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  8001ac6:	f002 f97f 	bl	8003dc8 <HAL_GPIO_WritePin>
-        HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_RESET);
- 8001aca:	2200      	movs	r2, #0
+        HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_SET);
+ 8001aca:	2201      	movs	r2, #1
  8001acc:	2180      	movs	r1, #128	@ 0x80
  8001ace:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  8001ad2:	f002 f979 	bl	8003dc8 <HAL_GPIO_WritePin>
@@ -2707,13 +2707,13 @@ void wheel_control(Wheel wheel, int speed) {
  8001b06:	da0e      	bge.n	8001b26 <wheel_control+0x1b2>
         // RR_MOTOR_A_CCR = speed;
         // RR_MOTOR_B_CCR = 0;
-        HAL_GPIO_WritePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin, GPIO_PIN_RESET);
- 8001b08:	2200      	movs	r2, #0
+        HAL_GPIO_WritePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin, GPIO_PIN_SET);
+ 8001b08:	2201      	movs	r2, #1
  8001b0a:	f44f 7100 	mov.w	r1, #512	@ 0x200
  8001b0e:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  8001b12:	f002 f959 	bl	8003dc8 <HAL_GPIO_WritePin>
-        HAL_GPIO_WritePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin, GPIO_PIN_SET);
- 8001b16:	2201      	movs	r2, #1
+        HAL_GPIO_WritePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin, GPIO_PIN_RESET);
+ 8001b16:	2200      	movs	r2, #0
  8001b18:	f44f 7180 	mov.w	r1, #256	@ 0x100
  8001b1c:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  8001b20:	f002 f952 	bl	8003dc8 <HAL_GPIO_WritePin>
@@ -2724,13 +2724,13 @@ void wheel_control(Wheel wheel, int speed) {
  8001b2a:	dd0e      	ble.n	8001b4a <wheel_control+0x1d6>
         // RR_MOTOR_A_CCR = 0;
         // RR_MOTOR_B_CCR = -speed;
-        HAL_GPIO_WritePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin, GPIO_PIN_SET);
- 8001b2c:	2201      	movs	r2, #1
+        HAL_GPIO_WritePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin, GPIO_PIN_RESET);
+ 8001b2c:	2200      	movs	r2, #0
  8001b2e:	f44f 7100 	mov.w	r1, #512	@ 0x200
  8001b32:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  8001b36:	f002 f947 	bl	8003dc8 <HAL_GPIO_WritePin>
-        HAL_GPIO_WritePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin, GPIO_PIN_RESET);
- 8001b3a:	2200      	movs	r2, #0
+        HAL_GPIO_WritePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin, GPIO_PIN_SET);
+ 8001b3a:	2201      	movs	r2, #1
  8001b3c:	f44f 7180 	mov.w	r1, #256	@ 0x100
  8001b40:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  8001b44:	f002 f940 	bl	8003dc8 <HAL_GPIO_WritePin>
@@ -2764,13 +2764,13 @@ void wheel_control(Wheel wheel, int speed) {
  8001b7a:	dd0c      	ble.n	8001b96 <wheel_control+0x222>
         // FL_MOTOR_A_CCR = 0;
         // FL_MOTOR_B_CCR = speed;
-        HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_SET);
- 8001b7c:	2201      	movs	r2, #1
+        HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_RESET);
+ 8001b7c:	2200      	movs	r2, #0
  8001b7e:	2120      	movs	r1, #32
  8001b80:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  8001b84:	f002 f920 	bl	8003dc8 <HAL_GPIO_WritePin>
-        HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_RESET);
- 8001b88:	2200      	movs	r2, #0
+        HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_SET);
+ 8001b88:	2201      	movs	r2, #1
  8001b8a:	2110      	movs	r1, #16
  8001b8c:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  8001b90:	f002 f91a 	bl	8003dc8 <HAL_GPIO_WritePin>
@@ -2781,13 +2781,13 @@ void wheel_control(Wheel wheel, int speed) {
  8001b9a:	da0c      	bge.n	8001bb6 <wheel_control+0x242>
         // FL_MOTOR_A_CCR = -speed;
         // FL_MOTOR_B_CCR = 0;
-        HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_RESET);
- 8001b9c:	2200      	movs	r2, #0
+        HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_SET);
+ 8001b9c:	2201      	movs	r2, #1
  8001b9e:	2120      	movs	r1, #32
  8001ba0:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  8001ba4:	f002 f910 	bl	8003dc8 <HAL_GPIO_WritePin>
-        HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_SET);
- 8001ba8:	2201      	movs	r2, #1
+        HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_RESET);
+ 8001ba8:	2200      	movs	r2, #0
  8001baa:	2110      	movs	r1, #16
  8001bac:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  8001bb0:	f002 f90a 	bl	8003dc8 <HAL_GPIO_WritePin>

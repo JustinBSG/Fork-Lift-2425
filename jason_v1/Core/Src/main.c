@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "controller.h"
+#include "mech.h"
 #include "movement.h"
 #include "servo.h"
 
@@ -38,7 +39,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define TEST 1
+#define TEST 0
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -52,7 +53,7 @@
 int test_encoder[4] = {0, 0, 0, 0};
 BaseVelocity test_base_vel = {0, 0, 0};
 WheelVelocity test_wheel_vel = {0, 0, 0, 0};
-WheelPWM test_pwm = {16800, 16800, 16800, 16800};
+WheelPWM test_pwm = {0, 0, 0, 0};
 WheelVelocity test_read_vel = {0, 0, 0, 0};
 int test_count = 0;
 int stage = 0;
@@ -129,10 +130,18 @@ int main(void) {
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
 
   servo_reset_all();
-  HAL_Delay(5000);
-  int degree = 120;
-  servo_move(&(servos[5]), 500 - degree, SHORTEST_TIME_ROTATE(6, degree));
+  HAL_Delay(1000);
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_RESET);
+  // HAL_Delay(5000);
+  // servo_move(&(servos[4]), SERVO_ID5_MAX_POS, SHORTEST_TIME_ROTATE(4, 90));
+  // HAL_Delay(5000);
+  // servo_move(&(servos[4]), SERVO_ID5_MIN_POS, SHORTEST_TIME_ROTATE(4, 90));
+  // HAL_Delay(5000);
+  // servo_move(&(servos[4]), SERVO_ID6_MAX_POS, SHORTEST_TIME_ROTATE(4, 10));
+  // HAL_Delay(5000);
+  // servo_move(&(servos[5]), SERVO_ID6_MIN_POS, SHORTEST_TIME_ROTATE(4, 30));
+  // HAL_Delay(5000);
+  // servo_reset_all();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -143,7 +152,7 @@ int main(void) {
     /* USER CODE BEGIN 3 */
     HAL_Delay(1);
 #if (TEST == 0)
-    HAL_UART_Transmit(&huart1, controller_buffer, sizeof(controller_buffer), 0xFFFF);
+    HAL_UART_Receive(&huart1, controller_buffer, sizeof(controller_buffer), 0xFFFF);
     parse_controller_data(controller_buffer, &controller_state);
     if (controller_state.options_button) {  // turn on/off the robot
       turn_on = !turn_on;
@@ -157,15 +166,73 @@ int main(void) {
         continue;
       }
 
-      if (controller_state.l_stick_x == 0 && controller_state.r_stick_x == 0 && !controller_state.r1 && !controller_state.l1 && rotation_vel != 0) {  // rotate, r2 or l2
-        BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY};
+      // if (controller_state.l_stick_x == 0 && controller_state.r_stick_x == 0 && !controller_state.r1 && !controller_state.l1 && rotation_vel != 0) {  // rotate, r2 or l2
+      //   BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY};
+      //   movement_control(target_vel);
+      // } else if (controller_state.r_stick_x == 0 && controller_state.r_stick_y == 0 && !controller_state.r1 && !controller_state.l1) {  // move fastly, left joy stick
+      //   BaseVelocity target_vel = {controller_state.l_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY,
+      //                              controller_state.l_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY,
+      //                              0};
+      //   movement_control(target_vel);
+      // } else if (!controller_state.r1 && !controller_state.l1) {  // move slowly, right joy stick
+      //   BaseVelocity target_vel = {controller_state.l_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.5,
+      //                              controller_state.l_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.5,
+      //                              0};
+      //   movement_control(target_vel);
+      // } else {  // rotate slowly, l1 or r1
+      //   BaseVelocity target_vel = {0, 0, 0};
+      //   if (controller_state.l1)
+      //     target_vel.z_vel = ROBOT_MAX_Z_VELOCITY * 0.5;
+      //   else if (controller_state.r1)
+      //     target_vel.z_vel = ROBOT_MAX_Z_VELOCITY * -0.5;
+      //   movement_control(target_vel);
+      // }
+
+      if (controller_state.r1) {
+        BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * 0.35};
         movement_control(target_vel);
-      } else if (controller_state.r_stick_x == 0 && controller_state.r_stick_y == 0 && !controller_state.r1 && !controller_state.l1) {  // move fastly, left joy stick
-
-      } else if (!controller_state.r1 && !controller_state.l1) {  // move slowly, right joy stick
-
-      } else {  // rotate slowly, l1 or r1
+      } else if (controller_state.l1) {
+        BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * -0.35};
+        movement_control(target_vel);
+      } else if (controller_state.up) {
+        BaseVelocity target_vel = {0,
+                                   ROBOT_MAX_Y_VELOCITY * 0.5,
+                                   0};
+        movement_control(target_vel);
+      } else if (controller_state.down) {
+        BaseVelocity target_vel = {0,
+                                   ROBOT_MAX_Y_VELOCITY * -0.5,
+                                   0};
+        movement_control(target_vel);
+      } else if (controller_state.left) {
+        BaseVelocity target_vel = {ROBOT_MAX_X_VELOCITY * -0.5,
+                                   0,
+                                   0};
+        movement_control(target_vel);
+      } else if (controller_state.right) {
+        BaseVelocity target_vel = {ROBOT_MAX_X_VELOCITY * 0.5,
+                                   0,
+                                   0};
+        movement_control(target_vel);
+      } else {
+        WheelPWM target_pwm = {0, 0, 0, 0};
+        wheels_control(target_pwm);
       }
+
+      if (controller_state.triangle) {
+        catch_move_down();
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_RESET);
+      } else if (controller_state.cross)
+        catch_move_up();
+      else if (controller_state.share_button) {
+        catch_reset();
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
+      }
+
+      if (controller_state.circle)
+        container_move_down();
+      else if (controller_state.square)
+        container_reset();
     }
 #else
     // test_base_vel.x_vel = 0;

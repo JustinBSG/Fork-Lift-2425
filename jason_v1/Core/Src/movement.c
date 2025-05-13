@@ -9,9 +9,15 @@ WheelVelocity base2wheel(BaseVelocity base_vel) {
     rear_right = sqrt(base_vel.x_vel * base_vel.x_vel + base_vel.y_vel * base_vel.y_vel) / RADIUS_WHEEL;
   } else {
     front_left = base_vel.z_vel / RADIUS_WHEEL;
-    front_right = base_vel.z_vel / RADIUS_WHEEL;
+    front_right = -base_vel.z_vel / RADIUS_WHEEL;
     rear_left = base_vel.z_vel / RADIUS_WHEEL;
-    rear_right = base_vel.z_vel / RADIUS_WHEEL;
+    rear_right = -base_vel.z_vel / RADIUS_WHEEL;
+  }
+  if (base_vel.x_vel < 0 || base_vel.y_vel < 0) {
+    front_left = -front_left;
+    front_right = -front_right;
+    rear_left = -rear_left;
+    rear_right = -rear_right;
   }
   return (WheelVelocity){front_left, front_right, rear_left, rear_right};
 }
@@ -188,7 +194,15 @@ void rotate_motor(BaseVelocity base_vel) {
 }
 
 void movement_control(BaseVelocity base_vel) {
-  rotate_motor(base_vel);
+  if (base_vel.x_vel != 0 && direction_encoder != LEFT_RIGHT || base_vel.y_vel != 0 && direction_encoder != FRONT_BACK) {
+    rotate_motor(base_vel);
+    direction_encoder = base_vel.x_vel != 0 ? LEFT_RIGHT : FRONT_BACK;
+  } else if (base_vel.z_vel != 0 && direction_encoder != ROTATE) {
+    rotate_motor(base_vel);
+    direction_encoder = ROTATE;
+  }
+
+
   WheelVelocity target_vel = base2wheel(base_vel);
   WheelPWM target_pwm = wheel2pwm(target_vel);
   wheels_control(target_pwm);

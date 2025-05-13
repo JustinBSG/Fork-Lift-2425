@@ -7,9 +7,9 @@
 #define LENGTH_CENTER_WHEEL_Y 0.090  // distance from the robot's center to the wheels on the y-axis
 #define RADIUS_WHEEL 0.022           // radius of the mecanum wheel
 
-#define ROBOT_MAX_X_VELOCITY 6.842 * 0.4   // max linear velocity of the robot, in m/s
-#define ROBOT_MAX_Y_VELOCITY 6.842 * 0.4   // max linear velocity of the robot, in m/s
-#define ROBOT_MAX_Z_VELOCITY 36.58 * 0.04  // max angular velocity of the robot, in rad/s
+#define ROBOT_MAX_X_VELOCITY 6.842 * 0.7  // max linear velocity of the robot, in m/s
+#define ROBOT_MAX_Y_VELOCITY 6.842 * 0.7  // max linear velocity of the robot, in m/s
+#define ROBOT_MAX_Z_VELOCITY 36.58 * 0.15    // max angular velocity of the robot, in rad/s
 
 #define PID_MODE 0
 

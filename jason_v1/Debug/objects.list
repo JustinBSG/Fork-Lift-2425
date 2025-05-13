@@ -2,6 +2,7 @@
 "./Core/Src/encoder.o"
 "./Core/Src/gpio.o"
 "./Core/Src/main.o"
+"./Core/Src/mech.o"
 "./Core/Src/movement.o"
 "./Core/Src/robot.o"
 "./Core/Src/servo.o"

@@ -167,11 +167,11 @@ void rotate_motor(BaseVelocity base_vel) {
     servo_move(&(servos[2]), INITIAL_POS, SHORTEST_TIME_ROTATE(3, 90));
     servo_move(&(servos[3]), INITIAL_POS, SHORTEST_TIME_ROTATE(4, 90));
   } else if (base_vel.x_vel != 0 && base_vel.y_vel == 0) {  // angle = 0 or 180
-    servo_move(&(servos[0]), SERVO_ID1_MAX_POS, SHORTEST_TIME_ROTATE(1, 90));
+    servo_move(&(servos[0]), SERVO_ID1_MIN_POS, SHORTEST_TIME_ROTATE(1, 90));
     servo_move(&(servos[1]), SERVO_ID2_MAX_POS, SHORTEST_TIME_ROTATE(2, 90));
-    servo_move(&(servos[2]), SERVO_ID3_MAX_POS, SHORTEST_TIME_ROTATE(3, 90));
+    servo_move(&(servos[2]), SERVO_ID3_MIN_POS, SHORTEST_TIME_ROTATE(3, 90));
     servo_move(&(servos[3]), SERVO_ID4_MAX_POS, SHORTEST_TIME_ROTATE(4, 90));
-  } else if (base_vel.x_vel < 0 && base_vel.y_vel > 0 || base_vel.x_vel > 0 && base_vel.y_vel < 0) {    // quadrant 2 or 4
+  } else if (base_vel.x_vel < 0 && base_vel.y_vel > 0 || base_vel.x_vel > 0 && base_vel.y_vel < 0) {  // quadrant 2 or 4
     if (angle < 0)
       angle += 180;
     angle -= 90;
@@ -181,11 +181,11 @@ void rotate_motor(BaseVelocity base_vel) {
     servo_move(&(servos[1]), SERVO_ID2_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(2, angle));
     servo_move(&(servos[2]), SERVO_ID3_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(3, angle));
     servo_move(&(servos[3]), SERVO_ID4_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(4, angle));
-  } else if (base_vel.x_vel < 0 && base_vel.y_vel < 0 || base_vel.x_vel > 0 && base_vel.y_vel > 0) {    // quadrant 1 or 3
+  } else if (base_vel.x_vel < 0 && base_vel.y_vel < 0 || base_vel.x_vel > 0 && base_vel.y_vel > 0) {  // quadrant 1 or 3
     if (angle < 0)
       angle += 180;
     angle = 90 - angle;
-    
+
     servo_move(&(servos[0]), SERVO_ID1_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(1, angle));
     servo_move(&(servos[1]), SERVO_ID2_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(2, angle));
     servo_move(&(servos[2]), SERVO_ID3_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(3, angle));
@@ -202,8 +202,13 @@ void movement_control(BaseVelocity base_vel) {
     direction_encoder = ROTATE;
   }
 
-
   WheelVelocity target_vel = base2wheel(base_vel);
+if (direction_encoder == LEFT_RIGHT) {
+  target_vel.front_left *= -1;
+  target_vel.rear_left *= -1;
+}
+
+
   WheelPWM target_pwm = wheel2pwm(target_vel);
   wheels_control(target_pwm);
 }

@@ -26,13 +26,13 @@ extern UART_HandleTypeDef huart4;
 #define INITIAL_POS 500
 #define SHORTEST_TIME_ROTATE(id, degree) (180 / 60.0 * abs((servos[id - 1].current_degree + 90) - (degree + 90)))
 
-#define SERVO_ID1_MAX_POS 500 + 360
+#define SERVO_ID1_MAX_POS 500 + 362
 #define SERVO_ID1_MIN_POS 500 - 400
-#define SERVO_ID2_MAX_POS 500 + 360
+#define SERVO_ID2_MAX_POS 500 + 370
 #define SERVO_ID2_MIN_POS 500 - 390
-#define SERVO_ID3_MAX_POS 500 + 375
+#define SERVO_ID3_MAX_POS 500 + 364
 #define SERVO_ID3_MIN_POS 500 - 370
-#define SERVO_ID4_MAX_POS 500 + 380
+#define SERVO_ID4_MAX_POS 500 + 378
 #define SERVO_ID4_MIN_POS 500 - 360
 #define SERVO_ID5_MAX_POS 500 + 390
 #define SERVO_ID5_MIN_POS 500 - 85

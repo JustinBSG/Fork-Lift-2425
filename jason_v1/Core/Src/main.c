@@ -132,16 +132,10 @@ int main(void) {
   servo_reset_all();
   HAL_Delay(1000);
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_RESET);
-  // HAL_Delay(5000);
-  // servo_move(&(servos[4]), SERVO_ID5_MAX_POS, SHORTEST_TIME_ROTATE(4, 90));
-  // HAL_Delay(5000);
-  // servo_move(&(servos[4]), SERVO_ID5_MIN_POS, SHORTEST_TIME_ROTATE(4, 90));
-  // HAL_Delay(5000);
-  // servo_move(&(servos[4]), SERVO_ID6_MAX_POS, SHORTEST_TIME_ROTATE(4, 10));
-  // HAL_Delay(5000);
-  // servo_move(&(servos[5]), SERVO_ID6_MIN_POS, SHORTEST_TIME_ROTATE(4, 30));
-  // HAL_Delay(5000);
-  // servo_reset_all();
+#if (TEST == 1)
+  BaseVelocity base_vel = {1, 0, 0};
+  rotate_motor(base_vel);
+#endif
   /* USER CODE END 2 */
 
   /* Infinite loop */

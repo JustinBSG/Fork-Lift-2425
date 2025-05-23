@@ -133,8 +133,8 @@ int main(void) {
   HAL_Delay(1000);
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_RESET);
 #if (TEST == 1)
-  BaseVelocity base_vel = {1, 0, 0};
-  rotate_motor(base_vel);
+  // BaseVelocity base_vel = {1, 0, 0};
+  // rotate_motor(base_vel);
 #endif
   /* USER CODE END 2 */
 

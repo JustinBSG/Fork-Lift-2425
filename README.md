@@ -4,7 +4,7 @@
 ### Jason Car with Fan
 1. [ ] movement control code
     - [x] servos 0, -90, 90 degree tuning
-    - [ ] encoder ppr measure
+    - [x] encoder ppr measure
     - [ ] dc motor max speed measure
     - [ ] 4 direction movement code
     - [ ] rotation code

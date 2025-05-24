@@ -1,5 +1,6 @@
 #include "encoder.h"
 
+// value of encoders[0] and encoders[2] need to be reversed, maybe hardware issue
 EncoderData encoders[4] = {{.displacement = 0.0, .velocity = 0.0, .last_counter_value = 0, .last_tick = 0, .htim = &htim1, ._ppr = FL_ENCODER_PPR},
                            {.displacement = 0.0, .velocity = 0.0, .last_counter_value = 0, .last_tick = 0, .htim = &htim8, ._ppr = FR_ENCODER_PPR},
                            {.displacement = 0.0, .velocity = 0.0, .last_counter_value = 0, .last_tick = 0, .htim = &htim5, ._ppr = RL_ENCODER_PPR},

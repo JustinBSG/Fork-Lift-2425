@@ -5,7 +5,7 @@
 1. [ ] movement control code
     - [x] servos 0, -90, 90 degree tuning
     - [x] encoder ppr measure
-    - [ ] dc motor max speed measure
+    - [x] dc motor max speed measure
     - [ ] 4 direction movement code
     - [ ] rotation code
 2. [ ] remote control code

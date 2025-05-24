@@ -3,7 +3,7 @@
 ## TODO List
 ### Jason Car with Fan
 1. [ ] movement control code
-    - [ ] servos 0, -90, 90 degree tuning
+    - [x] servos 0, -90, 90 degree tuning
     - [ ] encoder ppr measure
     - [ ] dc motor max speed measure
     - [ ] 4 direction movement code

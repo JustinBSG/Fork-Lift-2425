@@ -33,8 +33,8 @@
     - use movement code directly
 
 ### Kitty Car
-1. [ ] connect the wire
-2. [ ] movement control code
+1. [x] connect the wire
+2. [x] movement control code
     - may need to measure the dimension
 3. [ ] mech control code
     - stepper motor, pwm control

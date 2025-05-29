@@ -1,0 +1,3 @@
+../Core/Src/mech.c:8:6:big_wheel_move_up	1
+../Core/Src/mech.c:12:6:big_wheel_move_down	1
+../Core/Src/mech.c:16:6:big_wheel_rotate	3

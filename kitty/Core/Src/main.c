@@ -24,12 +24,14 @@
 #include "tim.h"
 #include "usart.h"
 
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "controller.h"
 #include "encoder.h"
+#include "mech.h"
 #include "movement.h"
 #include "robot.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -39,7 +41,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define TEST 0
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -53,7 +55,7 @@
 int test_encoder[4] = {0, 0, 0, 0};
 BaseVelocity test_target_base_vel = {0, 0, 0};
 int test_time = 0;
-int test_stage = 0; 
+int test_stage = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -132,7 +134,66 @@ int main(void) {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    HAL_Delay(1);
+#if (TEST == 0)
+    HAL_UART_Receive(&huart1, controller_buffer, sizeof(controller_buffer), 0xFFFF);
+    parse_controller_data(controller_buffer, &controller_state);
+
+    if (controller_state.options_button && !prev_turn_on) {  // turn on/off the robot
+      turn_on = !turn_on;
+      HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, turn_on ? GPIO_PIN_RESET : GPIO_PIN_SET);
+    }
+    prev_turn_on = controller_state.options_button;
+
+    if (turn_on) {
+      float rotation_vel = (controller_state.l2_pressure / 1024.0 + controller_state.r2_pressure / -1024.0) * 100.0;
+
+      if (controller_state.ps_button) {  // auto, line following
+      }
+
+      if (controller_state.cross) {} // auto, choose path, toggle left / right / straight forward
+
+      if (controller_state.l_stick_x == 0 && controller_state.l_stick_y == 0 && rotation_vel != 0 && !controller_state.r1 && !controller_state.l1) {  // rotate
+        BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY * 0.5};
+        movement_control(target_vel);
+      } else if (controller_state.r_stick_x == 0 && controller_state.r_stick_y == 0 && !controller_state.r1 && !controller_state.l1) {  // move fastly
+        BaseVelocity target_vel = {controller_state.l_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.5,
+                                   controller_state.l_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.5,
+                                   0};
+        movement_control(target_vel);
+      } else if (!controller_state.r1 && !controller_state.l1) {  // move slowly
+        BaseVelocity target_vel = {controller_state.r_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.25,
+                                   controller_state.r_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.25,
+                                   0};
+        movement_control(target_vel);
+      } else if (controller_state.l1 || controller_state.r1) {  // rotate slowly
+        BaseVelocity target_vel = {0, 0, 0};
+        if (controller_state.l1)
+          target_vel.z_vel = ROBOT_MAX_Z_VELOCITY * 0.25;
+        else if (controller_state.r1)
+          target_vel.z_vel = ROBOT_MAX_Z_VELOCITY * -0.25;
+        movement_control(target_vel);
+      }
+
+      if (controller_state.triangle && !prev_big_wheel_state) {  // lift up / down the big wheel
+        big_wheel_state = !big_wheel_state;
+        if (big_wheel_pos == BIG_WHEEL_DOWN) {
+          big_wheel_move_up();
+          big_wheel_pos = BIG_WHEEL_UP;
+        } else if (big_wheel_pos == BIG_WHEEL_UP){
+          big_wheel_move_down();
+          big_wheel_pos = BIG_WHEEL_DOWN;
+        }
+      }
+      prev_big_wheel_state = controller_state.triangle;
+
+      if (controller_state.square && !controller_state.circle)  // collect ball
+        big_wheel_rotate(BIG_WHEEL_ROTATE_CLOCKWISE);
+      else if (controller_state.circle && !controller_state.square)  // release ball
+        big_wheel_rotate(BIG_WHEEL_ROTATE_ANTICLOCKWISE);
+      else if (!controller_state.circle && !controller_state.square)  // stop the big wheel
+        big_wheel_rotate(BIG_WHEEL_ROTATE_STOP);
+    }
+#else
     if (HAL_GetTick() - test_time > 10000) {
       test_time = HAL_GetTick();
       test_stage++;
@@ -165,6 +226,8 @@ int main(void) {
     }
 
     movement_control(test_target_base_vel);
+#endif
+    HAL_Delay(1);
     read_current_velocity(encoders);
   }
   /* USER CODE END 3 */

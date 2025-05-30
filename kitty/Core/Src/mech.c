@@ -6,11 +6,11 @@ bool prev_big_wheel_state = false;
 BigWheelPositionState big_wheel_pos = BIG_WHEEL_DOWN;
 
 void big_wheel_move_up(void) {
-  HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
+  TIM2->CCR4 = 65535/14;
 }
 
 void big_wheel_move_down(void) {
-  HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_RESET);
+  TIM2->CCR4 = 65535/7;
 }
 
 void big_wheel_rotate(BigWheelRotateState direction) {

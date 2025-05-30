@@ -3,21 +3,23 @@
     - Turn on / off
 2. PS Button
     - Auto mode, line following
-3. Left Joy Stick
+3. Cross Button
+    - Choose auto path
+4. Left Joy Stick
     - Normal speed movement
-3. Right Joy Stick
+5. Right Joy Stick
     - Slow speed movement
-4. L2 Button
+6. L2 Button
     - Normal speed anti-clockwise rotation
-5. R2 Button
+7. R2 Button
     - Normal speed clockwise rotation
-5. L1 Button
+8. L1 Button
     - Slow speed anti-clockwise rotation
-6. R1 Button
+9. R1 Button
     - Slow speed clockwise rotation
-7. Triangle Button
+10. Triangle Button
     - Lift up / down the big wheel
-8. Square Button
+11. Square Button
     - Collect ball
-9. Circle Button
+12. Circle Button
     - Release ball

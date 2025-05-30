@@ -26,10 +26,10 @@ WheelPWM wheel2pwm(WheelVelocity wheel_vel) {
 }
 
 void wheel_control(MecanumWheel wheel, int speed) {
-  if (speed > 16800)
-    speed = 16800;
-  else if (speed < -16800)
-    speed = -16800;
+  if (speed > 65535)
+    speed = 65535;
+  else if (speed < -65535)
+    speed = -65535;
 
   switch (wheel) {
     case FRONT_LEFT:

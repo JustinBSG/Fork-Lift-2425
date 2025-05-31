@@ -131,7 +131,7 @@ int main(void)
   HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
 
-  big_wheel_move_down();
+  big_wheel_move_up();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -159,7 +159,19 @@ int main(void)
       if (controller_state.cross) {
       }  // auto, choose path, toggle left / right / straight forward
 
-      if (controller_state.l_stick_x == 0 && controller_state.l_stick_y == 0 && rotation_vel != 0 && !controller_state.r1 && !controller_state.l1) {  // rotate
+      if (controller_state.left && !controller_state.right && !controller_state.up && !controller_state.down) {
+        BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.25, 0};
+        movement_control(target_vel);  // move to the left
+      } else if (!controller_state.left && controller_state.right && !controller_state.up && !controller_state.down) {
+        BaseVelocity target_vel = {0, -ROBOT_MAX_X_VELOCITY * 0.25, 0};
+        movement_control(target_vel);  // move to the right
+      } else if (!controller_state.left && !controller_state.right && controller_state.up && !controller_state.down) {
+        BaseVelocity target_vel = {ROBOT_MAX_Y_VELOCITY * 0.25, 0, 0};
+        movement_control(target_vel);  // move forward
+      } else if (!controller_state.left && !controller_state.right && !controller_state.up && controller_state.down) {
+        BaseVelocity target_vel = {-ROBOT_MAX_Y_VELOCITY * 0.25, 0, 0};
+        movement_control(target_vel);  // move backward
+      } else if (controller_state.l_stick_x == 0 && controller_state.l_stick_y == 0 && rotation_vel != 0 && !controller_state.r1 && !controller_state.l1) {  // rotate
         BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY * 0.5};
         movement_control(target_vel);
       } else if (controller_state.r_stick_x == 0 && controller_state.r_stick_y == 0 && !controller_state.r1 && !controller_state.l1) {  // move fastly

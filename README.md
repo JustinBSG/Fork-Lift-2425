@@ -8,7 +8,7 @@
     - [x] dc motor max speed measure
     - [x] 4 direction movement code
     - [x] rotation code
-2. [ ] remote control code
+2. [x] remote control code
 3. [ ] fan control code
     - [ ] test pwm value
 4. [ ] write controller manual

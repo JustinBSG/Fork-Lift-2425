@@ -14,5 +14,6 @@
 #define PID_MODE 0
 
 extern bool turn_on;
+extern bool prev_turn_on;
 
 #endif /* __ROBOT_H__ */

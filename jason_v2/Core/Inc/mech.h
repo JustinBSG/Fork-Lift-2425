@@ -3,7 +3,6 @@
 
 #include "servo.h"
 
-// TODO: move to movement.h
 typedef enum {
   FRONT_BACK,
   LEFT_RIGHT, 

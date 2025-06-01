@@ -114,6 +114,7 @@ int main(void)
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
   HAL_TIM_Base_Start_IT(&htim1);
   HAL_TIM_Encoder_Start_IT(&htim1, TIM_CHANNEL_ALL);
   HAL_TIM_Base_Start_IT(&htim4);
@@ -213,21 +214,6 @@ int main(void)
         big_wheel_rotate(BIG_WHEEL_ROTATE_STOP);
     }
 #else
-    if (HAL_GetTick() - test_time > 5000) {
-      test_time = HAL_GetTick();
-      test_stage++;
-    }
-
-    switch (test_stage%2) {
-      case 0:
-        TIM2->CCR4 = 65535/7;
-        break;
-      case 1:
-        TIM2->CCR4 = 65535/14;
-        break;
-      default:
-        break;
-    }
     // switch (test_stage) {
     //   case 1:
     //     test_target_base_vel.x_vel = ROBOT_MAX_Y_VELOCITY;

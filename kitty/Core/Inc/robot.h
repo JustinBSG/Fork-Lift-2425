@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 #define LENGTH_CENTER_WHEEL_X 0.092  // distance from the robot's center to the wheels on the x-axis
-#define LENGTH_CENTER_WHEEL_Y 0.091  // distance from the robot's center to the wheels on the y-axis
+#define LENGTH_CENTER_WHEEL_Y 0.085  // distance from the robot's center to the wheels on the y-axis
 #define RADIUS_WHEEL 0.0375          // radius of the mecanum wheel
 
 #define ROBOT_MAX_X_VELOCITY 1.4625  // max linear velocity of the robot, in m/s

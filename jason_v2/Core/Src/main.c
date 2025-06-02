@@ -40,7 +40,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define TEST 0
+#define TEST 1
 
 /* USER CODE END PD */
 
@@ -184,8 +184,10 @@ int main(void) {
       }
     }
 #else
-    wheel_control(FRONT_RIGHT, -4715);
-    wheel_control(FRONT_LEFT, -4715);
+    test_base_vel.x_vel = ROBOT_MAX_X_VELOCITY * -0.5;
+    test_base_vel.y_vel = 0;
+    test_base_vel.z_vel = 0;
+    rotate_motor(test_base_vel);
     // if (HAL_GetTick() - test_time_stamp > 10000) {
     //   test_time_stamp = HAL_GetTick();
     //   test_stage++;

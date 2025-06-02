@@ -2,13 +2,15 @@
 
 ## TODO List
 ### Jason Car with Fan
-1. [x] movement control code
+1. [ ] movement control code
     - [x] servos 0, -90, 90 degree tuning
     - [x] encoder ppr measure
     - [x] dc motor max speed measure
     - [x] 4 direction movement code
     - [x] rotation code
+    - [ ] tune degree
 2. [x] remote control code
+5. [ ] fix the problem of cannot flash code
 3. [ ] fan control code
     - [ ] test pwm value
 4. [ ] write controller manual
@@ -27,7 +29,7 @@
 ### Tommy Car
 1. [x] need to configure all pin
 2. [x] reconnect the wire
-3. [ ] make pin header for 2 sliders
+3. [x] make pin header for 2 sliders
     - connect with motor driver
 4. [ ] test previous code
 5. [ ] slider control code
@@ -44,7 +46,8 @@
     - stepper motor, pwm control
     - need to test the control difficulty
 4. [x] remote control code
-4. [ ] write controller manual
+4. [x] write controller manual
+5. [ ] increase the rotating speed of big wheel
 5. [ ] auto mode code
     - pid
     - use movement code directly

@@ -3190,9 +3190,9 @@ void big_wheel_rotate(BigWheelRotateState direction) {
  8001dc0:	2110      	movs	r1, #16
  8001dc2:	480d      	ldr	r0, [pc, #52]	@ (8001df8 <big_wheel_rotate+0x50>)
  8001dc4:	f001 fd94 	bl	80038f0 <HAL_GPIO_WritePin>
-      TIM3->CCR4 = 65535 / 2;
+      TIM3->CCR4 = 65535 / 4;
  8001dc8:	4b0c      	ldr	r3, [pc, #48]	@ (8001dfc <big_wheel_rotate+0x54>)
- 8001dca:	f647 72ff 	movw	r2, #32767	@ 0x7fff
+ 8001dca:	f643 72ff 	movw	r2, #16383	@ 0x3fff
  8001dce:	641a      	str	r2, [r3, #64]	@ 0x40
       break;
  8001dd0:	e00d      	b.n	8001dee <big_wheel_rotate+0x46>
@@ -3202,9 +3202,9 @@ void big_wheel_rotate(BigWheelRotateState direction) {
  8001dd4:	2110      	movs	r1, #16
  8001dd6:	4808      	ldr	r0, [pc, #32]	@ (8001df8 <big_wheel_rotate+0x50>)
  8001dd8:	f001 fd8a 	bl	80038f0 <HAL_GPIO_WritePin>
-      TIM3->CCR4 = 65535 / 2;
+      TIM3->CCR4 = 65535 / 4;
  8001ddc:	4b07      	ldr	r3, [pc, #28]	@ (8001dfc <big_wheel_rotate+0x54>)
- 8001dde:	f647 72ff 	movw	r2, #32767	@ 0x7fff
+ 8001dde:	f643 72ff 	movw	r2, #16383	@ 0x3fff
  8001de2:	641a      	str	r2, [r3, #64]	@ 0x40
       break;
  8001de4:	e003      	b.n	8001dee <big_wheel_rotate+0x46>
@@ -3397,8 +3397,8 @@ WheelVelocity base2wheel(BaseVelocity base_vel) {
  8001fb8:	46bd      	mov	sp, r7
  8001fba:	bdb0      	pop	{r4, r5, r7, pc}
  8001fbc:	f3af 8000 	nop.w
- 8001fc0:	b22d0e56 	.word	0xb22d0e56
- 8001fc4:	3fc7ef9d 	.word	0x3fc7ef9d
+ 8001fc0:	9db22d0e 	.word	0x9db22d0e
+ 8001fc4:	3fc6a7ef 	.word	0x3fc6a7ef
  8001fc8:	33333333 	.word	0x33333333
  8001fcc:	3fa33333 	.word	0x3fa33333
 

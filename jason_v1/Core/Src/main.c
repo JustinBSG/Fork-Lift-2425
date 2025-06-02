@@ -39,7 +39,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define TEST 0
+#define TEST 1
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -251,6 +251,10 @@ int main(void) {
     // }
     // else if (test_count == 2)
     //   servo_reset_all();
+    test_base_vel.x_vel = ROBOT_MAX_X_VELOCITY * -0.5;
+    test_base_vel.y_vel = 0;
+    test_base_vel.z_vel = 0;
+    rotate_motor(test_base_vel);
     test_wheel_vel = read_current_velocity(encoders);
 #endif
   }

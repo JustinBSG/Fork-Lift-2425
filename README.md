@@ -47,7 +47,7 @@
     - need to test the control difficulty
 4. [x] remote control code
 4. [x] write controller manual
-5. [ ] increase the rotating speed of big wheel
+5. [x] increase the rotating speed of big wheel
 5. [ ] auto mode code
     - pid
     - use movement code directly

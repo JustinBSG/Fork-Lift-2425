@@ -4,6 +4,7 @@
 "./Core/Src/hmc5883l.o"
 "./Core/Src/i2c.o"
 "./Core/Src/main.o"
+"./Core/Src/mech.o"
 "./Core/Src/movement.o"
 "./Core/Src/pid-mecanum.o"
 "./Core/Src/robot.o"

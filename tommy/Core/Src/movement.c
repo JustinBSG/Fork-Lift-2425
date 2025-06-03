@@ -137,14 +137,25 @@ void wheels_control(WheelPWM pwm) {
   wheel_control(REAR_RIGHT, pwm.rear_right);
 }
 
+extern WheelVelocity test_wheel_vel;
+extern WheelPWM test_pwm ;
+
 void movement_control(BaseVelocity base_vel) {
   WheelVelocity target_vel = base2wheel(base_vel);
+  test_wheel_vel.front_left = target_vel.front_left;
+  test_wheel_vel.front_right = target_vel.front_right;
+  test_wheel_vel.rear_left = target_vel.rear_left;
+  test_wheel_vel.rear_right = target_vel.rear_right;
 #if (PID_MODE == 1)
   WheelVelocity current_vel = read_current_velocity(encoders);
   WheelVelocity result_vel = pid_system(target_vel, current_vel);
   WheelPWM target_pwm = wheel2pwm(result_vel);
 #else
   WheelPWM target_pwm = wheel2pwm(target_vel);
+  test_pwm.front_left = target_pwm.front_left;
+  test_pwm.front_right = target_pwm.front_right;
+  test_pwm.rear_left = target_pwm.rear_left;
+  test_pwm.rear_right = target_pwm.rear_right;
 #endif
   wheels_control(target_pwm);
 }

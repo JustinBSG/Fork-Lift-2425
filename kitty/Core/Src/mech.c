@@ -17,11 +17,11 @@ void big_wheel_rotate(BigWheelRotateState direction) {
   switch (direction) {
     case BIG_WHEEL_ROTATE_CLOCKWISE:
       HAL_GPIO_WritePin(STEPPER_DIR_GPIO_Port, STEPPER_DIR_Pin, GPIO_PIN_SET);
-      TIM3->CCR4 = 65535 / 4;
+      TIM3->CCR4 = 65535 / 2;
       break;
     case BIG_WHEEL_ROTATE_ANTICLOCKWISE:
       HAL_GPIO_WritePin(STEPPER_DIR_GPIO_Port, STEPPER_DIR_Pin, GPIO_PIN_RESET);
-      TIM3->CCR4 = 65535 / 4;
+      TIM3->CCR4 = 65535 / 2;
       break;
     default:
       TIM3->CCR4 = 0;

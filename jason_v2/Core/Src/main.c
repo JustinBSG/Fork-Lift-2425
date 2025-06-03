@@ -225,10 +225,43 @@ int main(void)
     //     break;
     // }
 
-    test_base_vel.x_vel = 0;
-    test_base_vel.y_vel = ROBOT_MAX_Y_VELOCITY * 0.75;
-    test_base_vel.z_vel = 0;
-    movement_control(test_base_vel);
+    HAL_UART_Receive(&huart1, (uint8_t *)&controller_buffer, sizeof(controller_buffer), 0xFFFF);
+    parse_controller_data(controller_buffer, &controller_state);
+
+    if (controller_state.options_button && !prev_turn_on) {
+      turn_on = !turn_on;
+      HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, turn_on ? GPIO_PIN_RESET : GPIO_PIN_SET);
+    }
+    prev_turn_on = controller_state.options_button;
+    if (turn_on) {
+      if (controller_state.r1) {
+        BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * 0.35};
+        movement_control(target_vel);
+      } else if (controller_state.l1) {
+        BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * -0.35};
+        movement_control(target_vel);
+      } else if (controller_state.up) {
+        BaseVelocity target_vel = {0,
+                                   ROBOT_MAX_Y_VELOCITY * 0.75,
+                                   0};
+        movement_control(target_vel);
+      } else if (controller_state.down) {
+        BaseVelocity target_vel = {0,
+                                   ROBOT_MAX_Y_VELOCITY * -0.75,
+                                   0};
+        movement_control(target_vel);
+      } else if (controller_state.left) {
+        BaseVelocity target_vel = {ROBOT_MAX_X_VELOCITY * -0.75,
+                                   0,
+                                   0};
+        movement_control(target_vel);
+      } else if (controller_state.right) {
+        BaseVelocity target_vel = {ROBOT_MAX_X_VELOCITY * 0.75,
+                                   0,
+                                   0};
+        movement_control(target_vel);
+      }
+    }
 #endif
   }
   /* USER CODE END 3 */

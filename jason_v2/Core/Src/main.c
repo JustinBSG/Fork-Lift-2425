@@ -25,10 +25,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "controller.h"
+#include "mech.h"
 #include "movement.h"
 #include "robot.h"
 #include "servo.h"
-
 
 /* USER CODE END Includes */
 
@@ -113,6 +113,7 @@ int main(void)
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
   HAL_TIM_Base_Start_IT(&htim1);
   HAL_TIM_Encoder_Start_IT(&htim1, TIM_CHANNEL_ALL);
   HAL_TIM_Base_Start_IT(&htim4);
@@ -132,6 +133,9 @@ int main(void)
 
   servo_reset_all();
   HAL_Delay(1000);
+  TIM3->CCR3 = 1500;
+  HAL_Delay(1000);
+  TIM3->CCR3 = 1450;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -185,12 +189,12 @@ int main(void)
       }
     }
 #else
-    // if (HAL_GetTick() - test_time_stamp > 10000) {
+    // if (HAL_GetTick() - test_time_stamp > 1.5) {
     //   test_time_stamp = HAL_GetTick();
-    //   test_stage++;
-    //   if (test_stage == 6)
-    //     test_stage = 0;
     // }
+
+    // TIM3->CCR3 = 1500;
+    // TIM3->CCR4 = 1450;
 
     // switch (test_stage) {
     //   case 1:
@@ -225,43 +229,43 @@ int main(void)
     //     break;
     // }
 
-    HAL_UART_Receive(&huart1, (uint8_t *)&controller_buffer, sizeof(controller_buffer), 0xFFFF);
-    parse_controller_data(controller_buffer, &controller_state);
+    // HAL_UART_Receive(&huart1, (uint8_t *)&controller_buffer, sizeof(controller_buffer), 0xFFFF);
+    // parse_controller_data(controller_buffer, &controller_state);
 
-    if (controller_state.options_button && !prev_turn_on) {
-      turn_on = !turn_on;
-      HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, turn_on ? GPIO_PIN_RESET : GPIO_PIN_SET);
-    }
-    prev_turn_on = controller_state.options_button;
-    if (turn_on) {
-      if (controller_state.r1) {
-        BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * 0.35};
-        movement_control(target_vel);
-      } else if (controller_state.l1) {
-        BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * -0.35};
-        movement_control(target_vel);
-      } else if (controller_state.up) {
-        BaseVelocity target_vel = {0,
-                                   ROBOT_MAX_Y_VELOCITY * 0.75,
-                                   0};
-        movement_control(target_vel);
-      } else if (controller_state.down) {
-        BaseVelocity target_vel = {0,
-                                   ROBOT_MAX_Y_VELOCITY * -0.75,
-                                   0};
-        movement_control(target_vel);
-      } else if (controller_state.left) {
-        BaseVelocity target_vel = {ROBOT_MAX_X_VELOCITY * -0.75,
-                                   0,
-                                   0};
-        movement_control(target_vel);
-      } else if (controller_state.right) {
-        BaseVelocity target_vel = {ROBOT_MAX_X_VELOCITY * 0.75,
-                                   0,
-                                   0};
-        movement_control(target_vel);
-      }
-    }
+    // if (controller_state.options_button && !prev_turn_on) {
+    //   turn_on = !turn_on;
+    //   HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, turn_on ? GPIO_PIN_RESET : GPIO_PIN_SET);
+    // }
+    // prev_turn_on = controller_state.options_button;
+    // if (turn_on) {
+    //   if (controller_state.r1) {
+    //     BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * 0.35};
+    //     movement_control(target_vel);
+    //   } else if (controller_state.l1) {
+    //     BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * -0.35};
+    //     movement_control(target_vel);
+    //   } else if (controller_state.up) {
+    //     BaseVelocity target_vel = {0,
+    //                                ROBOT_MAX_Y_VELOCITY * 0.75,
+    //                                0};
+    //     movement_control(target_vel);
+    //   } else if (controller_state.down) {
+    //     BaseVelocity target_vel = {0,
+    //                                ROBOT_MAX_Y_VELOCITY * -0.75,
+    //                                0};
+    //     movement_control(target_vel);
+    //   } else if (controller_state.left) {
+    //     BaseVelocity target_vel = {ROBOT_MAX_X_VELOCITY * -0.75,
+    //                                0,
+    //                                0};
+    //     movement_control(target_vel);
+    //   } else if (controller_state.right) {
+    //     BaseVelocity target_vel = {ROBOT_MAX_X_VELOCITY * 0.75,
+    //                                0,
+    //                                0};
+    //     movement_control(target_vel);
+    //   }
+    // }
 #endif
   }
   /* USER CODE END 3 */

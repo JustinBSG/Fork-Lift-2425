@@ -18,13 +18,15 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
+#include "gpio.h"
 #include "i2c.h"
 #include "tim.h"
 #include "usart.h"
-#include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "auto_path.h"
 #include "controller.h"
 #include "encoder.h"
 #include "mech.h"
@@ -70,12 +72,10 @@ void SystemClock_Config(void);
 /* USER CODE END 0 */
 
 /**
-  * @brief  The application entry point.
-  * @retval int
-  */
-int main(void)
-{
-
+ * @brief  The application entry point.
+ * @retval int
+ */
+int main(void) {
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -152,13 +152,39 @@ int main(void)
     prev_turn_on = controller_state.options_button;
 
     if (turn_on) {
-      float rotation_vel = (controller_state.l2_pressure / 1024.0 + controller_state.r2_pressure / -1024.0) * 100.0;
-
-      if (controller_state.ps_button) {  // auto, line following
+      if (auto_path_selection == LEFT_PATH) {
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_RESET);
+      } else if (auto_path_selection == MID_PATH) {
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
+      } else if (auto_path_selection == RIGHT_PATH) {
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
       }
 
-      if (controller_state.cross) {
+      float rotation_vel = (controller_state.l2_pressure / 1024.0 + controller_state.r2_pressure / -1024.0) * 100.0;
+
+      if (controller_state.ps_button && !prev_auto_path_enable) {  // auto, line following
+        auto_path_enable = !auto_path_enable;
+        if (auto_path_enable)
+          follow_auto_path(auto_path_selection);
+      }
+      prev_auto_path_enable = controller_state.ps_button;
+
+      if (controller_state.cross && !prev_auto_path_switch) {
+        auto_path_switch = !auto_path_switch;
+        if (auto_path_selection == LEFT_PATH)
+          auto_path_selection = MID_PATH;
+        else if (auto_path_selection == MID_PATH)
+          auto_path_selection = RIGHT_PATH;
+        else if (auto_path_selection == RIGHT_PATH)
+          auto_path_selection = LEFT_PATH;
       }  // auto, choose path, toggle left / right / straight forward
+      prev_auto_path_switch = controller_state.cross;
 
       if (controller_state.left && !controller_state.right && !controller_state.up && !controller_state.down) {
         BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.25, 0};
@@ -171,7 +197,7 @@ int main(void)
         movement_control(target_vel);  // move forward
       } else if (!controller_state.left && !controller_state.right && !controller_state.up && controller_state.down) {
         BaseVelocity target_vel = {-ROBOT_MAX_Y_VELOCITY * 0.25, 0, 0};
-        movement_control(target_vel);  // move backward
+        movement_control(target_vel);                                                                                                                        // move backward
       } else if (controller_state.l_stick_x == 0 && controller_state.l_stick_y == 0 && rotation_vel != 0 && !controller_state.r1 && !controller_state.l1) {  // rotate
         BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY * 0.5};
         movement_control(target_vel);
@@ -238,7 +264,10 @@ int main(void)
     //     break;
     // }
 
-    // movement_control(test_target_base_vel);
+    test_target_base_vel.x_vel = ROBOT_MAX_Y_VELOCITY * 0.25;
+    test_target_base_vel.y_vel = 0;
+    test_target_base_vel.z_vel = 0;
+    movement_control(test_target_base_vel);
 #endif
     HAL_Delay(1);
     read_current_velocity(encoders);
@@ -247,21 +276,20 @@ int main(void)
 }
 
 /**
-  * @brief System Clock Configuration
-  * @retval None
-  */
-void SystemClock_Config(void)
-{
+ * @brief System Clock Configuration
+ * @retval None
+ */
+void SystemClock_Config(void) {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
   /** Configure the main internal regulator output voltage
-  */
+   */
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST);
 
   /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
+   * in the RCC_OscInitTypeDef structure.
+   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
@@ -271,22 +299,19 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
   RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
     Error_Handler();
   }
 
   /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+   */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
-  {
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK) {
     Error_Handler();
   }
 }
@@ -296,11 +321,10 @@ void SystemClock_Config(void)
 /* USER CODE END 4 */
 
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
-void Error_Handler(void)
-{
+ * @brief  This function is executed in case of error occurrence.
+ * @retval None
+ */
+void Error_Handler(void) {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
@@ -309,16 +333,15 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
-void assert_failed(uint8_t *file, uint32_t line)
-{
+ * @brief  Reports the name of the source file and the source line number
+ *         where the assert_param error has occurred.
+ * @param  file: pointer to the source file name
+ * @param  line: assert_param error line source number
+ * @retval None
+ */
+void assert_failed(uint8_t *file, uint32_t line) {
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */

@@ -29,6 +29,7 @@
 #include "mech.h"
 #include "movement.h"
 #include "servo.h"
+#include "auto_path.h"
 
 /* USER CODE END Includes */
 
@@ -154,11 +155,39 @@ int main(void) {
     }
 
     if (turn_on) {
+      if (auto_path_selection == LEFT_PATH) {
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_RESET);
+      } else if (auto_path_selection == MID_PATH) {
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
+      } else if (auto_path_selection == RIGHT_PATH) {
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
+      }
+
       float rotation_vel = (controller_state.l2_pressure / 1024.0 + controller_state.r2_pressure / -1024.0) * 100.0;
 
-      if (controller_state.ps_button) {  // auto, line following
-        continue;
+      if (controller_state.ps_button && !prev_auto_path_enable) {  // auto, line following
+        auto_path_enable = !auto_path_enable;
+        if (auto_path_enable)
+          follow_auto_path(auto_path_selection);
       }
+      prev_auto_path_enable = controller_state.ps_button;
+
+      if (controller_state.cross && !prev_auto_path_switch) {
+        auto_path_switch = !auto_path_switch;
+        if (auto_path_selection == LEFT_PATH)
+          auto_path_selection = MID_PATH;
+        else if (auto_path_selection == MID_PATH)
+          auto_path_selection = RIGHT_PATH;
+        else if (auto_path_selection == RIGHT_PATH)
+          auto_path_selection = LEFT_PATH;
+      }  // auto, choose path, toggle left / right / straight forward
+      prev_auto_path_switch = controller_state.cross;
 
       // if (controller_state.l_stick_x == 0 && controller_state.r_stick_x == 0 && !controller_state.r1 && !controller_state.l1 && rotation_vel != 0) {  // rotate, r2 or l2
       //   BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY};

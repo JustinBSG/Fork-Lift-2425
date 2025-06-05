@@ -1,3 +1,4 @@
+"./Core/Src/auto_path.o"
 "./Core/Src/controller.o"
 "./Core/Src/encoder.o"
 "./Core/Src/gpio.o"

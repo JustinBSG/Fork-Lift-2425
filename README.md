@@ -10,9 +10,9 @@
     - [x] rotation code
     - [ ] tune degree
 2. [x] remote control code
-5. [ ] fix the problem of cannot flash code
-3. [ ] fan control code
-    - [ ] test pwm value
+5. [x] fix the problem of cannot flash code
+3. [x] fan control code
+    - [x] test pwm value
 4. [ ] write controller manual
 4. [ ] auto mode code
     - pid

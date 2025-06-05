@@ -176,9 +176,7 @@
     - GPIO Output 
     - Pull Down
 ### External TB6612 Module (for left motor)
-1. EN_R => PD15 (GPIO)
-    - GPIO Output 
-    - Pull Down
+1. EN_R => 3.3V / 5V (shorted)
 2. A_IN1 => PA8 (GPIO)
     - GPIO Output 
     - Pull Down
@@ -192,10 +190,16 @@
     - GPIO Output 
     - Pull Down
 ### Linear Actuator
-1. LINEAR_ACT_1 => PD2 (GPIO)
+1. LINEAR_ACT_1_1 => PD2 (GPIO)
     - GPIO Output 
     - Pull Down
-2. LINEAR_ACT_2 => PD4 (GPIO)
+1. LINEAR_ACT_1_2 => PD4 (GPIO)
+    - GPIO Output 
+    - Pull Down
+2. LINEAR_ACT_2_1 => PD6 (GPIO)
+    - GPIO Output 
+    - Pull Down
+2. LINEAR_ACT_2_2 => PD1 (GPIO)
     - GPIO Output 
     - Pull Down
 ### Remote Controller

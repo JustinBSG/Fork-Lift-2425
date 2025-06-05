@@ -39,7 +39,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define TEST 0
+#define TEST 1
 
 /* USER CODE END PD */
 
@@ -190,13 +190,6 @@ int main(void)
     //   test_time_stamp = HAL_GetTick();
     // }
 
-    TIM3->CCR3 = 1500;
-    HAL_Delay(1000);
-    TIM3->CCR3 = 1450;
-    test_base_vel.x_vel = ROBOT_MAX_X_VELOCITY * 0.5;
-    test_base_vel.y_vel = 0;
-    test_base_vel.z_vel = 0;
-    movement_control(test_base_vel);
     // switch (test_stage) {
     //   case 1:
     //     test_base_vel.x_vel = ROBOT_MAX_X_VELOCITY * 0.5;

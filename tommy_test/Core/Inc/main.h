@@ -79,10 +79,10 @@ void Error_Handler(void);
 #define LED1_GPIO_Port GPIOE
 #define D_IN2_Pin GPIO_PIN_13
 #define D_IN2_GPIO_Port GPIOE
-#define A_IN1_Pin GPIO_PIN_8
-#define A_IN1_GPIO_Port GPIOA
-#define A_IN2_Pin GPIO_PIN_9
+#define A_IN2_Pin GPIO_PIN_8
 #define A_IN2_GPIO_Port GPIOA
+#define A_IN1_Pin GPIO_PIN_9
+#define A_IN1_GPIO_Port GPIOA
 #define B_IN1_Pin GPIO_PIN_10
 #define B_IN1_GPIO_Port GPIOA
 #define B_IN2_Pin GPIO_PIN_11

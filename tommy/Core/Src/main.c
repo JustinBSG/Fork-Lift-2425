@@ -32,7 +32,6 @@
 #include "movement.h"
 #include "robot.h"
 
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -178,17 +177,17 @@ int main(void) {
       prev_auto_path_switch = controller_state.cross;
 
       if (controller_state.left && !controller_state.right && !controller_state.up && !controller_state.down) {
-        BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.25, 0};
-        movement_control(target_vel);  // move to the left
+        BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.25, 0};  // move to the left
+        movement_control(target_vel);
       } else if (!controller_state.left && controller_state.right && !controller_state.up && !controller_state.down) {
-        BaseVelocity target_vel = {0, -ROBOT_MAX_X_VELOCITY * 0.25, 0};
-        movement_control(target_vel);  // move to the right
+        BaseVelocity target_vel = {0, -ROBOT_MAX_X_VELOCITY * 0.25, 0};  // move to the right
+        movement_control(target_vel);
       } else if (!controller_state.left && !controller_state.right && controller_state.up && !controller_state.down) {
-        BaseVelocity target_vel = {ROBOT_MAX_Y_VELOCITY * 0.25, 0, 0};
-        movement_control(target_vel);  // move forward
+        BaseVelocity target_vel = {ROBOT_MAX_Y_VELOCITY * 0.25, 0, 0};  // move forward
+        movement_control(target_vel);
       } else if (!controller_state.left && !controller_state.right && !controller_state.up && controller_state.down) {
-        BaseVelocity target_vel = {-ROBOT_MAX_Y_VELOCITY * 0.25, 0, 0};
-        movement_control(target_vel);                                                                                                                        // move backward
+        BaseVelocity target_vel = {-ROBOT_MAX_Y_VELOCITY * 0.25, 0, 0};  // move backward
+        movement_control(target_vel);
       } else if (controller_state.l_stick_x == 0 && controller_state.l_stick_y == 0 && rotation_vel != 0 && !controller_state.r1 && !controller_state.l1) {  // rotate
         BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY * 0.5};
         movement_control(target_vel);

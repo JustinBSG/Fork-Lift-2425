@@ -69,12 +69,12 @@ void wheel_control(MecanumWheel wheel, int speed) {
       FR_MOTOR_CCR = abs(speed);
       break;
     case REAR_LEFT:
-      if (speed > 0) {
+      if (speed < 0) {
         // RL_MOTOR_B_CCR = 0;
         // RL_MOTOR_A_CCR = speed;
         HAL_GPIO_WritePin(D_IN1_GPIO_Port, D_IN1_Pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(D_IN2_GPIO_Port, D_IN2_Pin, GPIO_PIN_RESET);
-      } else if (speed < 0) {
+      } else if (speed > 0) {
         // RL_MOTOR_B_CCR = -speed;
         // RL_MOTOR_A_CCR = 0;
         HAL_GPIO_WritePin(D_IN1_GPIO_Port, D_IN1_Pin, GPIO_PIN_RESET);

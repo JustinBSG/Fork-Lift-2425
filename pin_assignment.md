@@ -190,16 +190,16 @@
     - GPIO Output 
     - Pull Down
 ### Linear Actuator
-1. LINEAR_ACT_1_1 => PD2 (GPIO)
+1. LINEAR_ACT_1_1 => PC10 (GPIO)
     - GPIO Output 
     - Pull Down
-1. LINEAR_ACT_1_2 => PD4 (GPIO)
+1. LINEAR_ACT_1_2 => PF2 (GPIO)
     - GPIO Output 
     - Pull Down
-2. LINEAR_ACT_2_1 => PD6 (GPIO)
+2. LINEAR_ACT_2_1 => PF9 (GPIO)
     - GPIO Output 
     - Pull Down
-2. LINEAR_ACT_2_2 => PD1 (GPIO)
+2. LINEAR_ACT_2_2 => PE14 (GPIO)
     - GPIO Output 
     - Pull Down
 ### Remote Controller

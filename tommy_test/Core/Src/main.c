@@ -122,8 +122,14 @@ int main(void)
   HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, GPIO_PIN_SET);
 
-  linear_actuator_extend(&linear_actuator[0]);
-  linear_actuator_extend(&linear_actuator[1]);
+  // linear_actuator_extend(&linear_actuator[0]);
+  // linear_actuator_extend(&linear_actuator[1]);
+  // linear_actuator_retract(&linear_actuator[0]);
+  // linear_actuator_retract(&linear_actuator[1]);
+  HAL_GPIO_WritePin(LINEAR_ACT_1_1_GPIO_Port, LINEAR_ACT_1_1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LINEAR_ACT_1_2_GPIO_Port, LINEAR_ACT_1_2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(LINEAR_ACT_2_1_GPIO_Port, LINEAR_ACT_2_1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LINEAR_ACT_2_2_GPIO_Port, LINEAR_ACT_2_2_Pin, GPIO_PIN_RESET);
 
   /* USER CODE END 2 */
 
@@ -135,16 +141,16 @@ int main(void)
     /* USER CODE BEGIN 3 */
     HAL_Delay(1);
 #if (TEST == 1)
-    if (HAL_GetTick() - test_time_stamp >= 5000) {
-      test_time_stamp = HAL_GetTick();
-      if (linear_actuator[0].pos == LINEAR_ACUATOR_UP || linear_actuator[1].pos == LINEAR_ACUATOR_UP) {
-        linear_actuator_retract(&linear_actuator[0]);
-        linear_actuator_retract(&linear_actuator[1]);
-      } else {
-        linear_actuator_extend(&linear_actuator[0]);
-        linear_actuator_extend(&linear_actuator[1]);
-      }
-    }
+    // if (HAL_GetTick() - test_time_stamp >= 5000) {
+    //   test_time_stamp = HAL_GetTick();
+    //   if (linear_actuator[0].pos == LINEAR_ACUATOR_UP || linear_actuator[1].pos == LINEAR_ACUATOR_UP) {
+    //     linear_actuator_retract(&linear_actuator[0]);
+    //     linear_actuator_retract(&linear_actuator[1]);
+    //   } else {
+    //     linear_actuator_extend(&linear_actuator[0]);
+    //     linear_actuator_extend(&linear_actuator[1]);
+    //   }
+    // }
     // test encoder
     // read_current_velocity(encoders);
 

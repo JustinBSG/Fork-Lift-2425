@@ -40,7 +40,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define TEST 0
+#define TEST 1
 
 /* USER CODE END PD */
 
@@ -54,6 +54,7 @@
 /* USER CODE BEGIN PV */
 BaseVelocity test_base_vel = {0, 0, 0};
 int time_stamp = 0;
+int time_stage = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -105,8 +106,8 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
-  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
 
   HAL_TIM_Base_Start_IT(&htim1);
@@ -118,13 +119,23 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim8);
   HAL_TIM_Encoder_Start_IT(&htim8, TIM_CHANNEL_ALL);
 
-  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LED5_GPIO_Port, LED5_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LED6_GPIO_Port, LED6_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LED7_GPIO_Port, LED7_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LINEAR_ACT_1_1_GPIO_Port, LINEAR_ACT_1_1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LINEAR_ACT_1_2_GPIO_Port, LINEAR_ACT_1_2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(LINEAR_ACT_2_1_GPIO_Port, LINEAR_ACT_2_1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LINEAR_ACT_2_2_GPIO_Port, LINEAR_ACT_2_2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(C_IN2_GPIO_Port, C_IN2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(D_IN1_GPIO_Port, D_IN1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(D_IN2_GPIO_Port, D_IN2_Pin, GPIO_PIN_RESET);
+
+  TIM3->CCR4 = 65535/4;
+  TIM3->CCR2 = 65535/4;
+  TIM3->CCR1 = 65535/4;
+  TIM2->CCR3 = 65535/4;
 
   /* USER CODE END 2 */
 
@@ -233,10 +244,22 @@ int main(void)
       prev_horizontal_linear_actuator_extend = controller_state.square;
     }
 #else
-    HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, GPIO_PIN_RESET);
+    if (HAL_GetTick() - time_stamp > 3000) {
+      time_stamp = HAL_GetTick();
+      HAL_GPIO_TogglePin(LINEAR_ACT_1_1_GPIO_Port, LINEAR_ACT_1_1_Pin);
+      HAL_GPIO_TogglePin(LINEAR_ACT_1_2_GPIO_Port, LINEAR_ACT_1_2_Pin);
+      HAL_GPIO_TogglePin(LINEAR_ACT_2_1_GPIO_Port, LINEAR_ACT_2_1_Pin);
+      HAL_GPIO_TogglePin(LINEAR_ACT_2_2_GPIO_Port, LINEAR_ACT_2_2_Pin);
+      HAL_GPIO_TogglePin(A_IN1_GPIO_Port, A_IN1_Pin);
+      HAL_GPIO_TogglePin(A_IN2_GPIO_Port, A_IN2_Pin);
+      HAL_GPIO_TogglePin(B_IN1_GPIO_Port, B_IN1_Pin);
+      HAL_GPIO_TogglePin(B_IN2_GPIO_Port, B_IN2_Pin);
+      HAL_GPIO_TogglePin(C_IN1_GPIO_Port, C_IN1_Pin);
+      HAL_GPIO_TogglePin(C_IN2_GPIO_Port, C_IN2_Pin);
+      HAL_GPIO_TogglePin(D_IN1_GPIO_Port, D_IN1_Pin);
+      HAL_GPIO_TogglePin(D_IN2_GPIO_Port, D_IN2_Pin);
+    }
+
 #endif
   }
   /* USER CODE END 3 */

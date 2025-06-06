@@ -59,8 +59,8 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define FR_PWM_Pin GPIO_PIN_2
 #define FR_PWM_GPIO_Port GPIOE
-#define C_IN1_Pin GPIO_PIN_3
-#define C_IN1_GPIO_Port GPIOE
+#define RL_PWM_Pin GPIO_PIN_3
+#define RL_PWM_GPIO_Port GPIOE
 #define FL_PWM_Pin GPIO_PIN_5
 #define FL_PWM_GPIO_Port GPIOE
 #define D_IN1_Pin GPIO_PIN_6
@@ -69,8 +69,6 @@ void Error_Handler(void);
 #define LINEAR_ACT_2_1_GPIO_Port GPIOF
 #define LINEAR_ACT_1_2_Pin GPIO_PIN_2
 #define LINEAR_ACT_1_2_GPIO_Port GPIOF
-#define RL_PWM_Pin GPIO_PIN_3
-#define RL_PWM_GPIO_Port GPIOA
 #define LED4_Pin GPIO_PIN_7
 #define LED4_GPIO_Port GPIOE
 #define LED3_Pin GPIO_PIN_8
@@ -79,30 +77,26 @@ void Error_Handler(void);
 #define LED2_GPIO_Port GPIOE
 #define LED1_Pin GPIO_PIN_10
 #define LED1_GPIO_Port GPIOE
+#define A_IN1_Pin GPIO_PIN_11
+#define A_IN1_GPIO_Port GPIOE
+#define A_IN2_Pin GPIO_PIN_12
+#define A_IN2_GPIO_Port GPIOE
+#define B_IN2_Pin GPIO_PIN_13
+#define B_IN2_GPIO_Port GPIOE
 #define LINEAR_ACT_2_2_Pin GPIO_PIN_14
 #define LINEAR_ACT_2_2_GPIO_Port GPIOE
-#define LED7_Pin GPIO_PIN_15
-#define LED7_GPIO_Port GPIOE
+#define B_IN1_Pin GPIO_PIN_10
+#define B_IN1_GPIO_Port GPIOB
+#define C_IN1_Pin GPIO_PIN_14
+#define C_IN1_GPIO_Port GPIOB
 #define C_IN2_Pin GPIO_PIN_15
 #define C_IN2_GPIO_Port GPIOB
 #define D_IN2_Pin GPIO_PIN_8
 #define D_IN2_GPIO_Port GPIOD
-#define A_IN2_Pin GPIO_PIN_8
-#define A_IN2_GPIO_Port GPIOA
-#define A_IN1_Pin GPIO_PIN_9
-#define A_IN1_GPIO_Port GPIOA
-#define B_IN1_Pin GPIO_PIN_10
-#define B_IN1_GPIO_Port GPIOA
-#define B_IN2_Pin GPIO_PIN_11
-#define B_IN2_GPIO_Port GPIOA
 #define LINEAR_ACT_1_1_Pin GPIO_PIN_10
 #define LINEAR_ACT_1_1_GPIO_Port GPIOC
 #define RR_PWM_Pin GPIO_PIN_7
 #define RR_PWM_GPIO_Port GPIOD
-#define LED6_Pin GPIO_PIN_6
-#define LED6_GPIO_Port GPIOB
-#define LED5_Pin GPIO_PIN_9
-#define LED5_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

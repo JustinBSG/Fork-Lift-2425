@@ -25,12 +25,13 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "auto_path.h"
 #include "controller.h"
 #include "encoder.h"
 #include "mech.h"
 #include "movement.h"
 #include "robot.h"
-#include "auto_path.h"
+
 
 /* USER CODE END Includes */
 
@@ -210,11 +211,23 @@ int main(void) {
         movement_control(target_vel);
       }
 
-      if (controller_state.triangle) { // extend / retract vertical linear actuator
+      if (controller_state.triangle && !prev_vertical_linear_actuator_extend) {  // extend / retract vertical linear actuator
+        vertical_linear_actuator_extend = !vertical_linear_actuator_extend;
+        if (vertical_linear_actuator_extend)
+          linear_actuator_extend(&linear_actuator[0]);
+        else
+          linear_actuator_retract(&linear_actuator[0]);
       }
+      prev_vertical_linear_actuator_extend = controller_state.triangle;
 
-      if (controller_state.square) { // extend / retract horizontal linear actuator
+      if (controller_state.square && !horizontal_linear_actuator_extend) {  // extend / retract horizontal linear actuator
+        horizontal_linear_actuator_extend = !horizontal_linear_actuator_extend;
+        if (horizontal_linear_actuator_extend)
+          linear_actuator_extend(&linear_actuator[1]);
+        else
+          linear_actuator_retract(&linear_actuator[1]);
       }
+      prev_horizontal_linear_actuator_extend = controller_state.square;
     }
 #else
     HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);

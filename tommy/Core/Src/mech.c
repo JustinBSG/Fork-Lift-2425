@@ -3,6 +3,14 @@
 LinearActuator linear_actuator[2] = {{.id = 0, .pos = LINEAR_ACUATOR_DOWN},
                                      {.id = 1, .pos = LINEAR_ACUATOR_DOWN}};
 
+bool vertical_linear_actuator_extend = false;
+
+bool prev_vertical_linear_actuator_extend = false;
+
+bool horizontal_linear_actuator_extend = false;
+
+bool prev_horizontal_linear_actuator_extend = false;
+
 void linear_actuator_extend(LinearActuator *actuator) {
   if (actuator->pos == LINEAR_ACUATOR_UP)
     return;

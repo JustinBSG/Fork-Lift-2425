@@ -21,4 +21,9 @@ void linear_actuator_retract(LinearActuator *actuator);
 
 extern LinearActuator linear_actuator[2];
 
+extern bool vertical_linear_actuator_extend;
+extern bool prev_vertical_linear_actuator_extend;
+extern bool horizontal_linear_actuator_extend;
+extern bool prev_horizontal_linear_actuator_extend;
+
 #endif  // __MECH_H__

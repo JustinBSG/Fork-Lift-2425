@@ -141,7 +141,7 @@ int main(void)
 
     if (controller_state.options_button && !prev_turn_on) {  // turn on/off the robot
       turn_on = !turn_on;
-      HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, turn_on ? GPIO_PIN_RESET : GPIO_PIN_SET);
+      HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, turn_on ? GPIO_PIN_RESET : GPIO_PIN_SET);
     }
     prev_turn_on = controller_state.options_button;
 

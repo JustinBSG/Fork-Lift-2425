@@ -1,5 +1,9 @@
 #include "movement.h"
 
+extern WheelVelocity test_wheel_vel;
+extern WheelPWM test_wheel_pwm;
+extern int test_var[10];
+
 WheelVelocity base2wheel(BaseVelocity base_vel) {
   float front_left = (base_vel.x_vel - base_vel.y_vel - (LENGTH_CENTER_WHEEL_X + LENGTH_CENTER_WHEEL_Y) * base_vel.z_vel) / RADIUS_WHEEL;
   float front_right = (base_vel.x_vel + base_vel.y_vel + (LENGTH_CENTER_WHEEL_X + LENGTH_CENTER_WHEEL_Y) * base_vel.z_vel) / RADIUS_WHEEL;
@@ -36,18 +40,22 @@ void wheel_control(MecanumWheel wheel, int speed) {
         // FL_MOTOR_B_CCR = speed;
         HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(C_IN2_GPIO_Port, C_IN2_Pin, GPIO_PIN_RESET);
+        test_var[0] = 1;
       } else if (speed < 0) {
         // FL_MOTOR_A_CCR = -speed;
         // FL_MOTOR_B_CCR = 0;
         HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(C_IN2_GPIO_Port, C_IN2_Pin, GPIO_PIN_SET);
+        test_var[0] = 2;
       } else {
         // FL_MOTOR_A_CCR = 0;
         // FL_MOTOR_B_CCR = 0;
         HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(C_IN2_GPIO_Port, C_IN2_Pin, GPIO_PIN_RESET);
+        test_var[0] = 3;
       }
       FL_MOTOR_CCR = abs(speed);
+      test_wheel_pwm.front_left = FL_MOTOR_CCR;
       break;
     case FRONT_RIGHT:
       if (speed < 0) {
@@ -55,18 +63,22 @@ void wheel_control(MecanumWheel wheel, int speed) {
         // FR_MOTOR_A_CCR = 0;
         HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_RESET);
+        test_var[1] = 1;
       } else if (speed > 0) {
         // FR_MOTOR_B_CCR = 0;
         // FR_MOTOR_A_CCR = -speed;
         HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_SET);
+        test_var[1] = 2;
       } else {
         // FR_MOTOR_A_CCR = 0;
         // FR_MOTOR_B_CCR = 0;
         HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_RESET);
+        test_var[1] = 3;
       }
       FR_MOTOR_CCR = abs(speed);
+      test_wheel_pwm.front_right = FR_MOTOR_CCR;
       break;
     case REAR_LEFT:
       if (speed < 0) {
@@ -74,18 +86,22 @@ void wheel_control(MecanumWheel wheel, int speed) {
         // RL_MOTOR_A_CCR = speed;
         HAL_GPIO_WritePin(D_IN1_GPIO_Port, D_IN1_Pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(D_IN2_GPIO_Port, D_IN2_Pin, GPIO_PIN_RESET);
+        test_var[2] = 1;
       } else if (speed > 0) {
         // RL_MOTOR_B_CCR = -speed;
         // RL_MOTOR_A_CCR = 0;
         HAL_GPIO_WritePin(D_IN1_GPIO_Port, D_IN1_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(D_IN2_GPIO_Port, D_IN2_Pin, GPIO_PIN_SET);
+        test_var[2] = 2;
       } else {
         // RL_MOTOR_A_CCR = 0;
         // RL_MOTOR_B_CCR = 0;
         HAL_GPIO_WritePin(D_IN1_GPIO_Port, D_IN1_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(D_IN2_GPIO_Port, D_IN2_Pin, GPIO_PIN_RESET);
+        test_var[2] = 3;
       }
       RL_MOTOR_CCR = abs(speed);
+      test_wheel_pwm.rear_left = RL_MOTOR_CCR;
       break;
     case REAR_RIGHT:
       if (speed < 0) {
@@ -93,18 +109,22 @@ void wheel_control(MecanumWheel wheel, int speed) {
         // RR_MOTOR_B_CCR = 0;
         HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_RESET);
+        test_var[3] = 1;
       } else if (speed > 0) {
         // RR_MOTOR_A_CCR = 0;
         // RR_MOTOR_B_CCR = -speed;
         HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_SET);
+        test_var[3] = 2;
       } else {
         // RR_MOTOR_A_CCR = 0;
         // RR_MOTOR_B_CCR = 0;
         HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_RESET);
+        test_var[3] = 3;
       }
       RR_MOTOR_CCR = abs(speed);
+      test_wheel_pwm.rear_right = RR_MOTOR_CCR;
       break;
     default:
       if (speed > 0) {
@@ -137,6 +157,10 @@ void wheels_control(WheelPWM pwm) {
 
 void movement_control(BaseVelocity base_vel) {
   WheelVelocity target_vel = base2wheel(base_vel);
+  test_wheel_vel.front_left = target_vel.front_left;
+  test_wheel_vel.front_right = target_vel.front_right;
+  test_wheel_vel.rear_left = target_vel.rear_left;
+  test_wheel_vel.rear_right = target_vel.rear_right;
 #if (PID_MODE == 1)
   WheelVelocity current_vel = read_current_velocity(encoders);
   WheelVelocity result_vel = pid_system(target_vel, current_vel);

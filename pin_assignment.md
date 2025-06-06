@@ -166,13 +166,13 @@
 2. C_IN1 => PE3 (GPIO)
     - GPIO Output 
     - Pull Down
-3. C_IN2 => PE4 (GPIO)
+3. C_IN2 => PB15 (GPIO)
     - GPIO Output 
     - Pull Down
 4. D_IN1 => PE6 (GPIO)
     - GPIO Output 
     - Pull Down
-5. D_IN2 => PC13 (GPIO)
+5. D_IN2 => PD8 (GPIO)
     - GPIO Output 
     - Pull Down
 ### External TB6612 Module (for left motor)

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "main.h"
+#include "tim.h"
 #include "robot.h"
 
 #define FL_MOTOR_TIMER TIM3

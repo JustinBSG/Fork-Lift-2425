@@ -53,6 +53,9 @@
 /* USER CODE BEGIN PV */
 BaseVelocity test_base_vel = {0, 0, 0};
 int test_time_stamp = 0;
+WheelVelocity test_wheel_vel = {0, 0, 0, 0};
+WheelPWM test_wheel_pwm = {0, 0, 0, 0};
+int test_var[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -117,19 +120,28 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim8);
   HAL_TIM_Encoder_Start_IT(&htim8, TIM_CHANNEL_ALL);
 
+  HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(C_IN2_GPIO_Port, C_IN2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(D_IN1_GPIO_Port, D_IN1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(D_IN2_GPIO_Port, D_IN2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_RESET);
+
   HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, GPIO_PIN_SET);
 
-  // linear_actuator_extend(&linear_actuator[0]);
-  // linear_actuator_extend(&linear_actuator[1]);
-  // linear_actuator_retract(&linear_actuator[0]);
-  // linear_actuator_retract(&linear_actuator[1]);
-  HAL_GPIO_WritePin(LINEAR_ACT_1_1_GPIO_Port, LINEAR_ACT_1_1_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LINEAR_ACT_1_2_GPIO_Port, LINEAR_ACT_1_2_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(LINEAR_ACT_2_1_GPIO_Port, LINEAR_ACT_2_1_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LINEAR_ACT_2_2_GPIO_Port, LINEAR_ACT_2_2_Pin, GPIO_PIN_RESET);
+  // linear_actuator_extend(&(linear_actuator[0]));
+  // linear_actuator_extend(&(linear_actuator[1]));
+  // linear_actuator_retract(&(linear_actuator[0]));
+  // linear_actuator_retract(&(linear_actuator[1]));
+  HAL_GPIO_WritePin(LINEAR_ACT_1_1_GPIO_Port, LINEAR_ACT_1_1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(LINEAR_ACT_1_2_GPIO_Port, LINEAR_ACT_1_2_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LINEAR_ACT_2_1_GPIO_Port, LINEAR_ACT_2_1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(LINEAR_ACT_2_2_GPIO_Port, LINEAR_ACT_2_2_Pin, GPIO_PIN_SET);
 
   /* USER CODE END 2 */
 
@@ -141,38 +153,39 @@ int main(void)
     /* USER CODE BEGIN 3 */
     HAL_Delay(1);
 #if (TEST == 1)
-    // if (HAL_GetTick() - test_time_stamp >= 5000) {
-    //   test_time_stamp = HAL_GetTick();
-    //   if (linear_actuator[0].pos == LINEAR_ACUATOR_UP || linear_actuator[1].pos == LINEAR_ACUATOR_UP) {
-    //     linear_actuator_retract(&linear_actuator[0]);
-    //     linear_actuator_retract(&linear_actuator[1]);
-    //   } else {
-    //     linear_actuator_extend(&linear_actuator[0]);
-    //     linear_actuator_extend(&linear_actuator[1]);
-    //   }
-    // }
+    if (HAL_GetTick() - test_time_stamp >= 5000) {
+      test_time_stamp = HAL_GetTick();
+      HAL_GPIO_TogglePin(LINEAR_ACT_1_1_GPIO_Port, LINEAR_ACT_1_1_Pin);
+      HAL_GPIO_TogglePin(LINEAR_ACT_1_2_GPIO_Port, LINEAR_ACT_1_2_Pin);
+      HAL_GPIO_TogglePin(LINEAR_ACT_2_1_GPIO_Port, LINEAR_ACT_2_1_Pin);
+      HAL_GPIO_TogglePin(LINEAR_ACT_2_2_GPIO_Port, LINEAR_ACT_2_2_Pin);
+    }
     // test encoder
     // read_current_velocity(encoders);
 
     // test motor
-    HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(C_IN2_GPIO_Port, C_IN2_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(D_IN1_GPIO_Port, D_IN1_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(D_IN2_GPIO_Port, D_IN2_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_RESET);
-    TIM2->CCR3 = 65535 / 2;
-    TIM2->CCR4 = 65535 / 2;
-    TIM3->CCR1 = 65535 / 2;
-    TIM3->CCR4 = 65535 / 2;
+    // HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_SET);
+    // HAL_GPIO_WritePin(C_IN2_GPIO_Port, C_IN2_Pin, GPIO_PIN_RESET);
+    // HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_SET);
+    // HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_RESET);
+    // HAL_GPIO_WritePin(D_IN1_GPIO_Port, D_IN1_Pin, GPIO_PIN_SET);
+    // HAL_GPIO_WritePin(D_IN2_GPIO_Port, D_IN2_Pin, GPIO_PIN_RESET);
+    // HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_SET);
+    // HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_RESET);
+    // TIM2->CCR3 = 65535 / 2;
+    // TIM2->CCR4 = 65535 / 2;
+    // TIM3->CCR1 = 65535 / 2;
+    // TIM3->CCR4 = 65535 / 2;
+    // FL_MOTOR_CCR = 13106;
+    // FR_MOTOR_CCR = 13106;
+    // RL_MOTOR_CCR = 13106;
+    // RR_MOTOR_CCR = 13106;
 
     // overall movement
-    // test_base_vel.x_vel = 0;
-    // test_base_vel.y_vel = ROBOT_MAX_X_VELOCITY * 0.5;
-    // test_base_vel.z_vel = 0;
-    // movement_control(test_base_vel);
+    test_base_vel.x_vel = 0;
+    test_base_vel.y_vel = ROBOT_MAX_X_VELOCITY * 0.5;
+    test_base_vel.z_vel = 0;
+    movement_control(test_base_vel);
 
     // remote controller
     // HAL_UART_Transmit(&huart1, controller_buffer, sizeof(controller_buffer), HAL_MAX_DELAY);

@@ -42,7 +42,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define TEST 0
+#define TEST 1
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/

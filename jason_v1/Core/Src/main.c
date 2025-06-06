@@ -112,7 +112,6 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
-  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
   HAL_TIM_Base_Start_IT(&htim1);
@@ -284,8 +283,8 @@ int main(void)
     //   servo_reset_all();
     TIM3->CCR1 = 16800 / 2;
     TIM3->CCR2 = 16800 / 2;
-    TIM3->CCR3 = 16800 / 2;
     TIM3->CCR4 = 16800 / 2;
+    TIM2->CCR4 = 16800 / 2;
 #endif
   }
   /* USER CODE END 3 */

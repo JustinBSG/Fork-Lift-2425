@@ -30,6 +30,7 @@
 #include "mech.h"
 #include "movement.h"
 #include "robot.h"
+#include "auto_path.h"
 
 /* USER CODE END Includes */
 
@@ -131,13 +132,95 @@ int main(void) {
     /* USER CODE BEGIN 3 */
     HAL_Delay(1);
 #if (TEST == 0)
-    
+    HAL_UART_Receive(&huart1, controller_buffer, sizeof(controller_buffer), 0xFFFF);
+    parse_controller_data(controller_buffer, &controller_state);
+
+    if (controller_state.options_button && !prev_turn_on) {  // turn on/off the robot
+      turn_on = !turn_on;
+      HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, turn_on ? GPIO_PIN_RESET : GPIO_PIN_SET);
+    }
+    prev_turn_on = controller_state.options_button;
+
+    if (turn_on) {
+      if (auto_path_selection == LEFT_PATH) {
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_RESET);
+      } else if (auto_path_selection == MID_PATH) {
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
+      } else if (auto_path_selection == RIGHT_PATH) {
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
+      }
+
+      float rotation_vel = (controller_state.l2_pressure / 1024.0 + controller_state.r2_pressure / -1024.0) * 100.0;
+
+      if (controller_state.ps_button && !prev_auto_path_enable) {  // auto, line following
+        auto_path_enable = !auto_path_enable;
+        if (auto_path_enable)
+          follow_auto_path(auto_path_selection);
+      }
+      prev_auto_path_enable = controller_state.ps_button;
+
+      if (controller_state.cross && !prev_auto_path_switch) {
+        auto_path_switch = !auto_path_switch;
+        if (auto_path_selection == LEFT_PATH)
+          auto_path_selection = MID_PATH;
+        else if (auto_path_selection == MID_PATH)
+          auto_path_selection = RIGHT_PATH;
+        else if (auto_path_selection == RIGHT_PATH)
+          auto_path_selection = LEFT_PATH;
+      }  // auto, choose path, toggle left / right / straight forward
+      prev_auto_path_switch = controller_state.cross;
+
+      if (controller_state.left && !controller_state.right && !controller_state.up && !controller_state.down) {
+        BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.25, 0};
+        movement_control(target_vel);  // move to the left
+      } else if (!controller_state.left && controller_state.right && !controller_state.up && !controller_state.down) {
+        BaseVelocity target_vel = {0, -ROBOT_MAX_X_VELOCITY * 0.25, 0};
+        movement_control(target_vel);  // move to the right
+      } else if (!controller_state.left && !controller_state.right && controller_state.up && !controller_state.down) {
+        BaseVelocity target_vel = {ROBOT_MAX_Y_VELOCITY * 0.25, 0, 0};
+        movement_control(target_vel);  // move forward
+      } else if (!controller_state.left && !controller_state.right && !controller_state.up && controller_state.down) {
+        BaseVelocity target_vel = {-ROBOT_MAX_Y_VELOCITY * 0.25, 0, 0};
+        movement_control(target_vel);                                                                                                                        // move backward
+      } else if (controller_state.l_stick_x == 0 && controller_state.l_stick_y == 0 && rotation_vel != 0 && !controller_state.r1 && !controller_state.l1) {  // rotate
+        BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY * 0.5};
+        movement_control(target_vel);
+      } else if (controller_state.r_stick_x == 0 && controller_state.r_stick_y == 0 && !controller_state.r1 && !controller_state.l1) {  // move fastly
+        BaseVelocity target_vel = {controller_state.l_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.5,
+                                   controller_state.l_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.5,
+                                   0};
+        movement_control(target_vel);
+      } else if (!controller_state.r1 && !controller_state.l1) {  // move slowly
+        BaseVelocity target_vel = {controller_state.r_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.25,
+                                   controller_state.r_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.25,
+                                   0};
+        movement_control(target_vel);
+      } else if (controller_state.l1 || controller_state.r1) {  // rotate slowly
+        BaseVelocity target_vel = {0, 0, 0};
+        if (controller_state.l1)
+          target_vel.z_vel = ROBOT_MAX_Z_VELOCITY * 0.25;
+        else if (controller_state.r1)
+          target_vel.z_vel = ROBOT_MAX_Z_VELOCITY * -0.25;
+        movement_control(target_vel);
+      }
+
+      if (controller_state.triangle) { // extend / retract vertical linear actuator
+      }
+
+      if (controller_state.square) { // extend / retract horizontal linear actuator
+      }
+    }
 #else
-    test_base_vel.x_vel = 0;
-    test_base_vel.y_vel = ROBOT_MAX_X_VELOCITY * 0.5;
-    test_base_vel.z_vel = 0;
-    movement_control(test_base_vel);
-    read_current_velocity(encoders);
+    HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, GPIO_PIN_RESET);
 #endif
   }
   /* USER CODE END 3 */

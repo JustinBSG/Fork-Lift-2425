@@ -138,10 +138,10 @@ int main(void)
     // read_current_velocity(encoders);
 
     // test motor
-    // TIM2->CCR3 = 65535 / 2;
-    // TIM2->CCR4 = 65535 / 2;
-    // TIM3->CCR1 = 65535 / 2;
-    // TIM3->CCR4 = 65535 / 2;
+    TIM2->CCR3 = 65535 / 2;
+    TIM2->CCR4 = 65535 / 2;
+    TIM3->CCR1 = 65535 / 2;
+    TIM3->CCR4 = 65535 / 2;
 
     // overall movement
     // test_base_vel.x_vel = 0;

@@ -177,10 +177,10 @@
     - Pull Down
 ### External TB6612 Module (for left motor)
 1. EN_R => 3.3V / 5V (shorted)
-2. A_IN1 => PA8 (GPIO)
+2. A_IN1 => PA9 (GPIO)
     - GPIO Output 
     - Pull Down
-3. A_IN2 => PA9 (GPIO)
+3. A_IN2 => PA8 (GPIO)
     - GPIO Output 
     - Pull Down
 4. B_IN1 => PA10 (GPIO)

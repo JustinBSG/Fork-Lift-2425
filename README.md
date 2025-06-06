@@ -19,9 +19,9 @@
 
 ### Tommy Car
 1. [x] update pin config
-2. [ ] update macro for pin
+2. [x] update macro for pin
 3. [ ] test previous code
-4. [ ] slider control code
+4. [x] slider control code
 5. [ ] write controller manual
 6. [ ] auto mode code
   - tune the time

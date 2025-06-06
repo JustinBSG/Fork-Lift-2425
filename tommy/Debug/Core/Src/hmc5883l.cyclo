@@ -1,7 +1,0 @@
-../Core/Src/hmc5883l.c:23:6:hmc5883l_init	1
-../Core/Src/hmc5883l.c:30:6:hmc5883l_write	1
-../Core/Src/hmc5883l.c:34:6:hmc5883l_read	1
-../Core/Src/hmc5883l.c:38:6:hmc5883l_is_data_ready	1
-../Core/Src/hmc5883l.c:44:6:hmc5883l_read_data	1
-../Core/Src/hmc5883l.c:57:7:hmc5883l_cal_xy_angle	1
-../Core/Src/hmc5883l.c:61:6:hmc5883l_calibrate	8

@@ -1,38 +1,29 @@
 /* USER CODE BEGIN Header */
 /**
- ******************************************************************************
- * @file           : main.c
- * @brief          : Main program body
- ******************************************************************************
- * @attention
- *
- * Copyright (c) 2025 STMicroelectronics.
- * All rights reserved.
- *
- * This software is licensed under terms that can be found in the LICENSE file
- * in the root directory of this software component.
- * If no LICENSE file comes with this software, it is provided AS-IS.
- *
- ******************************************************************************
- */
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Main program body
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <string.h>
-
-#include "controller.h"
-#include "encoder.h"
-#include "hmc5883l.h"
-#include "movement.h"
-#include "pid-mecanum.h"
-#include "robot.h"
 
 /* USER CODE END Includes */
 
@@ -43,7 +34,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define TEST 1
 
 /* USER CODE END PD */
 
@@ -55,21 +45,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-char test_controller_msg[41];
-int test_stage = 0;
-int test_time_stamp = 0;
-int test_encoder[4] = {0, 0, 0, 0};
-float test_var_1 = 0;
-float test_var_2 = 0;
-float test_var_3 = 0;
-float test_var_4 = 0;
-float test_var_5 = 0;
-uint8_t test_hmc[3];
-float test_hmc_angle = 0;
-WheelVelocity test_wheel_vel = {0, 0, 0, 0};
-WheelPWM test_pwm = {0, 0, 0, 0};
-BaseVelocity test_target_base_vel = {0, 0, 0};
-int controller_stage = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -112,158 +88,24 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_UART4_Init();
-  MX_USART1_UART_Init();
   MX_TIM3_Init();
   MX_TIM1_Init();
-  MX_TIM8_Init();
+  MX_TIM2_Init();
   MX_TIM4_Init();
   MX_TIM5_Init();
-  MX_I2C1_Init();
-  MX_TIM2_Init();
+  MX_TIM8_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
-  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
-  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
-  HAL_TIM_Base_Start_IT(&htim1);
-  HAL_TIM_Encoder_Start_IT(&htim1, TIM_CHANNEL_ALL);
-  HAL_TIM_Base_Start_IT(&htim4);
-  HAL_TIM_Encoder_Start_IT(&htim4, TIM_CHANNEL_ALL);
-  HAL_TIM_Base_Start_IT(&htim5);
-  HAL_TIM_Encoder_Start_IT(&htim5, TIM_CHANNEL_ALL);
-  HAL_TIM_Base_Start_IT(&htim8);
-  HAL_TIM_Encoder_Start_IT(&htim8, TIM_CHANNEL_ALL);
-  // enable both sides of motor driver IC
-  HAL_GPIO_WritePin(MOTOR_LEFT_ENABLE_GPIO_Port, MOTOR_LEFT_ENABLE_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(MOTOR_RIGHT_ENABLE_GPIO_Port, MOTOR_RIGHT_ENABLE_Pin, GPIO_PIN_SET);
 
-  HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
-  TIM3->CCR4 = 16800/2;
-  TIM3->CCR1 = 16800/2;
-  TIM2->CCR4 = 16800/2;
-  TIM2->CCR3 = 16800/2;
-  // hmc5883l_init();
-  // HAL_Delay(10);
-  // HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
-  // BaseVelocity calibrate_vel = {0, 0, 0.5 * ROBOT_MAX_Z_VELOCITY};
-  // movement_control(calibrate_vel);
-  // hmc5883l_calibrate(&hmc5883l_cali_data);
-  // calibrate_vel.z_vel = 0;
-  // movement_control(calibrate_vel);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1) {
+  while (1)
+  {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-#if (TEST)
-    HAL_Delay(1);
-    
-    // read_current_velocity(encoders);
-    // BaseVelocity target_vel = {0,
-    //                            0.5 * ROBOT_MAX_Y_VELOCITY,
-    //                            0};
-    // movement_control(target_vel);
-
-    // hmc5883l_read_data(&hmc5883l_data);
-    // test_hmc_angle = hmc5883l_cal_xy_angle(&hmc5883l_data, &hmc5883l_cali_data);
-#else
-    HAL_Delay(1);
-    HAL_UART_Receive(&huart1, controller_buffer, sizeof(controller_buffer), 0xFFFF);
-    parse_controller_data(controller_buffer, &controller_state);
-    if (controller_state.options_button && !prev_turn_on) {
-      turn_on = !turn_on;
-      HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, turn_on ? GPIO_PIN_SET : GPIO_PIN_RESET);
-    }
-    prev_turn_on = controller_state.options_button;
-
-    if (turn_on) {
-      float rotation_vel = (controller_state.l2_pressure / 1024.0 + controller_state.r2_pressure / -1024.0) * 100.0;
-
-      if (controller_state.ps_button) {  // auto, line following
-      }
-
-      if (controller_state.l_stick_x == 0 && controller_state.l_stick_y == 0 && rotation_vel != 0 && !controller_state.r1 && !controller_state.l1) {  // rotate
-        BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY};
-        movement_control(target_vel);
-        controller_stage = 1;
-      } else if (controller_state.r_stick_x == 0 && controller_state.r_stick_y == 0 && !controller_state.r1 && !controller_state.l1) {  // move fastly
-        BaseVelocity target_vel = {controller_state.l_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY,
-                                   controller_state.l_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY,
-                                   0};
-        movement_control(target_vel);
-        controller_stage = 2;
-      } else if (!controller_state.r1 && !controller_state.l1) {  // move slowly
-        BaseVelocity target_vel = {controller_state.r_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.5,
-                                   controller_state.r_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.5,
-                                   0};
-        movement_control(target_vel);
-        controller_stage = 3;
-      } else if (controller_state.l1 || controller_state.r1) {  // rotate slowly
-        BaseVelocity target_vel = {0, 0, 0};
-        if (controller_state.l1)
-          target_vel.z_vel = ROBOT_MAX_Z_VELOCITY * 0.5;
-        else if (controller_state.r1)
-          target_vel.z_vel = ROBOT_MAX_Z_VELOCITY * -0.5;
-        movement_control(target_vel);
-        controller_stage = 4;
-      }
-
-      if (controller_state.cross && !controller_state.triangle) {  // down the lift
-
-      } else if (!controller_state.cross && controller_state.triangle) {  // up the lift
-      }
-
-      if (controller_state.circle && !controller_state.square) {  // close the lift
-
-      } else if (controller_state.square && !controller_state.circle) {  // open the lift
-      }
-    }
-
-    // if (HAL_GetTick() - test_time_stamp > 10000) {
-    //   test_time_stamp = HAL_GetTick();
-    //   test_stage++;
-    //   if (test_stage > 3)
-    //     test_stage = 0;
-    // }
-
-    // switch (test_stage) {
-    //   case 2: // move forward
-    //     test_target_base_vel.x_vel = 75 / 100.0 * ROBOT_MAX_X_VELOCITY;
-    //     test_target_base_vel.y_vel = 0;
-    //     test_target_base_vel.z_vel = 0;
-    //     break;
-    //   case 1: // move to the left
-    //     test_target_base_vel.x_vel = 0;
-    //     test_target_base_vel.y_vel = 75 / 100.0 * ROBOT_MAX_Y_VELOCITY;
-    //     test_target_base_vel.z_vel = 0;
-    //     break;
-    //   case 3: // rotate clockwise
-    //     test_target_base_vel.x_vel = 0;
-    //     test_target_base_vel.y_vel = 0;
-    //     test_target_base_vel.z_vel = 75 / 100.0 * ROBOT_MAX_Z_VELOCITY;
-    //     break;
-    //   default:
-    //     test_target_base_vel.x_vel = 0;
-    //     test_target_base_vel.y_vel = 0;
-    //     test_target_base_vel.z_vel = 0;
-    //     test_stage = 0;
-    //     break;
-    // }
-    // movement_control(test_target_base_vel);
-
-    test_encoder[0] = __HAL_TIM_GET_COUNTER(&htim1);
-    test_encoder[1] = __HAL_TIM_GET_COUNTER(&htim8);
-    test_encoder[2] = __HAL_TIM_GET_COUNTER(&htim5);
-    test_encoder[3] = __HAL_TIM_GET_COUNTER(&htim4);
-    test_wheel_vel = read_current_velocity(encoders);
-#endif
   }
   /* USER CODE END 3 */
 }
@@ -279,20 +121,15 @@ void SystemClock_Config(void)
 
   /** Configure the main internal regulator output voltage
   */
-  HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST);
+  HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1);
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV2;
-  RCC_OscInitStruct.PLL.PLLN = 85;
-  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
-  RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -302,12 +139,12 @@ void SystemClock_Config(void)
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
   {
     Error_Handler();
   }
@@ -326,7 +163,8 @@ void Error_Handler(void)
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
-  while (1) {
+  while (1)
+  {
   }
   /* USER CODE END Error_Handler_Debug */
 }

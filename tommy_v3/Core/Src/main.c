@@ -154,27 +154,6 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     HAL_Delay(1);
-    if (HAL_GetTick() - time_stamp > 3000) {
-      time_stamp = HAL_GetTick();
-      HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin); // work
-      HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin); // work
-      HAL_GPIO_TogglePin(LED3_GPIO_Port, LED3_Pin); // work
-      HAL_GPIO_TogglePin(LED4_GPIO_Port, LED4_Pin); // work
-      HAL_GPIO_TogglePin(LINEAR_ACT_1_1_GPIO_Port, LINEAR_ACT_1_1_Pin); // work
-      HAL_GPIO_TogglePin(LINEAR_ACT_1_2_GPIO_Port, LINEAR_ACT_1_2_Pin); // work
-      HAL_GPIO_TogglePin(LINEAR_ACT_2_1_GPIO_Port, LINEAR_ACT_2_1_Pin); // work
-      HAL_GPIO_TogglePin(LINEAR_ACT_2_2_GPIO_Port, LINEAR_ACT_2_2_Pin); // work
-      HAL_GPIO_TogglePin(C_IN1_GPIO_Port, C_IN1_Pin); // work
-      HAL_GPIO_TogglePin(C_IN2_GPIO_Port, C_IN2_Pin); // not work
-      HAL_GPIO_TogglePin(B_IN1_GPIO_Port, B_IN1_Pin); // work
-      HAL_GPIO_TogglePin(B_IN2_GPIO_Port, B_IN2_Pin); // work
-      HAL_GPIO_TogglePin(D_IN1_GPIO_Port, D_IN1_Pin); // work
-      HAL_GPIO_TogglePin(D_IN2_GPIO_Port, D_IN2_Pin); // not work
-      HAL_GPIO_TogglePin(A_IN1_GPIO_Port, A_IN1_Pin); // work
-      HAL_GPIO_TogglePin(A_IN2_GPIO_Port, A_IN2_Pin); // work
-      HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_15); 
-      HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_8);
-    }
   }
   /* USER CODE END 3 */
 }

@@ -232,69 +232,77 @@ int main(void)
     if (HAL_GetTick() - time_stamp > 3000) {
       time_stamp = HAL_GetTick();
       test_stage++;
-      // HAL_GPIO_TogglePin(LINEAR_ACT_1_1_GPIO_Port, LINEAR_ACT_1_1_Pin);
-      // HAL_GPIO_TogglePin(LINEAR_ACT_1_2_GPIO_Port, LINEAR_ACT_1_2_Pin);
-      // HAL_GPIO_TogglePin(LINEAR_ACT_2_1_GPIO_Port, LINEAR_ACT_2_1_Pin);
-      // HAL_GPIO_TogglePin(LINEAR_ACT_2_2_GPIO_Port, LINEAR_ACT_2_2_Pin);
-      // HAL_GPIO_TogglePin(A_IN1_GPIO_Port, A_IN1_Pin);
-      // HAL_GPIO_TogglePin(A_IN2_GPIO_Port, A_IN2_Pin);
-      // HAL_GPIO_TogglePin(B_IN1_GPIO_Port, B_IN1_Pin);
-      // HAL_GPIO_TogglePin(B_IN2_GPIO_Port, B_IN2_Pin);
-      // HAL_GPIO_TogglePin(C_IN1_GPIO_Port, C_IN1_Pin);
-      // HAL_GPIO_TogglePin(C_IN2_GPIO_Port, C_IN2_Pin);
-      // HAL_GPIO_TogglePin(D_IN1_GPIO_Port, D_IN1_Pin);
-      // HAL_GPIO_TogglePin(D_IN2_GPIO_Port, D_IN2_Pin);
+      if (test_stage%2 == 0)
+        linear_actuator_extend(&(linear_actuator[1]));
+      else
+        linear_actuator_retract(&(linear_actuator[1]));
+    //   // HAL_GPIO_TogglePin(LINEAR_ACT_1_1_GPIO_Port, LINEAR_ACT_1_1_Pin);
+    //   // HAL_GPIO_TogglePin(LINEAR_ACT_1_2_GPIO_Port, LINEAR_ACT_1_2_Pin);
+    //   // HAL_GPIO_TogglePin(LINEAR_ACT_2_1_GPIO_Port, LINEAR_ACT_2_1_Pin);
+    //   // HAL_GPIO_TogglePin(LINEAR_ACT_2_2_GPIO_Port, LINEAR_ACT_2_2_Pin);
+    //   // HAL_GPIO_TogglePin(A_IN1_GPIO_Port, A_IN1_Pin);
+    //   // HAL_GPIO_TogglePin(A_IN2_GPIO_Port, A_IN2_Pin);
+    //   // HAL_GPIO_TogglePin(B_IN1_GPIO_Port, B_IN1_Pin);
+    //   // HAL_GPIO_TogglePin(B_IN2_GPIO_Port, B_IN2_Pin);
+    //   // HAL_GPIO_TogglePin(C_IN1_GPIO_Port, C_IN1_Pin);
+    //   // HAL_GPIO_TogglePin(C_IN2_GPIO_Port, C_IN2_Pin);
+    //   // HAL_GPIO_TogglePin(D_IN1_GPIO_Port, D_IN1_Pin);
+    //   // HAL_GPIO_TogglePin(D_IN2_GPIO_Port, D_IN2_Pin);
     }
 
-    switch (test_stage%8) {
-      case 0:
-        test_base_vel.x_vel = ROBOT_MAX_Y_VELOCITY * 0.5;
-        test_base_vel.y_vel = 0;
-        test_base_vel.z_vel = 0;
-        break;
-      case 1:
-        test_base_vel.x_vel = ROBOT_MAX_Y_VELOCITY * -0.5;
-        test_base_vel.y_vel = 0;
-        test_base_vel.z_vel = 0;
-        break;
-      case 2:
-        test_base_vel.x_vel = 0;
-        test_base_vel.y_vel = ROBOT_MAX_X_VELOCITY * 0.5;
-        test_base_vel.z_vel = 0;
-        break;
-      case 3:
-        test_base_vel.x_vel = 0;
-        test_base_vel.y_vel = ROBOT_MAX_X_VELOCITY * -0.5;
-        test_base_vel.z_vel = 0;
-        break;
-      case 4:
-        test_base_vel.x_vel = 0;
-        test_base_vel.y_vel = 0;
-        test_base_vel.z_vel = ROBOT_MAX_Z_VELOCITY * 0.25;
-        break;
-      case 5:
-        test_base_vel.x_vel = 0;
-        test_base_vel.y_vel = 0;
-        test_base_vel.z_vel = ROBOT_MAX_Z_VELOCITY * -0.25;
-        break;
-      case 6:
-        test_base_vel.x_vel = 0;
-        test_base_vel.y_vel = 0;
-        test_base_vel.z_vel = 0;
-        // linear_actuator_extend(&(linear_actuator[0]));
-        // linear_actuator_extend(&(linear_actuator[1]));
-        break;
-      case 7:
-        test_base_vel.x_vel = 0;
-        test_base_vel.y_vel = 0;
-        test_base_vel.z_vel = 0;
-        // linear_actuator_retract(&(linear_actuator[0]));
-        // linear_actuator_retract(&(linear_actuator[1]));
-        break;
-      default:
-        break;
-    }
-    movement_control(test_base_vel);
+    // switch (test_stage%8) {
+    //   case 0:
+    //     test_base_vel.x_vel = ROBOT_MAX_Y_VELOCITY * 0.5;
+    //     test_base_vel.y_vel = 0;
+    //     test_base_vel.z_vel = 0;
+    //     break;
+    //   case 1:
+    //     test_base_vel.x_vel = ROBOT_MAX_Y_VELOCITY * -0.5;
+    //     test_base_vel.y_vel = 0;
+    //     test_base_vel.z_vel = 0;
+    //     break;
+    //   case 2:
+    //     test_base_vel.x_vel = 0;
+    //     test_base_vel.y_vel = ROBOT_MAX_X_VELOCITY * 0.5;
+    //     test_base_vel.z_vel = 0;
+    //     break;
+    //   case 3:
+    //     test_base_vel.x_vel = 0;
+    //     test_base_vel.y_vel = ROBOT_MAX_X_VELOCITY * -0.5;
+    //     test_base_vel.z_vel = 0;
+    //     break;
+    //   case 4:
+    //     test_base_vel.x_vel = 0;
+    //     test_base_vel.y_vel = 0;
+    //     test_base_vel.z_vel = ROBOT_MAX_Z_VELOCITY * 0.25;
+    //     break;
+    //   case 5:
+    //     test_base_vel.x_vel = 0;
+    //     test_base_vel.y_vel = 0;
+    //     test_base_vel.z_vel = ROBOT_MAX_Z_VELOCITY * -0.25;
+    //     break;
+    //   case 6:
+    //     test_base_vel.x_vel = 0;
+    //     test_base_vel.y_vel = 0;
+    //     test_base_vel.z_vel = 0;
+    //     // linear_actuator_extend(&(linear_actuator[0]));
+    //     // linear_actuator_extend(&(linear_actuator[1]));
+    //     break;
+    //   case 7:
+    //     test_base_vel.x_vel = 0;
+    //     test_base_vel.y_vel = 0;
+    //     test_base_vel.z_vel = 0;
+    //     // linear_actuator_retract(&(linear_actuator[0]));
+    //     // linear_actuator_retract(&(linear_actuator[1]));
+    //     break;
+    //   default:
+    //     break;
+    // }
+    
+    // test_base_vel.x_vel = ROBOT_MAX_Y_VELOCITY * 0.5;
+    // test_base_vel.y_vel = 0;
+    // test_base_vel.z_vel = 0;
+    // movement_control(test_base_vel);
     read_current_velocity(encoders);
 
 #endif

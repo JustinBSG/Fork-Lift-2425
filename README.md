@@ -20,7 +20,7 @@
 ### Tommy Car
 1. [x] update pin config
 2. [x] update macro for pin
-3. [ ] test previous code
+3. [x] test previous code
 4. [x] slider control code
 5. [ ] write controller manual
 6. [ ] auto mode code

@@ -3554,10 +3554,10 @@ void wheel_control(MecanumWheel wheel, int speed) {
  8002274:	0800234d 	.word	0x0800234d
  8002278:	080023af 	.word	0x080023af
     case FRONT_LEFT:
-      if (speed < 0) {
+      if (speed > 0) {
  800227c:	683b      	ldr	r3, [r7, #0]
  800227e:	2b00      	cmp	r3, #0
- 8002280:	da0c      	bge.n	800229c <wheel_control+0x68>
+ 8002280:	dd0c      	ble.n	800229c <wheel_control+0x68>
         // FL_MOTOR_A_CCR = 0;
         // FL_MOTOR_B_CCR = speed;
         HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_SET);
@@ -3571,10 +3571,10 @@ void wheel_control(MecanumWheel wheel, int speed) {
  8002294:	487d      	ldr	r0, [pc, #500]	@ (800248c <wheel_control+0x258>)
  8002296:	f001 f9c9 	bl	800362c <HAL_GPIO_WritePin>
  800229a:	e01b      	b.n	80022d4 <wheel_control+0xa0>
-      } else if (speed > 0) {
+      } else if (speed < 0) {
  800229c:	683b      	ldr	r3, [r7, #0]
  800229e:	2b00      	cmp	r3, #0
- 80022a0:	dd0c      	ble.n	80022bc <wheel_control+0x88>
+ 80022a0:	da0c      	bge.n	80022bc <wheel_control+0x88>
         // FL_MOTOR_A_CCR = -speed;
         // FL_MOTOR_B_CCR = 0;
         HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_RESET);
@@ -3611,10 +3611,10 @@ void wheel_control(MecanumWheel wheel, int speed) {
       break;
  80022e2:	e0cd      	b.n	8002480 <wheel_control+0x24c>
     case FRONT_RIGHT:
-      if (speed > 0) {
+      if (speed < 0) {
  80022e4:	683b      	ldr	r3, [r7, #0]
  80022e6:	2b00      	cmp	r3, #0
- 80022e8:	dd0c      	ble.n	8002304 <wheel_control+0xd0>
+ 80022e8:	da0c      	bge.n	8002304 <wheel_control+0xd0>
         // FR_MOTOR_B_CCR = speed;
         // FR_MOTOR_A_CCR = 0;
         HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_SET);
@@ -3628,10 +3628,10 @@ void wheel_control(MecanumWheel wheel, int speed) {
  80022fc:	4865      	ldr	r0, [pc, #404]	@ (8002494 <wheel_control+0x260>)
  80022fe:	f001 f995 	bl	800362c <HAL_GPIO_WritePin>
  8002302:	e01b      	b.n	800233c <wheel_control+0x108>
-      } else if (speed < 0) {
+      } else if (speed > 0) {
  8002304:	683b      	ldr	r3, [r7, #0]
  8002306:	2b00      	cmp	r3, #0
- 8002308:	da0c      	bge.n	8002324 <wheel_control+0xf0>
+ 8002308:	dd0c      	ble.n	8002324 <wheel_control+0xf0>
         // FR_MOTOR_B_CCR = 0;
         // FR_MOTOR_A_CCR = -speed;
         HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_RESET);
@@ -3668,10 +3668,10 @@ void wheel_control(MecanumWheel wheel, int speed) {
       break;
  800234a:	e099      	b.n	8002480 <wheel_control+0x24c>
     case REAR_LEFT:
-      if (speed > 0) {
+      if (speed < 0) {
  800234c:	683b      	ldr	r3, [r7, #0]
  800234e:	2b00      	cmp	r3, #0
- 8002350:	dd0b      	ble.n	800236a <wheel_control+0x136>
+ 8002350:	da0b      	bge.n	800236a <wheel_control+0x136>
         // RL_MOTOR_B_CCR = 0;
         // RL_MOTOR_A_CCR = speed;
         HAL_GPIO_WritePin(D_IN1_GPIO_Port, D_IN1_Pin, GPIO_PIN_SET);
@@ -3685,10 +3685,10 @@ void wheel_control(MecanumWheel wheel, int speed) {
  8002362:	484d      	ldr	r0, [pc, #308]	@ (8002498 <wheel_control+0x264>)
  8002364:	f001 f962 	bl	800362c <HAL_GPIO_WritePin>
  8002368:	e019      	b.n	800239e <wheel_control+0x16a>
-      } else if (speed < 0) {
+      } else if (speed > 0) {
  800236a:	683b      	ldr	r3, [r7, #0]
  800236c:	2b00      	cmp	r3, #0
- 800236e:	da0b      	bge.n	8002388 <wheel_control+0x154>
+ 800236e:	dd0b      	ble.n	8002388 <wheel_control+0x154>
         // RL_MOTOR_B_CCR = -speed;
         // RL_MOTOR_A_CCR = 0;
         HAL_GPIO_WritePin(D_IN1_GPIO_Port, D_IN1_Pin, GPIO_PIN_RESET);
@@ -3725,10 +3725,10 @@ void wheel_control(MecanumWheel wheel, int speed) {
       break;
  80023ac:	e068      	b.n	8002480 <wheel_control+0x24c>
     case REAR_RIGHT:
-      if (speed > 0) {
+      if (speed < 0) {
  80023ae:	683b      	ldr	r3, [r7, #0]
  80023b0:	2b00      	cmp	r3, #0
- 80023b2:	dd0c      	ble.n	80023ce <wheel_control+0x19a>
+ 80023b2:	da0c      	bge.n	80023ce <wheel_control+0x19a>
         // RR_MOTOR_A_CCR = speed;
         // RR_MOTOR_B_CCR = 0;
         HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_SET);
@@ -3742,10 +3742,10 @@ void wheel_control(MecanumWheel wheel, int speed) {
  80023c6:	4833      	ldr	r0, [pc, #204]	@ (8002494 <wheel_control+0x260>)
  80023c8:	f001 f930 	bl	800362c <HAL_GPIO_WritePin>
  80023cc:	e01b      	b.n	8002406 <wheel_control+0x1d2>
-      } else if (speed < 0) {
+      } else if (speed > 0) {
  80023ce:	683b      	ldr	r3, [r7, #0]
  80023d0:	2b00      	cmp	r3, #0
- 80023d2:	da0c      	bge.n	80023ee <wheel_control+0x1ba>
+ 80023d2:	dd0c      	ble.n	80023ee <wheel_control+0x1ba>
         // RR_MOTOR_A_CCR = 0;
         // RR_MOTOR_B_CCR = -speed;
         HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_RESET);
@@ -3782,10 +3782,10 @@ void wheel_control(MecanumWheel wheel, int speed) {
       break;
  8002416:	e033      	b.n	8002480 <wheel_control+0x24c>
     default:
-      if (speed > 0) {
+      if (speed < 0) {
  8002418:	683b      	ldr	r3, [r7, #0]
  800241a:	2b00      	cmp	r3, #0
- 800241c:	dd0c      	ble.n	8002438 <wheel_control+0x204>
+ 800241c:	da0c      	bge.n	8002438 <wheel_control+0x204>
         // FL_MOTOR_A_CCR = 0;
         // FL_MOTOR_B_CCR = speed;
         HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_SET);
@@ -3799,10 +3799,10 @@ void wheel_control(MecanumWheel wheel, int speed) {
  8002430:	4816      	ldr	r0, [pc, #88]	@ (800248c <wheel_control+0x258>)
  8002432:	f001 f8fb 	bl	800362c <HAL_GPIO_WritePin>
  8002436:	e01b      	b.n	8002470 <wheel_control+0x23c>
-      } else if (speed < 0) {
+      } else if (speed > 0) {
  8002438:	683b      	ldr	r3, [r7, #0]
  800243a:	2b00      	cmp	r3, #0
- 800243c:	da0c      	bge.n	8002458 <wheel_control+0x224>
+ 800243c:	dd0c      	ble.n	8002458 <wheel_control+0x224>
         // FL_MOTOR_A_CCR = -speed;
         // FL_MOTOR_B_CCR = 0;
         HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_RESET);

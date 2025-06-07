@@ -87,7 +87,7 @@ void Error_Handler(void);
 #define LINEAR_ACT_2_2_GPIO_Port GPIOE
 #define B_IN1_Pin GPIO_PIN_10
 #define B_IN1_GPIO_Port GPIOB
-#define C_IN1_Pin GPIO_PIN_14
+#define C_IN1_Pin GPIO_PIN_13
 #define C_IN1_GPIO_Port GPIOB
 #define C_IN2_Pin GPIO_PIN_15
 #define C_IN2_GPIO_Port GPIOB

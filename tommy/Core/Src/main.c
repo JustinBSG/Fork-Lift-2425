@@ -40,7 +40,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define TEST 1
+#define TEST 0
 
 /* USER CODE END PD */
 
@@ -54,7 +54,8 @@
 /* USER CODE BEGIN PV */
 BaseVelocity test_base_vel = {0, 0, 0};
 int time_stamp = 0;
-int time_stage = 0;
+int test_stage = 0;
+int test_var = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -119,23 +120,10 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim8);
   HAL_TIM_Encoder_Start_IT(&htim8, TIM_CHANNEL_ALL);
 
-  HAL_GPIO_WritePin(LINEAR_ACT_1_1_GPIO_Port, LINEAR_ACT_1_1_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LINEAR_ACT_1_2_GPIO_Port, LINEAR_ACT_1_2_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(LINEAR_ACT_2_1_GPIO_Port, LINEAR_ACT_2_1_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LINEAR_ACT_2_2_GPIO_Port, LINEAR_ACT_2_2_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(C_IN2_GPIO_Port, C_IN2_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(D_IN1_GPIO_Port, D_IN1_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(D_IN2_GPIO_Port, D_IN2_Pin, GPIO_PIN_RESET);
-
-  TIM3->CCR4 = 65535/4;
-  TIM3->CCR2 = 65535/4;
-  TIM3->CCR1 = 65535/4;
-  TIM2->CCR3 = 65535/4;
+  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, GPIO_PIN_SET);
 
   /* USER CODE END 2 */
 
@@ -158,17 +146,14 @@ int main(void)
 
     if (turn_on) {
       if (auto_path_selection == LEFT_PATH) {
-        HAL_GPIO_WritePin(LED5_GPIO_Port, LED5_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(LED6_GPIO_Port, LED6_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(LED7_GPIO_Port, LED7_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, GPIO_PIN_SET);
       } else if (auto_path_selection == MID_PATH) {
-        HAL_GPIO_WritePin(LED5_GPIO_Port, LED5_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(LED6_GPIO_Port, LED6_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(LED7_GPIO_Port, LED7_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, GPIO_PIN_SET);
       } else if (auto_path_selection == RIGHT_PATH) {
-        HAL_GPIO_WritePin(LED5_GPIO_Port, LED5_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(LED6_GPIO_Port, LED6_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(LED7_GPIO_Port, LED7_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, GPIO_PIN_RESET);
       }
 
       float rotation_vel = (controller_state.l2_pressure / 1024.0 + controller_state.r2_pressure / -1024.0) * 100.0;
@@ -246,19 +231,71 @@ int main(void)
 #else
     if (HAL_GetTick() - time_stamp > 3000) {
       time_stamp = HAL_GetTick();
-      HAL_GPIO_TogglePin(LINEAR_ACT_1_1_GPIO_Port, LINEAR_ACT_1_1_Pin);
-      HAL_GPIO_TogglePin(LINEAR_ACT_1_2_GPIO_Port, LINEAR_ACT_1_2_Pin);
-      HAL_GPIO_TogglePin(LINEAR_ACT_2_1_GPIO_Port, LINEAR_ACT_2_1_Pin);
-      HAL_GPIO_TogglePin(LINEAR_ACT_2_2_GPIO_Port, LINEAR_ACT_2_2_Pin);
-      HAL_GPIO_TogglePin(A_IN1_GPIO_Port, A_IN1_Pin);
-      HAL_GPIO_TogglePin(A_IN2_GPIO_Port, A_IN2_Pin);
-      HAL_GPIO_TogglePin(B_IN1_GPIO_Port, B_IN1_Pin);
-      HAL_GPIO_TogglePin(B_IN2_GPIO_Port, B_IN2_Pin);
-      HAL_GPIO_TogglePin(C_IN1_GPIO_Port, C_IN1_Pin);
-      HAL_GPIO_TogglePin(C_IN2_GPIO_Port, C_IN2_Pin);
-      HAL_GPIO_TogglePin(D_IN1_GPIO_Port, D_IN1_Pin);
-      HAL_GPIO_TogglePin(D_IN2_GPIO_Port, D_IN2_Pin);
+      test_stage++;
+      // HAL_GPIO_TogglePin(LINEAR_ACT_1_1_GPIO_Port, LINEAR_ACT_1_1_Pin);
+      // HAL_GPIO_TogglePin(LINEAR_ACT_1_2_GPIO_Port, LINEAR_ACT_1_2_Pin);
+      // HAL_GPIO_TogglePin(LINEAR_ACT_2_1_GPIO_Port, LINEAR_ACT_2_1_Pin);
+      // HAL_GPIO_TogglePin(LINEAR_ACT_2_2_GPIO_Port, LINEAR_ACT_2_2_Pin);
+      // HAL_GPIO_TogglePin(A_IN1_GPIO_Port, A_IN1_Pin);
+      // HAL_GPIO_TogglePin(A_IN2_GPIO_Port, A_IN2_Pin);
+      // HAL_GPIO_TogglePin(B_IN1_GPIO_Port, B_IN1_Pin);
+      // HAL_GPIO_TogglePin(B_IN2_GPIO_Port, B_IN2_Pin);
+      // HAL_GPIO_TogglePin(C_IN1_GPIO_Port, C_IN1_Pin);
+      // HAL_GPIO_TogglePin(C_IN2_GPIO_Port, C_IN2_Pin);
+      // HAL_GPIO_TogglePin(D_IN1_GPIO_Port, D_IN1_Pin);
+      // HAL_GPIO_TogglePin(D_IN2_GPIO_Port, D_IN2_Pin);
     }
+
+    switch (test_stage%8) {
+      case 0:
+        test_base_vel.x_vel = ROBOT_MAX_Y_VELOCITY * 0.5;
+        test_base_vel.y_vel = 0;
+        test_base_vel.z_vel = 0;
+        break;
+      case 1:
+        test_base_vel.x_vel = ROBOT_MAX_Y_VELOCITY * -0.5;
+        test_base_vel.y_vel = 0;
+        test_base_vel.z_vel = 0;
+        break;
+      case 2:
+        test_base_vel.x_vel = 0;
+        test_base_vel.y_vel = ROBOT_MAX_X_VELOCITY * 0.5;
+        test_base_vel.z_vel = 0;
+        break;
+      case 3:
+        test_base_vel.x_vel = 0;
+        test_base_vel.y_vel = ROBOT_MAX_X_VELOCITY * -0.5;
+        test_base_vel.z_vel = 0;
+        break;
+      case 4:
+        test_base_vel.x_vel = 0;
+        test_base_vel.y_vel = 0;
+        test_base_vel.z_vel = ROBOT_MAX_Z_VELOCITY * 0.25;
+        break;
+      case 5:
+        test_base_vel.x_vel = 0;
+        test_base_vel.y_vel = 0;
+        test_base_vel.z_vel = ROBOT_MAX_Z_VELOCITY * -0.25;
+        break;
+      case 6:
+        test_base_vel.x_vel = 0;
+        test_base_vel.y_vel = 0;
+        test_base_vel.z_vel = 0;
+        // linear_actuator_extend(&(linear_actuator[0]));
+        // linear_actuator_extend(&(linear_actuator[1]));
+        break;
+      case 7:
+        test_base_vel.x_vel = 0;
+        test_base_vel.y_vel = 0;
+        test_base_vel.z_vel = 0;
+        // linear_actuator_retract(&(linear_actuator[0]));
+        // linear_actuator_retract(&(linear_actuator[1]));
+        break;
+      default:
+        break;
+    }
+    movement_control(test_base_vel);
+    read_current_velocity(encoders);
 
 #endif
   }

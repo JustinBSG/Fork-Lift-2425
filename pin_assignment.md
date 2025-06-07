@@ -167,13 +167,13 @@
 1. TIM3->CCR4 => PE5 (FL) (C) (PWM)
    - Prescale = 1-1
    - ARR = 65535
-2. TIM2->CCR4 => PE3 (RL) (D) (PWM)
+2. TIM3->CCR2 => PE3 (RL) (D) (PWM)
    - Prescale = 1-1
    - ARR = 65535
 3. TIM3->CCR1 => PE2 (FR) (B) (PWM)
    - Prescale = 1-1
    - ARR = 65535
-4. TIM3->CCR2 => PD7 (RR) (A) (PWM)
+4. TIM2->CCR3 => PD7 (RR) (A) (PWM)
    - Prescale = 1-1
    - ARR = 65535
 
@@ -195,7 +195,7 @@
 ### External TB6612 Module (for left motor)
 
 1. EN_L => 3.3V / 5V (shorted)
-2. C_IN1 => PB14 (GPIO)
+2. C_IN1 => PB13 (GPIO)
    - GPIO Output
    - Pull Down
 3. C_IN2 => PB15 (GPIO)

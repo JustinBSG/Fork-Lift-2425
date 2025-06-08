@@ -121,16 +121,27 @@ int main(void)
   HAL_TIM_Encoder_Start_IT(&htim5, TIM_CHANNEL_ALL);
   HAL_TIM_Base_Start_IT(&htim8);
   HAL_TIM_Encoder_Start_IT(&htim8, TIM_CHANNEL_ALL);
-  // enable both sides of motor driver IC
-  HAL_GPIO_WritePin(MOTOR_LEFT_ENABLE_GPIO_Port, MOTOR_LEFT_ENABLE_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(MOTOR_RIGHT_ENABLE_GPIO_Port, MOTOR_RIGHT_ENABLE_Pin, GPIO_PIN_SET);
 
   HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
 
-  big_wheel_move_up();
+  // HAL_GPIO_WritePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin, GPIO_PIN_RESET);
+  // HAL_GPIO_WritePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin, GPIO_PIN_SET);
+  // HAL_GPIO_WritePin(MOTOR_FR_IN1_GPIO_Port, MOTOR_FR_IN1_Pin, GPIO_PIN_RESET);
+  // HAL_GPIO_WritePin(MOTOR_FR_IN2_GPIO_Port, MOTOR_FR_IN2_Pin, GPIO_PIN_SET);
+  // HAL_GPIO_WritePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin, GPIO_PIN_RESET);
+  // HAL_GPIO_WritePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin, GPIO_PIN_SET);
+  // HAL_GPIO_WritePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin, GPIO_PIN_RESET);
+  // HAL_GPIO_WritePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin, GPIO_PIN_SET);
+
+  // TIM3->CCR2 = 65535/2;
+  // TIM2->CCR1 = 65535/2;
+  // TIM2->CCR2 = 65535/2;
+  // TIM3->CCR1 = 65535/2;
+
+  // big_wheel_move_up();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -264,7 +275,14 @@ int main(void)
 
     if (HAL_GetTick() - test_time > 3000) {
       test_time = HAL_GetTick();
-      HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
+      HAL_GPIO_TogglePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin);
+      HAL_GPIO_TogglePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin);
+      HAL_GPIO_TogglePin(MOTOR_FR_IN1_GPIO_Port, MOTOR_FR_IN1_Pin);
+      HAL_GPIO_TogglePin(MOTOR_FR_IN2_GPIO_Port, MOTOR_FR_IN2_Pin);
+      HAL_GPIO_TogglePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin);
+      HAL_GPIO_TogglePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin);
+      HAL_GPIO_TogglePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin);
+      HAL_GPIO_TogglePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin);
     }
 #endif
     HAL_Delay(1);

@@ -1,3 +1,80 @@
+## Jason without Fan (Kitty Board)
+
+### Motor
+
+1. TIM3->CCR2 => PE3 (FL) (A) (PWM)
+   - Prescale = 15-1
+   - ARR = 65535-1
+2. TIM2->CCR1 => PD3 (RL) (B) (PWM)
+   - Prescale = 15-1
+   - ARR = 65535-1
+3. TIM3->CCR1 => PE2 (FR) (C) (PWM)
+   - Prescale = 15-1
+   - ARR = 65535-1
+4. TIM2->CCR2 => PD4 (RR) (D) (PWM)
+   - Prescale = 15-1
+   - ARR = 65535-1
+
+### Encoder
+
+1. TIM1 => FL encoder (TIMER)
+   - Prescale = 1-1
+   - ARR = 65535
+2. TIM5 => RL encoder (TIMER)
+   - Prescale = 1-1
+   - ARR = 65535
+3. TIM8 => FR encoder (TIMER)
+   - Prescale = 1-1
+   - ARR = 65535
+4. TIM4 => RR encoder (TIMER)
+   - Prescale = 1-1
+   - ARR = 65535
+
+### TB6612 (for left motor)
+
+1. MOTOR_LEFT_ENABLE => 3.3V / 5V (shorted)
+2. MOTOR_FL_IN1 => PB0 (GPIO) (GPIO1 left 2nd)
+   - GPIO Output
+   - Pull Down
+3. MOTOR_FL_IN2 => PE6 (GPIO) (GPIO1 right 2nd)
+   - GPIO Output
+   - Pull Down
+4. MOTOR_RL_IN1 => PE4 (GPIO) (DIR)
+   - GPIO Output
+   - Pull Down
+5. MOTOR_RL_IN2 => PE5 (GPIO) (STEP)
+   - GPIO Output
+   - Pull Down
+
+### TB6612 (for right motor)
+
+1. MOTOR_RIGHT_ENABLE => 3.3V / 5V (shorted)
+2. MOTOR_FR_IN1 => PD0 (GPIO) (GPIO2 up 2nd)
+   - GPIO Output
+   - Pull Down
+3. MOTOR_FR_IN2 => PC12 (GPIO) (GPIO2 down 2nd)
+   - GPIO Output
+   - Pull Down
+4. MOTOR_RR_IN1 => PA15 (GPIO) (I2C down 2nd)
+   - GPIO Output
+   - Pull Down
+5. MOTOR_RR_IN2 => PB7 (GPIO) (I2C down 1st)
+   - GPIO Output
+   - Pull Down
+
+### Hiwonder Board
+1. UART4_TX => PC10 (UART)
+   - 9600 Bits/s
+2. UART4_RX => PC11 (UART)
+   - 9600 Bits/s
+
+### Remote Controller
+
+1. UART1_TX => PC4 (UART)
+   - 115200 Bits/s
+2. UART1_RX => PC5 (UART)
+   - 115200 Bits/s
+
 ## Jason's Car with Fan (F4)
 
 ### Motor

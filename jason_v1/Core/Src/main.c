@@ -55,10 +55,8 @@ BaseVelocity test_base_vel = {0, 0, 0};
 WheelVelocity test_wheel_vel = {0, 0, 0, 0};
 WheelPWM test_pwm = {0, 0, 0, 0};
 WheelVelocity test_read_vel = {0, 0, 0, 0};
-int test_count = 0;
+int time_stamp = 0;
 int stage = 0;
-int test_duration = 0;
-int test_var_1 = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -127,6 +125,20 @@ int main(void)
   HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
+
+  TIM3->CCR4 = 16800 / 2;
+  TIM2->CCR4 = 16800 / 2;
+  TIM3->CCR2 = 16800 / 2;
+  TIM3->CCR1 = 16800 / 2;
+
+  HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(C_IN2_GPIO_Port, C_IN2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(D_IN1_GPIO_Port, D_IN1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(D_IN2_GPIO_Port, D_IN2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_RESET);
 
   // servo_reset_all();
   // HAL_Delay(1000);
@@ -256,6 +268,17 @@ int main(void)
         container_reset();
     }
 #else
+    if (HAL_GetTick() - time_stamp > 3000) {
+      time_stamp = HAL_GetTick();
+      HAL_GPIO_TogglePin(C_IN1_GPIO_Port, C_IN1_Pin);
+      HAL_GPIO_TogglePin(C_IN2_GPIO_Port, C_IN2_Pin);
+      HAL_GPIO_TogglePin(D_IN1_GPIO_Port, D_IN1_Pin);
+      HAL_GPIO_TogglePin(D_IN2_GPIO_Port, D_IN2_Pin);
+      HAL_GPIO_TogglePin(A_IN1_GPIO_Port, A_IN1_Pin);
+      HAL_GPIO_TogglePin(A_IN2_GPIO_Port, A_IN2_Pin);
+      HAL_GPIO_TogglePin(B_IN1_GPIO_Port, B_IN1_Pin);
+      HAL_GPIO_TogglePin(B_IN2_GPIO_Port, B_IN2_Pin);
+    }
     // test_base_vel.x_vel = 0;
     // test_base_vel.y_vel = 0;
     // test_base_vel.z_vel = ROBOT_MAX_Z_VELOCITY;
@@ -278,10 +301,6 @@ int main(void)
     // }
     // else if (test_count == 2)
     //   servo_reset_all();
-    TIM3->CCR1 = 16800 / 2;
-    TIM3->CCR2 = 16800 / 2;
-    TIM3->CCR4 = 16800 / 2;
-    TIM2->CCR4 = 16800 / 2;
 #endif
   }
   /* USER CODE END 3 */

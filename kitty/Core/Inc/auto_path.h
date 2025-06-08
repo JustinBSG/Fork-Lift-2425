@@ -5,8 +5,8 @@
 
 #include "movement.h"
 
-#define LEFT_PATH_TIME_1 1000
-#define LEFT_PATH_TIME_2 1000
+#define LEFT_PATH_TIME_1 1500
+#define LEFT_PATH_TIME_2 1100
 #define MID_PATH_TIME_1 1000 
 #define RIGHT_PATH_TIME_1 1000
 #define RIGHT_PATH_TIME_2 1000

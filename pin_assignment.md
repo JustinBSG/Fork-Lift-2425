@@ -2,16 +2,16 @@
 
 ### Motor
 
-1. TIM3->CCR4 => PE5 (FL) (C) (PWM)
+1. TIM3->CCR4 => PE5 (FL) (C) (PWM) (PWM2B)
    - Prescale = 170-1
    - ARR = 10000-1
-2. TIM2->CCR1 => (RL) (D) (PWM)
+2. TIM2->CCR4 => PD6 (RL) (D) (PWM) (GPIO right 2nd)
    - Prescale = 170-1
    - ARR = 10000-1
-3. TIM2->CCR1 => (FR) (B) (PWM)
+3. TIM3->CCR1 => PE2 (FR) (B) (PWM) (PWM1C)
    - Prescale = 170-1
    - ARR = 10000-1
-4. TIM2->CCR2 => (RR) (A) (PWM)
+4. TIM3->CCR2 => PE3 (RR) (A) (PWM) (PWM2C)
    - Prescale = 170-1
    - ARR = 10000-1
 
@@ -30,41 +30,41 @@
    - Prescale = 1-1
    - ARR = 65535
 
-### External TB6612 Module (for right motor)
-
-1. EN_L => 3.3V / 5V (shorted)
-2. C_IN1 => PB0 (GPIO)
-   - GPIO Output
-   - Pull Down
-3. C_IN2 => PE6 (GPIO)
-   - GPIO Output
-   - Pull Down
-4. D_IN1 => PD7 (GPIO)
-   - GPIO Output
-   - Pull Down
-5. D_IN2 => PB3 (GPIO)
-   - GPIO Output
-   - Pull Down
-
 ### External TB6612 Module (for left motor)
 
+1. EN_L => 3.3V / 5V (shorted)
+2. C_IN1 => PB0 (GPIO) (GPIO1 left 2nd)
+   - GPIO Output
+   - Pull Down
+3. C_IN2 => PE6 (GPIO) (GPIO1 right 2nd)
+   - GPIO Output
+   - Pull Down
+4. D_IN1 => PD7 (GPIO) (GPIO2 left 2nd)
+   - GPIO Output
+   - Pull Down
+5. D_IN2 => PB3 (GPIO) (UART4 left 2nd)
+   - GPIO Output
+   - Pull Down
+
+### External TB6612 Module (for right motor)
+
 1. EN_R => 3.3V / 5V (shorted)
-2. A_IN1 => PA15 (GPIO)
+2. A_IN1 => PA15 (GPIO) (I2C down 2nd)
    - GPIO Output
    - Pull Down
-3. A_IN2 => PB7 (GPIO)
+3. A_IN2 => PB7 (GPIO) (I2C down 1st)
    - GPIO Output
    - Pull Down
-4. B_IN1 => PD2 (GPIO)
+4. B_IN1 => PD2 (GPIO) (UART3 up 2nd)
    - GPIO Output
    - Pull Down
-5. B_IN2 => PC12 (GPIO)
+5. B_IN2 => PC12 (GPIO) (UART2 down 2nd)
    - GPIO Output
    - Pull Down
 
 ### Fan
 
-1. TIM3->CCR3 => PE4 (PWM)
+1. TIM3->CCR3 => PE4 (PWM) (PWM1B)
    - Prescale = 170-1
    - ARR = 10000-1
 
@@ -86,16 +86,16 @@
 
 ### Motor
 
-1. TIM3->CCR4 => PE5 (FL) (C) (PWM)
+1. TIM3->CCR4 => PE5 (FL) (C) (PWM) (PWM2B)
    - Prescale = 1-1
    - ARR = 16800-1
-2. TIM2->CCR4 => PD6 (RL) (D) (PWM)
+2. TIM2->CCR4 => PD6 (RL) (D) (PWM) (GPIO2 right 2nd)
    - Prescale = 1-1
    - ARR = 16800-1
-3. TIM3->CCR2 => PE3 (FR) (B) (PWM)
+3. TIM3->CCR2 => PE3 (FR) (B) (PWM) (PWM2C)
    - Prescale = 1-1
    - ARR = 16800-1
-4. TIM3->CCR1 => PE2 (RR) (A) (PWM)
+4. TIM3->CCR1 => PE2 (RR) (A) (PWM) (PWM1C)
    - Prescale = 1-1
    - ARR = 16800-1
 
@@ -114,35 +114,35 @@
    - Prescale = 1-1
    - ARR = 65535
 
-### External TB6612 Module (for right motor)
-
-1. EN_L => 3.3V / 5V (shorted)
-2. C_IN1 => PB0 (GPIO)
-   - GPIO Output
-   - Pull Down
-3. C_IN2 => PE6 (GPIO)
-   - GPIO Output
-   - Pull Down
-4. D_IN1 => PD7 (GPIO)
-   - GPIO Output
-   - Pull Down
-5. D_IN2 => PB3 (GPIO)
-   - GPIO Output
-   - Pull Down
-
 ### External TB6612 Module (for left motor)
 
+1. EN_L => 3.3V / 5V (shorted)
+2. C_IN1 => PB0 (GPIO) (GPIO1 left 2nd)
+   - GPIO Output
+   - Pull Down
+3. C_IN2 => PE6 (GPIO) (GPIO1 right 2nd)
+   - GPIO Output
+   - Pull Down
+4. D_IN1 => PD7 (GPIO) (GPIO2 left 2nd)
+   - GPIO Output
+   - Pull Down
+5. D_IN2 => PB3 (GPIO) (UART4 left 2nd)
+   - GPIO Output
+   - Pull Down
+
+### External TB6612 Module (for right motor)
+
 1. EN_R => 3.3V / 5V (shorted)
-2. A_IN1 => PA15 (GPIO)
+2. A_IN1 => PA15 (GPIO) (I2C down 2nd)
    - GPIO Output
    - Pull Down
-3. A_IN2 => PB7 (GPIO)
+3. A_IN2 => PB7 (GPIO) (I2C down 1st)
    - GPIO Output
    - Pull Down
-4. B_IN1 => PD2 (GPIO)
+4. B_IN1 => PD2 (GPIO) (UART3 up 2nd)
    - GPIO Output
    - Pull Down
-5. B_IN2 => PC12 (GPIO)
+5. B_IN2 => PC12 (GPIO) (UART2 down 2nd)
    - GPIO Output
    - Pull Down
 

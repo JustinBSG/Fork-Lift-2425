@@ -122,18 +122,15 @@ int main(void)
   HAL_TIM_Encoder_Start_IT(&htim5, TIM_CHANNEL_ALL);
   HAL_TIM_Base_Start_IT(&htim8);
   HAL_TIM_Encoder_Start_IT(&htim8, TIM_CHANNEL_ALL);
-  // enable both sides of motor driver IC
-  HAL_GPIO_WritePin(MOTOR_LEFT_ENABLE_GPIO_Port, MOTOR_LEFT_ENABLE_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(MOTOR_RIGHT_ENABLE_GPIO_Port, MOTOR_RIGHT_ENABLE_Pin, GPIO_PIN_SET);
 
   HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
 
-  servo_reset_all();
-  HAL_Delay(1000);
-  HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_RESET);
+  // servo_reset_all();
+  // HAL_Delay(1000);
+  // HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_RESET);
 #if (TEST == 1)
   // BaseVelocity base_vel = {1, 0, 0};
   // rotate_motor(base_vel);

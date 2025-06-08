@@ -57,6 +57,12 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define FR_PWM_Pin GPIO_PIN_2
+#define FR_PWM_GPIO_Port GPIOE
+#define RR_PWM_Pin GPIO_PIN_3
+#define RR_PWM_GPIO_Port GPIOE
+#define FL_PWM_Pin GPIO_PIN_5
+#define FL_PWM_GPIO_Port GPIOE
 #define C_IN2_Pin GPIO_PIN_6
 #define C_IN2_GPIO_Port GPIOE
 #define C_IN1_Pin GPIO_PIN_0
@@ -75,6 +81,8 @@ void Error_Handler(void);
 #define B_IN2_GPIO_Port GPIOC
 #define B_IN1_Pin GPIO_PIN_2
 #define B_IN1_GPIO_Port GPIOD
+#define RL_PWM_Pin GPIO_PIN_6
+#define RL_PWM_GPIO_Port GPIOD
 #define D_IN1_Pin GPIO_PIN_7
 #define D_IN1_GPIO_Port GPIOD
 #define D_IN2_Pin GPIO_PIN_3

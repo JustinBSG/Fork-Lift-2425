@@ -173,7 +173,7 @@ int main(void)
         movement_control(target_vel);
       } else if (controller_state.up) {
         BaseVelocity target_vel = {0,
-                                   ROBOT_MAX_Y_VELOCITY * 0.75,
+                                   ROBOT_MAX_ Y_VELOCITY * 0.75,
                                    0};
         movement_control(target_vel);
       } else if (controller_state.down) {

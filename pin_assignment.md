@@ -52,7 +52,7 @@
 2. A_IN1 => PB1 (GPIO)
    - GPIO Output
    - Pull Down
-3. A_IN2 => PB2 (GPIO) 
+3. A_IN2 => PE12 (GPIO) 
    - GPIO Output
    - Pull Down
 4. B_IN1 => PE7 (GPIO) 
@@ -87,17 +87,17 @@
 ### Motor
 
 1. TIM3->CCR2 => PE3 (FL) (A) (PWM)
-   - Prescale = 15-1
-   - ARR = 65535-1
+   - Prescale = 1-1
+   - ARR = 16801-1
 2. TIM2->CCR1 => PD3 (RL) (B) (PWM)
-   - Prescale = 15-1
-   - ARR = 65535-1
+   - Prescale = 1-1
+   - ARR = 16801-1
 3. TIM3->CCR1 => PE2 (FR) (C) (PWM)
-   - Prescale = 15-1
-   - ARR = 65535-1
+   - Prescale = 1-1
+   - ARR = 16801-1
 4. TIM2->CCR2 => PD4 (RR) (D) (PWM)
-   - Prescale = 15-1
-   - ARR = 65535-1
+   - Prescale = 1-1
+   - ARR = 16801-1
 
 ### Encoder
 

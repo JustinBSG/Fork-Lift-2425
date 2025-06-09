@@ -165,7 +165,7 @@ int main(void)
       }
       prev_auto_path_enable = controller_state.ps_button;
 
-      if (controller_state.cross && !prev_auto_path_switch) {
+      if (controller_state.share_button && !prev_auto_path_switch) {
         auto_path_switch = !auto_path_switch;
         if (auto_path_selection == LEFT_PATH)
           auto_path_selection = MID_PATH;
@@ -174,7 +174,7 @@ int main(void)
         else if (auto_path_selection == RIGHT_PATH)
           auto_path_selection = LEFT_PATH;
       }  // auto, choose path, toggle left / right / straight forward
-      prev_auto_path_switch = controller_state.cross;
+      prev_auto_path_switch = controller_state.share_button;
 
       if (controller_state.left && !controller_state.right && !controller_state.up && !controller_state.down) {
         BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.25, 0};  // move to the left
@@ -192,13 +192,13 @@ int main(void)
         BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY * 0.5};
         movement_control(target_vel);
       } else if (controller_state.r_stick_x == 0 && controller_state.r_stick_y == 0 && !controller_state.r1 && !controller_state.l1) {  // move fastly
-        BaseVelocity target_vel = {controller_state.l_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.5,
-                                   controller_state.l_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.5,
+        BaseVelocity target_vel = {controller_state.l_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.65,
+                                   controller_state.l_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.65,
                                    0};
         movement_control(target_vel);
       } else if (!controller_state.r1 && !controller_state.l1) {  // move slowly
-        BaseVelocity target_vel = {controller_state.r_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.25,
-                                   controller_state.r_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.25,
+        BaseVelocity target_vel = {controller_state.r_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.4,
+                                   controller_state.r_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.4,
                                    0};
         movement_control(target_vel);
       } else if (controller_state.l1 || controller_state.r1) {  // rotate slowly
@@ -210,23 +210,19 @@ int main(void)
         movement_control(target_vel);
       }
 
-      if (controller_state.triangle && !prev_vertical_linear_actuator_extend) {  // extend / retract vertical linear actuator
-        vertical_linear_actuator_extend = !vertical_linear_actuator_extend;
-        if (vertical_linear_actuator_extend)
-          linear_actuator_extend(&linear_actuator[0]);
-        else
-          linear_actuator_retract(&linear_actuator[0]);
-      }
-      prev_vertical_linear_actuator_extend = controller_state.triangle;
+      if (controller_state.triangle) 
+        linear_actuator_operation(&(linear_actuator[1]), LINEAR_ACUATOR_RETRACT);
+      else if (controller_state.cross)
+        linear_actuator_operation(&(linear_actuator[1]), LINEAR_ACUATOR_EXTEND);
+      else 
+        linear_actuator_operation(&(linear_actuator[1]), LINEAR_ACUATOR_IDLE);
 
-      if (controller_state.square && !horizontal_linear_actuator_extend) {  // extend / retract horizontal linear actuator
-        horizontal_linear_actuator_extend = !horizontal_linear_actuator_extend;
-        if (horizontal_linear_actuator_extend)
-          linear_actuator_extend(&linear_actuator[1]);
-        else
-          linear_actuator_retract(&linear_actuator[1]);
-      }
-      prev_horizontal_linear_actuator_extend = controller_state.square;
+      if (controller_state.square) 
+        linear_actuator_operation(&(linear_actuator[0]), LINEAR_ACUATOR_RETRACT);
+      else if (controller_state.circle)
+        linear_actuator_operation(&(linear_actuator[0]), LINEAR_ACUATOR_EXTEND);
+      else 
+        linear_actuator_operation(&(linear_actuator[0]), LINEAR_ACUATOR_IDLE);
     }
 #else
     if (HAL_GetTick() - time_stamp > 3000) {

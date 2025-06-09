@@ -6,18 +6,16 @@
 #include "main.h"
 
 typedef enum {
-  LINEAR_ACUATOR_UP,
-  LINEAR_ACUATOR_DOWN,
-} LinearActuatorPosition;
+  LINEAR_ACUATOR_EXTEND,
+  LINEAR_ACUATOR_RETRACT,
+  LINEAR_ACUATOR_IDLE
+} LinearActuatorOperation;
 
 typedef struct {
     int id;
-    LinearActuatorPosition pos;
 } LinearActuator;
 
-void linear_actuator_extend(LinearActuator *actuator);
-
-void linear_actuator_retract(LinearActuator *actuator);
+void linear_actuator_operation(LinearActuator *actuator, LinearActuatorOperation operation);
 
 extern LinearActuator linear_actuator[2];
 

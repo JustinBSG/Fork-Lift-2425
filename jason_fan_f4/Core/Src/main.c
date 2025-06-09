@@ -1,20 +1,20 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2025 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : Main program body
+ ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2025 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -97,16 +97,49 @@ int main(void)
   MX_UART4_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+  HAL_TIM_Base_Start_IT(&htim1);
+  HAL_TIM_Encoder_Start_IT(&htim1, TIM_CHANNEL_ALL);
+  HAL_TIM_Base_Start_IT(&htim4);
+  HAL_TIM_Encoder_Start_IT(&htim4, TIM_CHANNEL_ALL);
+  HAL_TIM_Base_Start_IT(&htim5);
+  HAL_TIM_Encoder_Start_IT(&htim5, TIM_CHANNEL_ALL);
+  HAL_TIM_Base_Start_IT(&htim8);
+  HAL_TIM_Encoder_Start_IT(&htim8, TIM_CHANNEL_ALL);
+
+  HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
+
+  TIM2->CCR1 = 10000/2;
+  TIM2->CCR2 = 10000/2;
+  TIM2->CCR3 = 10000/2;
+  TIM2->CCR4 = 10000/2;
+
+  HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(C_IN2_GPIO_Port, C_IN2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(D_IN1_GPIO_Port, D_IN1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(D_IN2_GPIO_Port, D_IN2_Pin, GPIO_PIN_RESET);
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+  while (1) {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    HAL_Delay(1);
+    
   }
   /* USER CODE END 3 */
 }
@@ -169,8 +202,7 @@ void Error_Handler(void)
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
-  while (1)
-  {
+  while (1) {
   }
   /* USER CODE END Error_Handler_Debug */
 }

@@ -24,7 +24,7 @@ void follow_auto_path(AutoPathSelection auto_path_selection) {
       break;
     }
     case MID_PATH: {
-      BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.25, 0};
+      BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.3, 0};
       movement_control(target_vel);
       HAL_Delay(MID_PATH_TIME_1);
       break;

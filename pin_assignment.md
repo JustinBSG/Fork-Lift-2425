@@ -163,16 +163,16 @@
 
 ### Motor
 
-1. TIM3->CCR4 => PE5 (FL) (C) (PWM) (PWM2B)
+1. TIM3->CCR4 => PE5 (FL) (C) (PWM) (PWM2B) (J8)
    - Prescale = 170-1
    - ARR = 10000-1
 2. TIM2->CCR4 => PD6 (RL) (D) (PWM) (GPIO right 2nd)
    - Prescale = 170-1
    - ARR = 10000-1
-3. TIM3->CCR1 => PE2 (FR) (B) (PWM) (PWM1C)
+3. TIM3->CCR1 => PE2 (FR) (B) (PWM) (PWM1C) (J1)
    - Prescale = 170-1
    - ARR = 10000-1
-4. TIM3->CCR2 => PE3 (RR) (A) (PWM) (PWM2C)
+4. TIM3->CCR2 => PE3 (RR) (A) (PWM) (PWM2C) (J2)
    - Prescale = 170-1
    - ARR = 10000-1
 
@@ -219,7 +219,7 @@
 4. B_IN1 => PD2 (GPIO) (UART3 up 2nd)
    - GPIO Output
    - Pull Down
-5. B_IN2 => PC12 (GPIO) (UART2 down 2nd)
+5. B_IN2 => PC12 (GPIO) (UART3 down 2nd)
    - GPIO Output
    - Pull Down
 

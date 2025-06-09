@@ -52,7 +52,7 @@
 
 /* USER CODE BEGIN PV */
 int test_stage = 3;
-int test_time_stamp = 0;
+int time_stamp = 0;
 BaseVelocity test_base_vel = {0, 0, 0};
 int test_encoder = 0;
 WheelVelocity test_wheel_vel = {0, 0, 0, 0};
@@ -122,17 +122,28 @@ int main(void)
   HAL_TIM_Encoder_Start_IT(&htim5, TIM_CHANNEL_ALL);
   HAL_TIM_Base_Start_IT(&htim8);
   HAL_TIM_Encoder_Start_IT(&htim8, TIM_CHANNEL_ALL);
-  // enable both sides of motor driver IC
-  HAL_GPIO_WritePin(MOTOR_LEFT_ENABLE_GPIO_Port, MOTOR_LEFT_ENABLE_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(MOTOR_RIGHT_ENABLE_GPIO_Port, MOTOR_RIGHT_ENABLE_Pin, GPIO_PIN_SET);
 
   HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
 
-  servo_reset_all();
-  HAL_Delay(1000);
+  HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(C_IN2_GPIO_Port, C_IN2_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(D_IN1_GPIO_Port, D_IN1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(D_IN2_GPIO_Port, D_IN2_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_SET);
+
+  TIM3->CCR2 = 10000 / 2;
+  TIM2->CCR1 = 10000 / 2;
+  TIM2->CCR2 = 10000 / 2;
+  TIM3->CCR1 = 10000 / 2;
+
+  // servo_reset_all();
+  // HAL_Delay(1000);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -186,9 +197,17 @@ int main(void)
       }
     }
 #else
-    // if (HAL_GetTick() - test_time_stamp > 1.5) {
-    //   test_time_stamp = HAL_GetTick();
-    // }
+    if (HAL_GetTick() - time_stamp > 3000) {
+      time_stamp = HAL_GetTick();
+      HAL_GPIO_TogglePin(C_IN1_GPIO_Port, C_IN1_Pin);
+      HAL_GPIO_TogglePin(C_IN2_GPIO_Port, C_IN2_Pin);
+      HAL_GPIO_TogglePin(D_IN1_GPIO_Port, D_IN1_Pin);
+      HAL_GPIO_TogglePin(D_IN2_GPIO_Port, D_IN2_Pin);
+      HAL_GPIO_TogglePin(A_IN1_GPIO_Port, A_IN1_Pin);
+      HAL_GPIO_TogglePin(A_IN2_GPIO_Port, A_IN2_Pin);
+      HAL_GPIO_TogglePin(B_IN1_GPIO_Port, B_IN1_Pin);
+      HAL_GPIO_TogglePin(B_IN2_GPIO_Port, B_IN2_Pin);
+    }
 
     // switch (test_stage) {
     //   case 1:

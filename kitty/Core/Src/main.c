@@ -105,7 +105,6 @@ int main(void)
   MX_TIM8_Init();
   MX_TIM4_Init();
   MX_TIM5_Init();
-  MX_TIM20_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
@@ -141,7 +140,7 @@ int main(void)
   // TIM2->CCR2 = 65535/2;
   // TIM3->CCR1 = 65535/2;
 
-  // big_wheel_move_up();
+  big_wheel_move_up();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -196,19 +195,19 @@ int main(void)
       prev_auto_path_switch = controller_state.cross;
 
       if (controller_state.left && !controller_state.right && !controller_state.up && !controller_state.down) {
-        BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.25, 0};
+        BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.15, 0};
         movement_control(target_vel);  // move to the left
       } else if (!controller_state.left && controller_state.right && !controller_state.up && !controller_state.down) {
-        BaseVelocity target_vel = {0, -ROBOT_MAX_X_VELOCITY * 0.25, 0};
+        BaseVelocity target_vel = {0, -ROBOT_MAX_X_VELOCITY * 0.15, 0};
         movement_control(target_vel);  // move to the right
       } else if (!controller_state.left && !controller_state.right && controller_state.up && !controller_state.down) {
-        BaseVelocity target_vel = {ROBOT_MAX_Y_VELOCITY * 0.25, 0, 0};
+        BaseVelocity target_vel = {ROBOT_MAX_Y_VELOCITY * 0.15, 0, 0};
         movement_control(target_vel);  // move forward
       } else if (!controller_state.left && !controller_state.right && !controller_state.up && controller_state.down) {
-        BaseVelocity target_vel = {-ROBOT_MAX_Y_VELOCITY * 0.25, 0, 0};
+        BaseVelocity target_vel = {-ROBOT_MAX_Y_VELOCITY * 0.15, 0, 0};
         movement_control(target_vel);                                                                                                                        // move backward
       } else if (controller_state.l_stick_x == 0 && controller_state.l_stick_y == 0 && rotation_vel != 0 && !controller_state.r1 && !controller_state.l1) {  // rotate
-        BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY * 0.5};
+        BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY * 0.35};
         movement_control(target_vel);
       } else if (controller_state.r_stick_x == 0 && controller_state.r_stick_y == 0 && !controller_state.r1 && !controller_state.l1) {  // move fastly
         BaseVelocity target_vel = {controller_state.l_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.5,
@@ -273,17 +272,21 @@ int main(void)
     //     break;
     // }
 
-    if (HAL_GetTick() - test_time > 3000) {
-      test_time = HAL_GetTick();
-      HAL_GPIO_TogglePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin);
-      HAL_GPIO_TogglePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin);
-      HAL_GPIO_TogglePin(MOTOR_FR_IN1_GPIO_Port, MOTOR_FR_IN1_Pin);
-      HAL_GPIO_TogglePin(MOTOR_FR_IN2_GPIO_Port, MOTOR_FR_IN2_Pin);
-      HAL_GPIO_TogglePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin);
-      HAL_GPIO_TogglePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin);
-      HAL_GPIO_TogglePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin);
-      HAL_GPIO_TogglePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin);
-    }
+    test_target_base_vel.x_vel = ROBOT_MAX_Y_VELOCITY / 2.0;
+    test_target_base_vel.y_vel = 0;
+    test_target_base_vel.z_vel = 0;
+    movement_control(test_target_base_vel);
+    // if (HAL_GetTick() - test_time > 3000) {
+    //   test_time = HAL_GetTick();
+    //   HAL_GPIO_TogglePin(MOTOR_FL_IN1_GPIO_Port, MOTOR_FL_IN1_Pin);
+    //   HAL_GPIO_TogglePin(MOTOR_FL_IN2_GPIO_Port, MOTOR_FL_IN2_Pin);
+    //   HAL_GPIO_TogglePin(MOTOR_FR_IN1_GPIO_Port, MOTOR_FR_IN1_Pin);
+    //   HAL_GPIO_TogglePin(MOTOR_FR_IN2_GPIO_Port, MOTOR_FR_IN2_Pin);
+    //   HAL_GPIO_TogglePin(MOTOR_RL_IN1_GPIO_Port, MOTOR_RL_IN1_Pin);
+    //   HAL_GPIO_TogglePin(MOTOR_RL_IN2_GPIO_Port, MOTOR_RL_IN2_Pin);
+    //   HAL_GPIO_TogglePin(MOTOR_RR_IN1_GPIO_Port, MOTOR_RR_IN1_Pin);
+    //   HAL_GPIO_TogglePin(MOTOR_RR_IN2_GPIO_Port, MOTOR_RR_IN2_Pin);
+    // }
 #endif
     HAL_Delay(1);
     read_current_velocity(encoders);

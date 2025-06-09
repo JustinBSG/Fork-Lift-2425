@@ -1141,7 +1141,7 @@ void follow_auto_path(AutoPathSelection auto_path_selection) {
  8000e68:	d035      	beq.n	8000ed6 <follow_auto_path+0x8a>
  8000e6a:	e084      	b.n	8000f76 <follow_auto_path+0x12a>
     case LEFT_PATH: {
-      BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.75, 0};
+      BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.55, 0};
  8000e6c:	f04f 0300 	mov.w	r3, #0
  8000e70:	633b      	str	r3, [r7, #48]	@ 0x30
  8000e72:	4b5a      	ldr	r3, [pc, #360]	@ (8000fdc <follow_auto_path+0x190>)
@@ -1157,9 +1157,9 @@ void follow_auto_path(AutoPathSelection auto_path_selection) {
  8000e90:	eeb0 1a67 	vmov.f32	s2, s15
  8000e94:	f001 fb24 	bl	80024e0 <movement_control>
       HAL_Delay(LEFT_PATH_TIME_1);
- 8000e98:	f44f 60fa 	mov.w	r0, #2000	@ 0x7d0
+ 8000e98:	f44f 60e1 	mov.w	r0, #1800	@ 0x708
  8000e9c:	f002 f942 	bl	8003124 <HAL_Delay>
-      target_vel.x_vel = -ROBOT_MAX_Y_VELOCITY * 0.75;
+      target_vel.x_vel = -ROBOT_MAX_Y_VELOCITY * 0.5;
  8000ea0:	4b4f      	ldr	r3, [pc, #316]	@ (8000fe0 <follow_auto_path+0x194>)
  8000ea2:	633b      	str	r3, [r7, #48]	@ 0x30
       target_vel.y_vel = 0;
@@ -1177,13 +1177,13 @@ void follow_auto_path(AutoPathSelection auto_path_selection) {
  8000ec4:	eeb0 1a67 	vmov.f32	s2, s15
  8000ec8:	f001 fb0a 	bl	80024e0 <movement_control>
       HAL_Delay(LEFT_PATH_TIME_2);
- 8000ecc:	f44f 707a 	mov.w	r0, #1000	@ 0x3e8
+ 8000ecc:	f240 404c 	movw	r0, #1100	@ 0x44c
  8000ed0:	f002 f928 	bl	8003124 <HAL_Delay>
       break;
  8000ed4:	e067      	b.n	8000fa6 <follow_auto_path+0x15a>
     }
     case MID_PATH: {
-      BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.75, 0};
+      BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.55, 0};
  8000ed6:	f04f 0300 	mov.w	r3, #0
  8000eda:	627b      	str	r3, [r7, #36]	@ 0x24
  8000edc:	4b3f      	ldr	r3, [pc, #252]	@ (8000fdc <follow_auto_path+0x190>)
@@ -1199,13 +1199,13 @@ void follow_auto_path(AutoPathSelection auto_path_selection) {
  8000efa:	eeb0 1a67 	vmov.f32	s2, s15
  8000efe:	f001 faef 	bl	80024e0 <movement_control>
       HAL_Delay(MID_PATH_TIME_1);
- 8000f02:	f640 30b8 	movw	r0, #3000	@ 0xbb8
+ 8000f02:	f44f 6048 	mov.w	r0, #3200	@ 0xc80
  8000f06:	f002 f90d 	bl	8003124 <HAL_Delay>
       break;
  8000f0a:	e04c      	b.n	8000fa6 <follow_auto_path+0x15a>
     }
     case RIGHT_PATH: {
-      BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.75, 0};
+      BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.55, 0};
  8000f0c:	f04f 0300 	mov.w	r3, #0
  8000f10:	61bb      	str	r3, [r7, #24]
  8000f12:	4b32      	ldr	r3, [pc, #200]	@ (8000fdc <follow_auto_path+0x190>)
@@ -1221,10 +1221,10 @@ void follow_auto_path(AutoPathSelection auto_path_selection) {
  8000f30:	eeb0 1a67 	vmov.f32	s2, s15
  8000f34:	f001 fad4 	bl	80024e0 <movement_control>
       HAL_Delay(RIGHT_PATH_TIME_1);
- 8000f38:	f44f 60fa 	mov.w	r0, #2000	@ 0x7d0
+ 8000f38:	f44f 60e1 	mov.w	r0, #1800	@ 0x708
  8000f3c:	f002 f8f2 	bl	8003124 <HAL_Delay>
-      target_vel.x_vel = ROBOT_MAX_Y_VELOCITY * 0.75;
- 8000f40:	4b26      	ldr	r3, [pc, #152]	@ (8000fdc <follow_auto_path+0x190>)
+      target_vel.x_vel = ROBOT_MAX_Y_VELOCITY * 0.5;
+ 8000f40:	4b28      	ldr	r3, [pc, #160]	@ (8000fe4 <follow_auto_path+0x198>)
  8000f42:	61bb      	str	r3, [r7, #24]
       target_vel.y_vel = 0;
  8000f44:	f04f 0300 	mov.w	r3, #0
@@ -1241,7 +1241,7 @@ void follow_auto_path(AutoPathSelection auto_path_selection) {
  8000f64:	eeb0 1a67 	vmov.f32	s2, s15
  8000f68:	f001 faba 	bl	80024e0 <movement_control>
       HAL_Delay(RIGHT_PATH_TIME_2);
- 8000f6c:	f44f 707a 	mov.w	r0, #1000	@ 0x3e8
+ 8000f6c:	f240 404c 	movw	r0, #1100	@ 0x44c
  8000f70:	f002 f8d8 	bl	8003124 <HAL_Delay>
       break;
  8000f74:	e017      	b.n	8000fa6 <follow_auto_path+0x15a>
@@ -1285,546 +1285,546 @@ void follow_auto_path(AutoPathSelection auto_path_selection) {
  8000fd6:	3748      	adds	r7, #72	@ 0x48
  8000fd8:	46bd      	mov	sp, r7
  8000fda:	bd80      	pop	{r7, pc}
- 8000fdc:	400f47ae 	.word	0x400f47ae
- 8000fe0:	c00f47ae 	.word	0xc00f47ae
+ 8000fdc:	3fd224dd 	.word	0x3fd224dd
+ 8000fe0:	bfbf0a3d 	.word	0xbfbf0a3d
+ 8000fe4:	3fbf0a3d 	.word	0x3fbf0a3d
 
-08000fe4 <parse_controller_data>:
+08000fe8 <parse_controller_data>:
 
 char controller_buffer[41] = "";
 
 ControllerState controller_state = {.r1 = false, .r2 = false, .r3 = false, .l1 = false, .l2 = false, .l3 = false, .cross = false, .circle = false, .triangle = false, .square = false, .up = false, .down = false, .left = false, .right = false, .l_stick_x = 0, .l_stick_y = 0, .r_stick_x = 0, .r_stick_y = 0, .l2_pressure = 0, .r2_pressure = 0, .ps_button = false, .share_button = false, .options_button = false};
 
 uint8_t parse_controller_data(const char* input, ControllerState* data) {
- 8000fe4:	b580      	push	{r7, lr}
- 8000fe6:	b098      	sub	sp, #96	@ 0x60
- 8000fe8:	af08      	add	r7, sp, #32
- 8000fea:	6078      	str	r0, [r7, #4]
- 8000fec:	6039      	str	r1, [r7, #0]
+ 8000fe8:	b580      	push	{r7, lr}
+ 8000fea:	b098      	sub	sp, #96	@ 0x60
+ 8000fec:	af08      	add	r7, sp, #32
+ 8000fee:	6078      	str	r0, [r7, #4]
+ 8000ff0:	6039      	str	r1, [r7, #0]
   if (input == NULL || data == NULL) {
- 8000fee:	687b      	ldr	r3, [r7, #4]
- 8000ff0:	2b00      	cmp	r3, #0
- 8000ff2:	d002      	beq.n	8000ffa <parse_controller_data+0x16>
- 8000ff4:	683b      	ldr	r3, [r7, #0]
- 8000ff6:	2b00      	cmp	r3, #0
- 8000ff8:	d104      	bne.n	8001004 <parse_controller_data+0x20>
+ 8000ff2:	687b      	ldr	r3, [r7, #4]
+ 8000ff4:	2b00      	cmp	r3, #0
+ 8000ff6:	d002      	beq.n	8000ffe <parse_controller_data+0x16>
+ 8000ff8:	683b      	ldr	r3, [r7, #0]
+ 8000ffa:	2b00      	cmp	r3, #0
+ 8000ffc:	d104      	bne.n	8001008 <parse_controller_data+0x20>
     printf("Invalid input or data pointer\n");
- 8000ffa:	4887      	ldr	r0, [pc, #540]	@ (8001218 <parse_controller_data+0x234>)
- 8000ffc:	f005 fd8a 	bl	8006b14 <puts>
+ 8000ffe:	4887      	ldr	r0, [pc, #540]	@ (800121c <parse_controller_data+0x234>)
+ 8001000:	f005 fd88 	bl	8006b14 <puts>
     return 1;
- 8001000:	2301      	movs	r3, #1
- 8001002:	e105      	b.n	8001210 <parse_controller_data+0x22c>
+ 8001004:	2301      	movs	r3, #1
+ 8001006:	e105      	b.n	8001214 <parse_controller_data+0x22c>
   int buttons_value;
   char l_stick_x_str[5], l_stick_y_str[5], r_stick_x_str[5], r_stick_y_str[5];
   int l2_pressure, r2_pressure;
   int misc_buttons;
 
   int parse_num = sscanf(input, "c:%1x,%03x,%4s,%4s,%4s,%4s,%d,%d,%1x", &dpad_value, &buttons_value, l_stick_y_str, l_stick_x_str, r_stick_y_str, r_stick_x_str, &l2_pressure, &r2_pressure, &misc_buttons);
- 8001004:	f107 0134 	add.w	r1, r7, #52	@ 0x34
- 8001008:	f107 0238 	add.w	r2, r7, #56	@ 0x38
- 800100c:	f107 0308 	add.w	r3, r7, #8
- 8001010:	9306      	str	r3, [sp, #24]
- 8001012:	f107 030c 	add.w	r3, r7, #12
- 8001016:	9305      	str	r3, [sp, #20]
- 8001018:	f107 0310 	add.w	r3, r7, #16
- 800101c:	9304      	str	r3, [sp, #16]
- 800101e:	f107 031c 	add.w	r3, r7, #28
- 8001022:	9303      	str	r3, [sp, #12]
- 8001024:	f107 0314 	add.w	r3, r7, #20
- 8001028:	9302      	str	r3, [sp, #8]
- 800102a:	f107 032c 	add.w	r3, r7, #44	@ 0x2c
- 800102e:	9301      	str	r3, [sp, #4]
- 8001030:	f107 0324 	add.w	r3, r7, #36	@ 0x24
- 8001034:	9300      	str	r3, [sp, #0]
- 8001036:	460b      	mov	r3, r1
- 8001038:	4978      	ldr	r1, [pc, #480]	@ (800121c <parse_controller_data+0x238>)
- 800103a:	6878      	ldr	r0, [r7, #4]
- 800103c:	f005 fb5c 	bl	80066f8 <siscanf>
- 8001040:	63f8      	str	r0, [r7, #60]	@ 0x3c
+ 8001008:	f107 0134 	add.w	r1, r7, #52	@ 0x34
+ 800100c:	f107 0238 	add.w	r2, r7, #56	@ 0x38
+ 8001010:	f107 0308 	add.w	r3, r7, #8
+ 8001014:	9306      	str	r3, [sp, #24]
+ 8001016:	f107 030c 	add.w	r3, r7, #12
+ 800101a:	9305      	str	r3, [sp, #20]
+ 800101c:	f107 0310 	add.w	r3, r7, #16
+ 8001020:	9304      	str	r3, [sp, #16]
+ 8001022:	f107 031c 	add.w	r3, r7, #28
+ 8001026:	9303      	str	r3, [sp, #12]
+ 8001028:	f107 0314 	add.w	r3, r7, #20
+ 800102c:	9302      	str	r3, [sp, #8]
+ 800102e:	f107 032c 	add.w	r3, r7, #44	@ 0x2c
+ 8001032:	9301      	str	r3, [sp, #4]
+ 8001034:	f107 0324 	add.w	r3, r7, #36	@ 0x24
+ 8001038:	9300      	str	r3, [sp, #0]
+ 800103a:	460b      	mov	r3, r1
+ 800103c:	4978      	ldr	r1, [pc, #480]	@ (8001220 <parse_controller_data+0x238>)
+ 800103e:	6878      	ldr	r0, [r7, #4]
+ 8001040:	f005 fb5a 	bl	80066f8 <siscanf>
+ 8001044:	63f8      	str	r0, [r7, #60]	@ 0x3c
 
   if (parse_num != 9) {
- 8001042:	6bfb      	ldr	r3, [r7, #60]	@ 0x3c
- 8001044:	2b09      	cmp	r3, #9
- 8001046:	d004      	beq.n	8001052 <parse_controller_data+0x6e>
+ 8001046:	6bfb      	ldr	r3, [r7, #60]	@ 0x3c
+ 8001048:	2b09      	cmp	r3, #9
+ 800104a:	d004      	beq.n	8001056 <parse_controller_data+0x6e>
     printf("Error parsing input string\n");
- 8001048:	4875      	ldr	r0, [pc, #468]	@ (8001220 <parse_controller_data+0x23c>)
- 800104a:	f005 fd63 	bl	8006b14 <puts>
+ 800104c:	4875      	ldr	r0, [pc, #468]	@ (8001224 <parse_controller_data+0x23c>)
+ 800104e:	f005 fd61 	bl	8006b14 <puts>
     return 2;
- 800104e:	2302      	movs	r3, #2
- 8001050:	e0de      	b.n	8001210 <parse_controller_data+0x22c>
+ 8001052:	2302      	movs	r3, #2
+ 8001054:	e0de      	b.n	8001214 <parse_controller_data+0x22c>
   }
 
   data->up = dpad_value & 0x1;
- 8001052:	6bbb      	ldr	r3, [r7, #56]	@ 0x38
- 8001054:	f003 0301 	and.w	r3, r3, #1
- 8001058:	2b00      	cmp	r3, #0
- 800105a:	bf14      	ite	ne
- 800105c:	2301      	movne	r3, #1
- 800105e:	2300      	moveq	r3, #0
- 8001060:	b2da      	uxtb	r2, r3
- 8001062:	683b      	ldr	r3, [r7, #0]
- 8001064:	729a      	strb	r2, [r3, #10]
+ 8001056:	6bbb      	ldr	r3, [r7, #56]	@ 0x38
+ 8001058:	f003 0301 	and.w	r3, r3, #1
+ 800105c:	2b00      	cmp	r3, #0
+ 800105e:	bf14      	ite	ne
+ 8001060:	2301      	movne	r3, #1
+ 8001062:	2300      	moveq	r3, #0
+ 8001064:	b2da      	uxtb	r2, r3
+ 8001066:	683b      	ldr	r3, [r7, #0]
+ 8001068:	729a      	strb	r2, [r3, #10]
   data->down = dpad_value & 0x2;
- 8001066:	6bbb      	ldr	r3, [r7, #56]	@ 0x38
- 8001068:	f003 0302 	and.w	r3, r3, #2
- 800106c:	2b00      	cmp	r3, #0
- 800106e:	bf14      	ite	ne
- 8001070:	2301      	movne	r3, #1
- 8001072:	2300      	moveq	r3, #0
- 8001074:	b2da      	uxtb	r2, r3
- 8001076:	683b      	ldr	r3, [r7, #0]
- 8001078:	72da      	strb	r2, [r3, #11]
+ 800106a:	6bbb      	ldr	r3, [r7, #56]	@ 0x38
+ 800106c:	f003 0302 	and.w	r3, r3, #2
+ 8001070:	2b00      	cmp	r3, #0
+ 8001072:	bf14      	ite	ne
+ 8001074:	2301      	movne	r3, #1
+ 8001076:	2300      	moveq	r3, #0
+ 8001078:	b2da      	uxtb	r2, r3
+ 800107a:	683b      	ldr	r3, [r7, #0]
+ 800107c:	72da      	strb	r2, [r3, #11]
   data->right = dpad_value & 0x4;
- 800107a:	6bbb      	ldr	r3, [r7, #56]	@ 0x38
- 800107c:	f003 0304 	and.w	r3, r3, #4
- 8001080:	2b00      	cmp	r3, #0
- 8001082:	bf14      	ite	ne
- 8001084:	2301      	movne	r3, #1
- 8001086:	2300      	moveq	r3, #0
- 8001088:	b2da      	uxtb	r2, r3
- 800108a:	683b      	ldr	r3, [r7, #0]
- 800108c:	735a      	strb	r2, [r3, #13]
+ 800107e:	6bbb      	ldr	r3, [r7, #56]	@ 0x38
+ 8001080:	f003 0304 	and.w	r3, r3, #4
+ 8001084:	2b00      	cmp	r3, #0
+ 8001086:	bf14      	ite	ne
+ 8001088:	2301      	movne	r3, #1
+ 800108a:	2300      	moveq	r3, #0
+ 800108c:	b2da      	uxtb	r2, r3
+ 800108e:	683b      	ldr	r3, [r7, #0]
+ 8001090:	735a      	strb	r2, [r3, #13]
   data->left = dpad_value & 0x8;
- 800108e:	6bbb      	ldr	r3, [r7, #56]	@ 0x38
- 8001090:	f003 0308 	and.w	r3, r3, #8
- 8001094:	2b00      	cmp	r3, #0
- 8001096:	bf14      	ite	ne
- 8001098:	2301      	movne	r3, #1
- 800109a:	2300      	moveq	r3, #0
- 800109c:	b2da      	uxtb	r2, r3
- 800109e:	683b      	ldr	r3, [r7, #0]
- 80010a0:	731a      	strb	r2, [r3, #12]
+ 8001092:	6bbb      	ldr	r3, [r7, #56]	@ 0x38
+ 8001094:	f003 0308 	and.w	r3, r3, #8
+ 8001098:	2b00      	cmp	r3, #0
+ 800109a:	bf14      	ite	ne
+ 800109c:	2301      	movne	r3, #1
+ 800109e:	2300      	moveq	r3, #0
+ 80010a0:	b2da      	uxtb	r2, r3
+ 80010a2:	683b      	ldr	r3, [r7, #0]
+ 80010a4:	731a      	strb	r2, [r3, #12]
 
   data->cross = buttons_value & 0x001;
- 80010a2:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
- 80010a4:	f003 0301 	and.w	r3, r3, #1
- 80010a8:	2b00      	cmp	r3, #0
- 80010aa:	bf14      	ite	ne
- 80010ac:	2301      	movne	r3, #1
- 80010ae:	2300      	moveq	r3, #0
- 80010b0:	b2da      	uxtb	r2, r3
- 80010b2:	683b      	ldr	r3, [r7, #0]
- 80010b4:	719a      	strb	r2, [r3, #6]
+ 80010a6:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
+ 80010a8:	f003 0301 	and.w	r3, r3, #1
+ 80010ac:	2b00      	cmp	r3, #0
+ 80010ae:	bf14      	ite	ne
+ 80010b0:	2301      	movne	r3, #1
+ 80010b2:	2300      	moveq	r3, #0
+ 80010b4:	b2da      	uxtb	r2, r3
+ 80010b6:	683b      	ldr	r3, [r7, #0]
+ 80010b8:	719a      	strb	r2, [r3, #6]
   data->circle = buttons_value & 0x002;
- 80010b6:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
- 80010b8:	f003 0302 	and.w	r3, r3, #2
- 80010bc:	2b00      	cmp	r3, #0
- 80010be:	bf14      	ite	ne
- 80010c0:	2301      	movne	r3, #1
- 80010c2:	2300      	moveq	r3, #0
- 80010c4:	b2da      	uxtb	r2, r3
- 80010c6:	683b      	ldr	r3, [r7, #0]
- 80010c8:	71da      	strb	r2, [r3, #7]
+ 80010ba:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
+ 80010bc:	f003 0302 	and.w	r3, r3, #2
+ 80010c0:	2b00      	cmp	r3, #0
+ 80010c2:	bf14      	ite	ne
+ 80010c4:	2301      	movne	r3, #1
+ 80010c6:	2300      	moveq	r3, #0
+ 80010c8:	b2da      	uxtb	r2, r3
+ 80010ca:	683b      	ldr	r3, [r7, #0]
+ 80010cc:	71da      	strb	r2, [r3, #7]
   data->square = buttons_value & 0x004;
- 80010ca:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
- 80010cc:	f003 0304 	and.w	r3, r3, #4
- 80010d0:	2b00      	cmp	r3, #0
- 80010d2:	bf14      	ite	ne
- 80010d4:	2301      	movne	r3, #1
- 80010d6:	2300      	moveq	r3, #0
- 80010d8:	b2da      	uxtb	r2, r3
- 80010da:	683b      	ldr	r3, [r7, #0]
- 80010dc:	725a      	strb	r2, [r3, #9]
+ 80010ce:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
+ 80010d0:	f003 0304 	and.w	r3, r3, #4
+ 80010d4:	2b00      	cmp	r3, #0
+ 80010d6:	bf14      	ite	ne
+ 80010d8:	2301      	movne	r3, #1
+ 80010da:	2300      	moveq	r3, #0
+ 80010dc:	b2da      	uxtb	r2, r3
+ 80010de:	683b      	ldr	r3, [r7, #0]
+ 80010e0:	725a      	strb	r2, [r3, #9]
   data->triangle = buttons_value & 0x008;
- 80010de:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
- 80010e0:	f003 0308 	and.w	r3, r3, #8
- 80010e4:	2b00      	cmp	r3, #0
- 80010e6:	bf14      	ite	ne
- 80010e8:	2301      	movne	r3, #1
- 80010ea:	2300      	moveq	r3, #0
- 80010ec:	b2da      	uxtb	r2, r3
- 80010ee:	683b      	ldr	r3, [r7, #0]
- 80010f0:	721a      	strb	r2, [r3, #8]
+ 80010e2:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
+ 80010e4:	f003 0308 	and.w	r3, r3, #8
+ 80010e8:	2b00      	cmp	r3, #0
+ 80010ea:	bf14      	ite	ne
+ 80010ec:	2301      	movne	r3, #1
+ 80010ee:	2300      	moveq	r3, #0
+ 80010f0:	b2da      	uxtb	r2, r3
+ 80010f2:	683b      	ldr	r3, [r7, #0]
+ 80010f4:	721a      	strb	r2, [r3, #8]
   data->l1 = buttons_value & 0x010;
- 80010f2:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
- 80010f4:	f003 0310 	and.w	r3, r3, #16
- 80010f8:	2b00      	cmp	r3, #0
- 80010fa:	bf14      	ite	ne
- 80010fc:	2301      	movne	r3, #1
- 80010fe:	2300      	moveq	r3, #0
- 8001100:	b2da      	uxtb	r2, r3
- 8001102:	683b      	ldr	r3, [r7, #0]
- 8001104:	70da      	strb	r2, [r3, #3]
+ 80010f6:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
+ 80010f8:	f003 0310 	and.w	r3, r3, #16
+ 80010fc:	2b00      	cmp	r3, #0
+ 80010fe:	bf14      	ite	ne
+ 8001100:	2301      	movne	r3, #1
+ 8001102:	2300      	moveq	r3, #0
+ 8001104:	b2da      	uxtb	r2, r3
+ 8001106:	683b      	ldr	r3, [r7, #0]
+ 8001108:	70da      	strb	r2, [r3, #3]
   data->r1 = buttons_value & 0x020;
- 8001106:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
- 8001108:	f003 0320 	and.w	r3, r3, #32
- 800110c:	2b00      	cmp	r3, #0
- 800110e:	bf14      	ite	ne
- 8001110:	2301      	movne	r3, #1
- 8001112:	2300      	moveq	r3, #0
- 8001114:	b2da      	uxtb	r2, r3
- 8001116:	683b      	ldr	r3, [r7, #0]
- 8001118:	701a      	strb	r2, [r3, #0]
+ 800110a:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
+ 800110c:	f003 0320 	and.w	r3, r3, #32
+ 8001110:	2b00      	cmp	r3, #0
+ 8001112:	bf14      	ite	ne
+ 8001114:	2301      	movne	r3, #1
+ 8001116:	2300      	moveq	r3, #0
+ 8001118:	b2da      	uxtb	r2, r3
+ 800111a:	683b      	ldr	r3, [r7, #0]
+ 800111c:	701a      	strb	r2, [r3, #0]
   data->l2 = buttons_value & 0x040;
- 800111a:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
- 800111c:	f003 0340 	and.w	r3, r3, #64	@ 0x40
- 8001120:	2b00      	cmp	r3, #0
- 8001122:	bf14      	ite	ne
- 8001124:	2301      	movne	r3, #1
- 8001126:	2300      	moveq	r3, #0
- 8001128:	b2da      	uxtb	r2, r3
- 800112a:	683b      	ldr	r3, [r7, #0]
- 800112c:	711a      	strb	r2, [r3, #4]
+ 800111e:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
+ 8001120:	f003 0340 	and.w	r3, r3, #64	@ 0x40
+ 8001124:	2b00      	cmp	r3, #0
+ 8001126:	bf14      	ite	ne
+ 8001128:	2301      	movne	r3, #1
+ 800112a:	2300      	moveq	r3, #0
+ 800112c:	b2da      	uxtb	r2, r3
+ 800112e:	683b      	ldr	r3, [r7, #0]
+ 8001130:	711a      	strb	r2, [r3, #4]
   data->r2 = buttons_value & 0x080;
- 800112e:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
- 8001130:	f003 0380 	and.w	r3, r3, #128	@ 0x80
- 8001134:	2b00      	cmp	r3, #0
- 8001136:	bf14      	ite	ne
- 8001138:	2301      	movne	r3, #1
- 800113a:	2300      	moveq	r3, #0
- 800113c:	b2da      	uxtb	r2, r3
- 800113e:	683b      	ldr	r3, [r7, #0]
- 8001140:	705a      	strb	r2, [r3, #1]
+ 8001132:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
+ 8001134:	f003 0380 	and.w	r3, r3, #128	@ 0x80
+ 8001138:	2b00      	cmp	r3, #0
+ 800113a:	bf14      	ite	ne
+ 800113c:	2301      	movne	r3, #1
+ 800113e:	2300      	moveq	r3, #0
+ 8001140:	b2da      	uxtb	r2, r3
+ 8001142:	683b      	ldr	r3, [r7, #0]
+ 8001144:	705a      	strb	r2, [r3, #1]
   data->l3 = buttons_value & 0x100;
- 8001142:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
- 8001144:	f403 7380 	and.w	r3, r3, #256	@ 0x100
- 8001148:	2b00      	cmp	r3, #0
- 800114a:	bf14      	ite	ne
- 800114c:	2301      	movne	r3, #1
- 800114e:	2300      	moveq	r3, #0
- 8001150:	b2da      	uxtb	r2, r3
- 8001152:	683b      	ldr	r3, [r7, #0]
- 8001154:	715a      	strb	r2, [r3, #5]
+ 8001146:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
+ 8001148:	f403 7380 	and.w	r3, r3, #256	@ 0x100
+ 800114c:	2b00      	cmp	r3, #0
+ 800114e:	bf14      	ite	ne
+ 8001150:	2301      	movne	r3, #1
+ 8001152:	2300      	moveq	r3, #0
+ 8001154:	b2da      	uxtb	r2, r3
+ 8001156:	683b      	ldr	r3, [r7, #0]
+ 8001158:	715a      	strb	r2, [r3, #5]
   data->r3 = buttons_value & 0x200;
- 8001156:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
- 8001158:	f403 7300 	and.w	r3, r3, #512	@ 0x200
- 800115c:	2b00      	cmp	r3, #0
- 800115e:	bf14      	ite	ne
- 8001160:	2301      	movne	r3, #1
- 8001162:	2300      	moveq	r3, #0
- 8001164:	b2da      	uxtb	r2, r3
- 8001166:	683b      	ldr	r3, [r7, #0]
- 8001168:	709a      	strb	r2, [r3, #2]
+ 800115a:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
+ 800115c:	f403 7300 	and.w	r3, r3, #512	@ 0x200
+ 8001160:	2b00      	cmp	r3, #0
+ 8001162:	bf14      	ite	ne
+ 8001164:	2301      	movne	r3, #1
+ 8001166:	2300      	moveq	r3, #0
+ 8001168:	b2da      	uxtb	r2, r3
+ 800116a:	683b      	ldr	r3, [r7, #0]
+ 800116c:	709a      	strb	r2, [r3, #2]
 
   data->l_stick_y = (int8_t)strtol(l_stick_y_str, NULL, 10);
- 800116a:	f107 0324 	add.w	r3, r7, #36	@ 0x24
- 800116e:	220a      	movs	r2, #10
- 8001170:	2100      	movs	r1, #0
- 8001172:	4618      	mov	r0, r3
- 8001174:	f005 fc50 	bl	8006a18 <strtol>
- 8001178:	4603      	mov	r3, r0
- 800117a:	b25a      	sxtb	r2, r3
- 800117c:	683b      	ldr	r3, [r7, #0]
- 800117e:	73da      	strb	r2, [r3, #15]
+ 800116e:	f107 0324 	add.w	r3, r7, #36	@ 0x24
+ 8001172:	220a      	movs	r2, #10
+ 8001174:	2100      	movs	r1, #0
+ 8001176:	4618      	mov	r0, r3
+ 8001178:	f005 fc4e 	bl	8006a18 <strtol>
+ 800117c:	4603      	mov	r3, r0
+ 800117e:	b25a      	sxtb	r2, r3
+ 8001180:	683b      	ldr	r3, [r7, #0]
+ 8001182:	73da      	strb	r2, [r3, #15]
   data->l_stick_x = (int8_t)strtol(l_stick_x_str, NULL, 10);
- 8001180:	f107 032c 	add.w	r3, r7, #44	@ 0x2c
- 8001184:	220a      	movs	r2, #10
- 8001186:	2100      	movs	r1, #0
- 8001188:	4618      	mov	r0, r3
- 800118a:	f005 fc45 	bl	8006a18 <strtol>
- 800118e:	4603      	mov	r3, r0
- 8001190:	b25a      	sxtb	r2, r3
- 8001192:	683b      	ldr	r3, [r7, #0]
- 8001194:	739a      	strb	r2, [r3, #14]
+ 8001184:	f107 032c 	add.w	r3, r7, #44	@ 0x2c
+ 8001188:	220a      	movs	r2, #10
+ 800118a:	2100      	movs	r1, #0
+ 800118c:	4618      	mov	r0, r3
+ 800118e:	f005 fc43 	bl	8006a18 <strtol>
+ 8001192:	4603      	mov	r3, r0
+ 8001194:	b25a      	sxtb	r2, r3
+ 8001196:	683b      	ldr	r3, [r7, #0]
+ 8001198:	739a      	strb	r2, [r3, #14]
   data->r_stick_y = (int8_t)strtol(r_stick_y_str, NULL, 10);
- 8001196:	f107 0314 	add.w	r3, r7, #20
- 800119a:	220a      	movs	r2, #10
- 800119c:	2100      	movs	r1, #0
- 800119e:	4618      	mov	r0, r3
- 80011a0:	f005 fc3a 	bl	8006a18 <strtol>
- 80011a4:	4603      	mov	r3, r0
- 80011a6:	b25a      	sxtb	r2, r3
- 80011a8:	683b      	ldr	r3, [r7, #0]
- 80011aa:	745a      	strb	r2, [r3, #17]
+ 800119a:	f107 0314 	add.w	r3, r7, #20
+ 800119e:	220a      	movs	r2, #10
+ 80011a0:	2100      	movs	r1, #0
+ 80011a2:	4618      	mov	r0, r3
+ 80011a4:	f005 fc38 	bl	8006a18 <strtol>
+ 80011a8:	4603      	mov	r3, r0
+ 80011aa:	b25a      	sxtb	r2, r3
+ 80011ac:	683b      	ldr	r3, [r7, #0]
+ 80011ae:	745a      	strb	r2, [r3, #17]
   data->r_stick_x = (int8_t)strtol(r_stick_x_str, NULL, 10);
- 80011ac:	f107 031c 	add.w	r3, r7, #28
- 80011b0:	220a      	movs	r2, #10
- 80011b2:	2100      	movs	r1, #0
- 80011b4:	4618      	mov	r0, r3
- 80011b6:	f005 fc2f 	bl	8006a18 <strtol>
- 80011ba:	4603      	mov	r3, r0
- 80011bc:	b25a      	sxtb	r2, r3
- 80011be:	683b      	ldr	r3, [r7, #0]
- 80011c0:	741a      	strb	r2, [r3, #16]
+ 80011b0:	f107 031c 	add.w	r3, r7, #28
+ 80011b4:	220a      	movs	r2, #10
+ 80011b6:	2100      	movs	r1, #0
+ 80011b8:	4618      	mov	r0, r3
+ 80011ba:	f005 fc2d 	bl	8006a18 <strtol>
+ 80011be:	4603      	mov	r3, r0
+ 80011c0:	b25a      	sxtb	r2, r3
+ 80011c2:	683b      	ldr	r3, [r7, #0]
+ 80011c4:	741a      	strb	r2, [r3, #16]
 
   data->l2_pressure = (uint16_t)l2_pressure;
- 80011c2:	693b      	ldr	r3, [r7, #16]
- 80011c4:	b29a      	uxth	r2, r3
- 80011c6:	683b      	ldr	r3, [r7, #0]
- 80011c8:	825a      	strh	r2, [r3, #18]
+ 80011c6:	693b      	ldr	r3, [r7, #16]
+ 80011c8:	b29a      	uxth	r2, r3
+ 80011ca:	683b      	ldr	r3, [r7, #0]
+ 80011cc:	825a      	strh	r2, [r3, #18]
   data->r2_pressure = (uint16_t)r2_pressure;
- 80011ca:	68fb      	ldr	r3, [r7, #12]
- 80011cc:	b29a      	uxth	r2, r3
- 80011ce:	683b      	ldr	r3, [r7, #0]
- 80011d0:	829a      	strh	r2, [r3, #20]
+ 80011ce:	68fb      	ldr	r3, [r7, #12]
+ 80011d0:	b29a      	uxth	r2, r3
+ 80011d2:	683b      	ldr	r3, [r7, #0]
+ 80011d4:	829a      	strh	r2, [r3, #20]
 
   data->ps_button = misc_buttons & 0x1;
- 80011d2:	68bb      	ldr	r3, [r7, #8]
- 80011d4:	f003 0301 	and.w	r3, r3, #1
- 80011d8:	2b00      	cmp	r3, #0
- 80011da:	bf14      	ite	ne
- 80011dc:	2301      	movne	r3, #1
- 80011de:	2300      	moveq	r3, #0
- 80011e0:	b2da      	uxtb	r2, r3
- 80011e2:	683b      	ldr	r3, [r7, #0]
- 80011e4:	759a      	strb	r2, [r3, #22]
+ 80011d6:	68bb      	ldr	r3, [r7, #8]
+ 80011d8:	f003 0301 	and.w	r3, r3, #1
+ 80011dc:	2b00      	cmp	r3, #0
+ 80011de:	bf14      	ite	ne
+ 80011e0:	2301      	movne	r3, #1
+ 80011e2:	2300      	moveq	r3, #0
+ 80011e4:	b2da      	uxtb	r2, r3
+ 80011e6:	683b      	ldr	r3, [r7, #0]
+ 80011e8:	759a      	strb	r2, [r3, #22]
   data->share_button = misc_buttons & 0x2;
- 80011e6:	68bb      	ldr	r3, [r7, #8]
- 80011e8:	f003 0302 	and.w	r3, r3, #2
- 80011ec:	2b00      	cmp	r3, #0
- 80011ee:	bf14      	ite	ne
- 80011f0:	2301      	movne	r3, #1
- 80011f2:	2300      	moveq	r3, #0
- 80011f4:	b2da      	uxtb	r2, r3
- 80011f6:	683b      	ldr	r3, [r7, #0]
- 80011f8:	75da      	strb	r2, [r3, #23]
+ 80011ea:	68bb      	ldr	r3, [r7, #8]
+ 80011ec:	f003 0302 	and.w	r3, r3, #2
+ 80011f0:	2b00      	cmp	r3, #0
+ 80011f2:	bf14      	ite	ne
+ 80011f4:	2301      	movne	r3, #1
+ 80011f6:	2300      	moveq	r3, #0
+ 80011f8:	b2da      	uxtb	r2, r3
+ 80011fa:	683b      	ldr	r3, [r7, #0]
+ 80011fc:	75da      	strb	r2, [r3, #23]
   data->options_button = misc_buttons & 0x4;
- 80011fa:	68bb      	ldr	r3, [r7, #8]
- 80011fc:	f003 0304 	and.w	r3, r3, #4
- 8001200:	2b00      	cmp	r3, #0
- 8001202:	bf14      	ite	ne
- 8001204:	2301      	movne	r3, #1
- 8001206:	2300      	moveq	r3, #0
- 8001208:	b2da      	uxtb	r2, r3
- 800120a:	683b      	ldr	r3, [r7, #0]
- 800120c:	761a      	strb	r2, [r3, #24]
+ 80011fe:	68bb      	ldr	r3, [r7, #8]
+ 8001200:	f003 0304 	and.w	r3, r3, #4
+ 8001204:	2b00      	cmp	r3, #0
+ 8001206:	bf14      	ite	ne
+ 8001208:	2301      	movne	r3, #1
+ 800120a:	2300      	moveq	r3, #0
+ 800120c:	b2da      	uxtb	r2, r3
+ 800120e:	683b      	ldr	r3, [r7, #0]
+ 8001210:	761a      	strb	r2, [r3, #24]
 
   return 0;
- 800120e:	2300      	movs	r3, #0
+ 8001212:	2300      	movs	r3, #0
 }
- 8001210:	4618      	mov	r0, r3
- 8001212:	3740      	adds	r7, #64	@ 0x40
- 8001214:	46bd      	mov	sp, r7
- 8001216:	bd80      	pop	{r7, pc}
- 8001218:	08007a50 	.word	0x08007a50
- 800121c:	08007a70 	.word	0x08007a70
- 8001220:	08007a98 	.word	0x08007a98
+ 8001214:	4618      	mov	r0, r3
+ 8001216:	3740      	adds	r7, #64	@ 0x40
+ 8001218:	46bd      	mov	sp, r7
+ 800121a:	bd80      	pop	{r7, pc}
+ 800121c:	08007a50 	.word	0x08007a50
+ 8001220:	08007a70 	.word	0x08007a70
+ 8001224:	08007a98 	.word	0x08007a98
 
-08001224 <MX_GPIO_Init>:
+08001228 <MX_GPIO_Init>:
         * Output
         * EVENT_OUT
         * EXTI
 */
 void MX_GPIO_Init(void)
 {
- 8001224:	b580      	push	{r7, lr}
- 8001226:	b08c      	sub	sp, #48	@ 0x30
- 8001228:	af00      	add	r7, sp, #0
+ 8001228:	b580      	push	{r7, lr}
+ 800122a:	b08c      	sub	sp, #48	@ 0x30
+ 800122c:	af00      	add	r7, sp, #0
 
   GPIO_InitTypeDef GPIO_InitStruct = {0};
- 800122a:	f107 031c 	add.w	r3, r7, #28
- 800122e:	2200      	movs	r2, #0
- 8001230:	601a      	str	r2, [r3, #0]
- 8001232:	605a      	str	r2, [r3, #4]
- 8001234:	609a      	str	r2, [r3, #8]
- 8001236:	60da      	str	r2, [r3, #12]
- 8001238:	611a      	str	r2, [r3, #16]
+ 800122e:	f107 031c 	add.w	r3, r7, #28
+ 8001232:	2200      	movs	r2, #0
+ 8001234:	601a      	str	r2, [r3, #0]
+ 8001236:	605a      	str	r2, [r3, #4]
+ 8001238:	609a      	str	r2, [r3, #8]
+ 800123a:	60da      	str	r2, [r3, #12]
+ 800123c:	611a      	str	r2, [r3, #16]
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOE_CLK_ENABLE();
- 800123a:	4b5a      	ldr	r3, [pc, #360]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 800123c:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
- 800123e:	4a59      	ldr	r2, [pc, #356]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 8001240:	f043 0310 	orr.w	r3, r3, #16
- 8001244:	64d3      	str	r3, [r2, #76]	@ 0x4c
- 8001246:	4b57      	ldr	r3, [pc, #348]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 8001248:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
- 800124a:	f003 0310 	and.w	r3, r3, #16
- 800124e:	61bb      	str	r3, [r7, #24]
- 8001250:	69bb      	ldr	r3, [r7, #24]
+ 800123e:	4b5a      	ldr	r3, [pc, #360]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 8001240:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
+ 8001242:	4a59      	ldr	r2, [pc, #356]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 8001244:	f043 0310 	orr.w	r3, r3, #16
+ 8001248:	64d3      	str	r3, [r2, #76]	@ 0x4c
+ 800124a:	4b57      	ldr	r3, [pc, #348]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 800124c:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
+ 800124e:	f003 0310 	and.w	r3, r3, #16
+ 8001252:	61bb      	str	r3, [r7, #24]
+ 8001254:	69bb      	ldr	r3, [r7, #24]
   __HAL_RCC_GPIOC_CLK_ENABLE();
- 8001252:	4b54      	ldr	r3, [pc, #336]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 8001254:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
- 8001256:	4a53      	ldr	r2, [pc, #332]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 8001258:	f043 0304 	orr.w	r3, r3, #4
- 800125c:	64d3      	str	r3, [r2, #76]	@ 0x4c
- 800125e:	4b51      	ldr	r3, [pc, #324]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 8001260:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
- 8001262:	f003 0304 	and.w	r3, r3, #4
- 8001266:	617b      	str	r3, [r7, #20]
- 8001268:	697b      	ldr	r3, [r7, #20]
+ 8001256:	4b54      	ldr	r3, [pc, #336]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 8001258:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
+ 800125a:	4a53      	ldr	r2, [pc, #332]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 800125c:	f043 0304 	orr.w	r3, r3, #4
+ 8001260:	64d3      	str	r3, [r2, #76]	@ 0x4c
+ 8001262:	4b51      	ldr	r3, [pc, #324]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 8001264:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
+ 8001266:	f003 0304 	and.w	r3, r3, #4
+ 800126a:	617b      	str	r3, [r7, #20]
+ 800126c:	697b      	ldr	r3, [r7, #20]
   __HAL_RCC_GPIOF_CLK_ENABLE();
- 800126a:	4b4e      	ldr	r3, [pc, #312]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 800126c:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
- 800126e:	4a4d      	ldr	r2, [pc, #308]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 8001270:	f043 0320 	orr.w	r3, r3, #32
- 8001274:	64d3      	str	r3, [r2, #76]	@ 0x4c
- 8001276:	4b4b      	ldr	r3, [pc, #300]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 8001278:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
- 800127a:	f003 0320 	and.w	r3, r3, #32
- 800127e:	613b      	str	r3, [r7, #16]
- 8001280:	693b      	ldr	r3, [r7, #16]
+ 800126e:	4b4e      	ldr	r3, [pc, #312]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 8001270:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
+ 8001272:	4a4d      	ldr	r2, [pc, #308]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 8001274:	f043 0320 	orr.w	r3, r3, #32
+ 8001278:	64d3      	str	r3, [r2, #76]	@ 0x4c
+ 800127a:	4b4b      	ldr	r3, [pc, #300]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 800127c:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
+ 800127e:	f003 0320 	and.w	r3, r3, #32
+ 8001282:	613b      	str	r3, [r7, #16]
+ 8001284:	693b      	ldr	r3, [r7, #16]
   __HAL_RCC_GPIOA_CLK_ENABLE();
- 8001282:	4b48      	ldr	r3, [pc, #288]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 8001284:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
- 8001286:	4a47      	ldr	r2, [pc, #284]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 8001288:	f043 0301 	orr.w	r3, r3, #1
- 800128c:	64d3      	str	r3, [r2, #76]	@ 0x4c
- 800128e:	4b45      	ldr	r3, [pc, #276]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 8001290:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
- 8001292:	f003 0301 	and.w	r3, r3, #1
- 8001296:	60fb      	str	r3, [r7, #12]
- 8001298:	68fb      	ldr	r3, [r7, #12]
+ 8001286:	4b48      	ldr	r3, [pc, #288]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 8001288:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
+ 800128a:	4a47      	ldr	r2, [pc, #284]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 800128c:	f043 0301 	orr.w	r3, r3, #1
+ 8001290:	64d3      	str	r3, [r2, #76]	@ 0x4c
+ 8001292:	4b45      	ldr	r3, [pc, #276]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 8001294:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
+ 8001296:	f003 0301 	and.w	r3, r3, #1
+ 800129a:	60fb      	str	r3, [r7, #12]
+ 800129c:	68fb      	ldr	r3, [r7, #12]
   __HAL_RCC_GPIOB_CLK_ENABLE();
- 800129a:	4b42      	ldr	r3, [pc, #264]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 800129c:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
- 800129e:	4a41      	ldr	r2, [pc, #260]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 80012a0:	f043 0302 	orr.w	r3, r3, #2
- 80012a4:	64d3      	str	r3, [r2, #76]	@ 0x4c
- 80012a6:	4b3f      	ldr	r3, [pc, #252]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 80012a8:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
- 80012aa:	f003 0302 	and.w	r3, r3, #2
- 80012ae:	60bb      	str	r3, [r7, #8]
- 80012b0:	68bb      	ldr	r3, [r7, #8]
+ 800129e:	4b42      	ldr	r3, [pc, #264]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 80012a0:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
+ 80012a2:	4a41      	ldr	r2, [pc, #260]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 80012a4:	f043 0302 	orr.w	r3, r3, #2
+ 80012a8:	64d3      	str	r3, [r2, #76]	@ 0x4c
+ 80012aa:	4b3f      	ldr	r3, [pc, #252]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 80012ac:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
+ 80012ae:	f003 0302 	and.w	r3, r3, #2
+ 80012b2:	60bb      	str	r3, [r7, #8]
+ 80012b4:	68bb      	ldr	r3, [r7, #8]
   __HAL_RCC_GPIOD_CLK_ENABLE();
- 80012b2:	4b3c      	ldr	r3, [pc, #240]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 80012b4:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
- 80012b6:	4a3b      	ldr	r2, [pc, #236]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 80012b8:	f043 0308 	orr.w	r3, r3, #8
- 80012bc:	64d3      	str	r3, [r2, #76]	@ 0x4c
- 80012be:	4b39      	ldr	r3, [pc, #228]	@ (80013a4 <MX_GPIO_Init+0x180>)
- 80012c0:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
- 80012c2:	f003 0308 	and.w	r3, r3, #8
- 80012c6:	607b      	str	r3, [r7, #4]
- 80012c8:	687b      	ldr	r3, [r7, #4]
+ 80012b6:	4b3c      	ldr	r3, [pc, #240]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 80012b8:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
+ 80012ba:	4a3b      	ldr	r2, [pc, #236]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 80012bc:	f043 0308 	orr.w	r3, r3, #8
+ 80012c0:	64d3      	str	r3, [r2, #76]	@ 0x4c
+ 80012c2:	4b39      	ldr	r3, [pc, #228]	@ (80013a8 <MX_GPIO_Init+0x180>)
+ 80012c4:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
+ 80012c6:	f003 0308 	and.w	r3, r3, #8
+ 80012ca:	607b      	str	r3, [r7, #4]
+ 80012cc:	687b      	ldr	r3, [r7, #4]
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOE, D_IN1_Pin|LED4_Pin|LED3_Pin|LED2_Pin
- 80012ca:	2200      	movs	r2, #0
- 80012cc:	f647 71c0 	movw	r1, #32704	@ 0x7fc0
- 80012d0:	4835      	ldr	r0, [pc, #212]	@ (80013a8 <MX_GPIO_Init+0x184>)
- 80012d2:	f002 f9af 	bl	8003634 <HAL_GPIO_WritePin>
+ 80012ce:	2200      	movs	r2, #0
+ 80012d0:	f647 71c0 	movw	r1, #32704	@ 0x7fc0
+ 80012d4:	4835      	ldr	r0, [pc, #212]	@ (80013ac <MX_GPIO_Init+0x184>)
+ 80012d6:	f002 f9ad 	bl	8003634 <HAL_GPIO_WritePin>
                           |LED1_Pin|A_IN1_Pin|A_IN2_Pin|B_IN2_Pin
                           |LINEAR_ACT_2_2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOF, LINEAR_ACT_2_1_Pin|LINEAR_ACT_1_2_Pin, GPIO_PIN_RESET);
- 80012d6:	2200      	movs	r2, #0
- 80012d8:	f44f 7101 	mov.w	r1, #516	@ 0x204
- 80012dc:	4833      	ldr	r0, [pc, #204]	@ (80013ac <MX_GPIO_Init+0x188>)
- 80012de:	f002 f9a9 	bl	8003634 <HAL_GPIO_WritePin>
+ 80012da:	2200      	movs	r2, #0
+ 80012dc:	f44f 7101 	mov.w	r1, #516	@ 0x204
+ 80012e0:	4833      	ldr	r0, [pc, #204]	@ (80013b0 <MX_GPIO_Init+0x188>)
+ 80012e2:	f002 f9a7 	bl	8003634 <HAL_GPIO_WritePin>
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, B_IN1_Pin|C_IN1_Pin|C_IN2_Pin, GPIO_PIN_RESET);
- 80012e2:	2200      	movs	r2, #0
- 80012e4:	f44f 4124 	mov.w	r1, #41984	@ 0xa400
- 80012e8:	4831      	ldr	r0, [pc, #196]	@ (80013b0 <MX_GPIO_Init+0x18c>)
- 80012ea:	f002 f9a3 	bl	8003634 <HAL_GPIO_WritePin>
+ 80012e6:	2200      	movs	r2, #0
+ 80012e8:	f44f 4124 	mov.w	r1, #41984	@ 0xa400
+ 80012ec:	4831      	ldr	r0, [pc, #196]	@ (80013b4 <MX_GPIO_Init+0x18c>)
+ 80012ee:	f002 f9a1 	bl	8003634 <HAL_GPIO_WritePin>
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, D_IN2_Pin|GPIO_PIN_9|GPIO_PIN_10, GPIO_PIN_RESET);
- 80012ee:	2200      	movs	r2, #0
- 80012f0:	f44f 61e0 	mov.w	r1, #1792	@ 0x700
- 80012f4:	482f      	ldr	r0, [pc, #188]	@ (80013b4 <MX_GPIO_Init+0x190>)
- 80012f6:	f002 f99d 	bl	8003634 <HAL_GPIO_WritePin>
+ 80012f2:	2200      	movs	r2, #0
+ 80012f4:	f44f 61e0 	mov.w	r1, #1792	@ 0x700
+ 80012f8:	482f      	ldr	r0, [pc, #188]	@ (80013b8 <MX_GPIO_Init+0x190>)
+ 80012fa:	f002 f99b 	bl	8003634 <HAL_GPIO_WritePin>
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LINEAR_ACT_1_1_GPIO_Port, LINEAR_ACT_1_1_Pin, GPIO_PIN_RESET);
- 80012fa:	2200      	movs	r2, #0
- 80012fc:	f44f 6180 	mov.w	r1, #1024	@ 0x400
- 8001300:	482d      	ldr	r0, [pc, #180]	@ (80013b8 <MX_GPIO_Init+0x194>)
- 8001302:	f002 f997 	bl	8003634 <HAL_GPIO_WritePin>
+ 80012fe:	2200      	movs	r2, #0
+ 8001300:	f44f 6180 	mov.w	r1, #1024	@ 0x400
+ 8001304:	482d      	ldr	r0, [pc, #180]	@ (80013bc <MX_GPIO_Init+0x194>)
+ 8001306:	f002 f995 	bl	8003634 <HAL_GPIO_WritePin>
 
   /*Configure GPIO pins : D_IN1_Pin LED4_Pin LED3_Pin LED2_Pin
                            LED1_Pin A_IN1_Pin A_IN2_Pin B_IN2_Pin
                            LINEAR_ACT_2_2_Pin */
   GPIO_InitStruct.Pin = D_IN1_Pin|LED4_Pin|LED3_Pin|LED2_Pin
- 8001306:	f647 73c0 	movw	r3, #32704	@ 0x7fc0
- 800130a:	61fb      	str	r3, [r7, #28]
+ 800130a:	f647 73c0 	movw	r3, #32704	@ 0x7fc0
+ 800130e:	61fb      	str	r3, [r7, #28]
                           |LED1_Pin|A_IN1_Pin|A_IN2_Pin|B_IN2_Pin
                           |LINEAR_ACT_2_2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
- 800130c:	2301      	movs	r3, #1
- 800130e:	623b      	str	r3, [r7, #32]
+ 8001310:	2301      	movs	r3, #1
+ 8001312:	623b      	str	r3, [r7, #32]
   GPIO_InitStruct.Pull = GPIO_NOPULL;
- 8001310:	2300      	movs	r3, #0
- 8001312:	627b      	str	r3, [r7, #36]	@ 0x24
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
  8001314:	2300      	movs	r3, #0
- 8001316:	62bb      	str	r3, [r7, #40]	@ 0x28
+ 8001316:	627b      	str	r3, [r7, #36]	@ 0x24
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+ 8001318:	2300      	movs	r3, #0
+ 800131a:	62bb      	str	r3, [r7, #40]	@ 0x28
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
- 8001318:	f107 031c 	add.w	r3, r7, #28
- 800131c:	4619      	mov	r1, r3
- 800131e:	4822      	ldr	r0, [pc, #136]	@ (80013a8 <MX_GPIO_Init+0x184>)
- 8001320:	f002 f806 	bl	8003330 <HAL_GPIO_Init>
+ 800131c:	f107 031c 	add.w	r3, r7, #28
+ 8001320:	4619      	mov	r1, r3
+ 8001322:	4822      	ldr	r0, [pc, #136]	@ (80013ac <MX_GPIO_Init+0x184>)
+ 8001324:	f002 f804 	bl	8003330 <HAL_GPIO_Init>
 
   /*Configure GPIO pins : LINEAR_ACT_2_1_Pin LINEAR_ACT_1_2_Pin */
   GPIO_InitStruct.Pin = LINEAR_ACT_2_1_Pin|LINEAR_ACT_1_2_Pin;
- 8001324:	f44f 7301 	mov.w	r3, #516	@ 0x204
- 8001328:	61fb      	str	r3, [r7, #28]
+ 8001328:	f44f 7301 	mov.w	r3, #516	@ 0x204
+ 800132c:	61fb      	str	r3, [r7, #28]
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
- 800132a:	2301      	movs	r3, #1
- 800132c:	623b      	str	r3, [r7, #32]
+ 800132e:	2301      	movs	r3, #1
+ 8001330:	623b      	str	r3, [r7, #32]
   GPIO_InitStruct.Pull = GPIO_NOPULL;
- 800132e:	2300      	movs	r3, #0
- 8001330:	627b      	str	r3, [r7, #36]	@ 0x24
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
  8001332:	2300      	movs	r3, #0
- 8001334:	62bb      	str	r3, [r7, #40]	@ 0x28
+ 8001334:	627b      	str	r3, [r7, #36]	@ 0x24
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+ 8001336:	2300      	movs	r3, #0
+ 8001338:	62bb      	str	r3, [r7, #40]	@ 0x28
   HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
- 8001336:	f107 031c 	add.w	r3, r7, #28
- 800133a:	4619      	mov	r1, r3
- 800133c:	481b      	ldr	r0, [pc, #108]	@ (80013ac <MX_GPIO_Init+0x188>)
- 800133e:	f001 fff7 	bl	8003330 <HAL_GPIO_Init>
+ 800133a:	f107 031c 	add.w	r3, r7, #28
+ 800133e:	4619      	mov	r1, r3
+ 8001340:	481b      	ldr	r0, [pc, #108]	@ (80013b0 <MX_GPIO_Init+0x188>)
+ 8001342:	f001 fff5 	bl	8003330 <HAL_GPIO_Init>
 
   /*Configure GPIO pins : B_IN1_Pin C_IN1_Pin C_IN2_Pin */
   GPIO_InitStruct.Pin = B_IN1_Pin|C_IN1_Pin|C_IN2_Pin;
- 8001342:	f44f 4324 	mov.w	r3, #41984	@ 0xa400
- 8001346:	61fb      	str	r3, [r7, #28]
+ 8001346:	f44f 4324 	mov.w	r3, #41984	@ 0xa400
+ 800134a:	61fb      	str	r3, [r7, #28]
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
- 8001348:	2301      	movs	r3, #1
- 800134a:	623b      	str	r3, [r7, #32]
+ 800134c:	2301      	movs	r3, #1
+ 800134e:	623b      	str	r3, [r7, #32]
   GPIO_InitStruct.Pull = GPIO_NOPULL;
- 800134c:	2300      	movs	r3, #0
- 800134e:	627b      	str	r3, [r7, #36]	@ 0x24
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
  8001350:	2300      	movs	r3, #0
- 8001352:	62bb      	str	r3, [r7, #40]	@ 0x28
+ 8001352:	627b      	str	r3, [r7, #36]	@ 0x24
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+ 8001354:	2300      	movs	r3, #0
+ 8001356:	62bb      	str	r3, [r7, #40]	@ 0x28
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
- 8001354:	f107 031c 	add.w	r3, r7, #28
- 8001358:	4619      	mov	r1, r3
- 800135a:	4815      	ldr	r0, [pc, #84]	@ (80013b0 <MX_GPIO_Init+0x18c>)
- 800135c:	f001 ffe8 	bl	8003330 <HAL_GPIO_Init>
+ 8001358:	f107 031c 	add.w	r3, r7, #28
+ 800135c:	4619      	mov	r1, r3
+ 800135e:	4815      	ldr	r0, [pc, #84]	@ (80013b4 <MX_GPIO_Init+0x18c>)
+ 8001360:	f001 ffe6 	bl	8003330 <HAL_GPIO_Init>
 
   /*Configure GPIO pins : D_IN2_Pin PD9 PD10 */
   GPIO_InitStruct.Pin = D_IN2_Pin|GPIO_PIN_9|GPIO_PIN_10;
- 8001360:	f44f 63e0 	mov.w	r3, #1792	@ 0x700
- 8001364:	61fb      	str	r3, [r7, #28]
+ 8001364:	f44f 63e0 	mov.w	r3, #1792	@ 0x700
+ 8001368:	61fb      	str	r3, [r7, #28]
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
- 8001366:	2301      	movs	r3, #1
- 8001368:	623b      	str	r3, [r7, #32]
+ 800136a:	2301      	movs	r3, #1
+ 800136c:	623b      	str	r3, [r7, #32]
   GPIO_InitStruct.Pull = GPIO_NOPULL;
- 800136a:	2300      	movs	r3, #0
- 800136c:	627b      	str	r3, [r7, #36]	@ 0x24
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
  800136e:	2300      	movs	r3, #0
- 8001370:	62bb      	str	r3, [r7, #40]	@ 0x28
+ 8001370:	627b      	str	r3, [r7, #36]	@ 0x24
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+ 8001372:	2300      	movs	r3, #0
+ 8001374:	62bb      	str	r3, [r7, #40]	@ 0x28
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
- 8001372:	f107 031c 	add.w	r3, r7, #28
- 8001376:	4619      	mov	r1, r3
- 8001378:	480e      	ldr	r0, [pc, #56]	@ (80013b4 <MX_GPIO_Init+0x190>)
- 800137a:	f001 ffd9 	bl	8003330 <HAL_GPIO_Init>
+ 8001376:	f107 031c 	add.w	r3, r7, #28
+ 800137a:	4619      	mov	r1, r3
+ 800137c:	480e      	ldr	r0, [pc, #56]	@ (80013b8 <MX_GPIO_Init+0x190>)
+ 800137e:	f001 ffd7 	bl	8003330 <HAL_GPIO_Init>
 
   /*Configure GPIO pin : LINEAR_ACT_1_1_Pin */
   GPIO_InitStruct.Pin = LINEAR_ACT_1_1_Pin;
- 800137e:	f44f 6380 	mov.w	r3, #1024	@ 0x400
- 8001382:	61fb      	str	r3, [r7, #28]
+ 8001382:	f44f 6380 	mov.w	r3, #1024	@ 0x400
+ 8001386:	61fb      	str	r3, [r7, #28]
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
- 8001384:	2301      	movs	r3, #1
- 8001386:	623b      	str	r3, [r7, #32]
+ 8001388:	2301      	movs	r3, #1
+ 800138a:	623b      	str	r3, [r7, #32]
   GPIO_InitStruct.Pull = GPIO_NOPULL;
- 8001388:	2300      	movs	r3, #0
- 800138a:	627b      	str	r3, [r7, #36]	@ 0x24
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
  800138c:	2300      	movs	r3, #0
- 800138e:	62bb      	str	r3, [r7, #40]	@ 0x28
+ 800138e:	627b      	str	r3, [r7, #36]	@ 0x24
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+ 8001390:	2300      	movs	r3, #0
+ 8001392:	62bb      	str	r3, [r7, #40]	@ 0x28
   HAL_GPIO_Init(LINEAR_ACT_1_1_GPIO_Port, &GPIO_InitStruct);
- 8001390:	f107 031c 	add.w	r3, r7, #28
- 8001394:	4619      	mov	r1, r3
- 8001396:	4808      	ldr	r0, [pc, #32]	@ (80013b8 <MX_GPIO_Init+0x194>)
- 8001398:	f001 ffca 	bl	8003330 <HAL_GPIO_Init>
+ 8001394:	f107 031c 	add.w	r3, r7, #28
+ 8001398:	4619      	mov	r1, r3
+ 800139a:	4808      	ldr	r0, [pc, #32]	@ (80013bc <MX_GPIO_Init+0x194>)
+ 800139c:	f001 ffc8 	bl	8003330 <HAL_GPIO_Init>
 
 }
- 800139c:	bf00      	nop
- 800139e:	3730      	adds	r7, #48	@ 0x30
- 80013a0:	46bd      	mov	sp, r7
- 80013a2:	bd80      	pop	{r7, pc}
- 80013a4:	40021000 	.word	0x40021000
- 80013a8:	48001000 	.word	0x48001000
- 80013ac:	48001400 	.word	0x48001400
- 80013b0:	48000400 	.word	0x48000400
- 80013b4:	48000c00 	.word	0x48000c00
- 80013b8:	48000800 	.word	0x48000800
- 80013bc:	00000000 	.word	0x00000000
+ 80013a0:	bf00      	nop
+ 80013a2:	3730      	adds	r7, #48	@ 0x30
+ 80013a4:	46bd      	mov	sp, r7
+ 80013a6:	bd80      	pop	{r7, pc}
+ 80013a8:	40021000 	.word	0x40021000
+ 80013ac:	48001000 	.word	0x48001000
+ 80013b0:	48001400 	.word	0x48001400
+ 80013b4:	48000400 	.word	0x48000400
+ 80013b8:	48000c00 	.word	0x48000c00
+ 80013bc:	48000800 	.word	0x48000800
 
 080013c0 <main>:
 /**
@@ -1856,7 +1856,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
- 80013ce:	f7ff ff29 	bl	8001224 <MX_GPIO_Init>
+ 80013ce:	f7ff ff2b 	bl	8001228 <MX_GPIO_Init>
   MX_TIM3_Init();
  80013d2:	f001 fa8d 	bl	80028f0 <MX_TIM3_Init>
   MX_TIM1_Init();
@@ -1956,7 +1956,7 @@ int main(void)
     parse_controller_data(controller_buffer, &controller_state);
  8001488:	4978      	ldr	r1, [pc, #480]	@ (800166c <main+0x2ac>)
  800148a:	4876      	ldr	r0, [pc, #472]	@ (8001664 <main+0x2a4>)
- 800148c:	f7ff fdaa 	bl	8000fe4 <parse_controller_data>
+ 800148c:	f7ff fdac 	bl	8000fe8 <parse_controller_data>
 
     if (controller_state.options_button && !prev_turn_on) {  // turn on/off the robot
  8001490:	4b76      	ldr	r3, [pc, #472]	@ (800166c <main+0x2ac>)
@@ -2238,7 +2238,7 @@ int main(void)
  80016da:	b2db      	uxtb	r3, r3
  80016dc:	2b00      	cmp	r3, #0
  80016de:	d016      	beq.n	800170e <main+0x34e>
-        BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.25, 0};  // move to the left
+        BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.3, 0};  // move to the left
  80016e0:	f04f 0300 	mov.w	r3, #0
  80016e4:	65bb      	str	r3, [r7, #88]	@ 0x58
  80016e6:	4b89      	ldr	r3, [pc, #548]	@ (800190c <main+0x54c>)
@@ -2278,7 +2278,7 @@ int main(void)
  800173a:	b2db      	uxtb	r3, r3
  800173c:	2b00      	cmp	r3, #0
  800173e:	d016      	beq.n	800176e <main+0x3ae>
-        BaseVelocity target_vel = {0, -ROBOT_MAX_X_VELOCITY * 0.25, 0};  // move to the right
+        BaseVelocity target_vel = {0, -ROBOT_MAX_X_VELOCITY * 0.3, 0};  // move to the right
  8001740:	f04f 0300 	mov.w	r3, #0
  8001744:	64fb      	str	r3, [r7, #76]	@ 0x4c
  8001746:	4b72      	ldr	r3, [pc, #456]	@ (8001910 <main+0x550>)
@@ -2318,7 +2318,7 @@ int main(void)
  800179a:	b2db      	uxtb	r3, r3
  800179c:	2b00      	cmp	r3, #0
  800179e:	d016      	beq.n	80017ce <main+0x40e>
-        BaseVelocity target_vel = {ROBOT_MAX_Y_VELOCITY * 0.25, 0, 0};  // move forward
+        BaseVelocity target_vel = {ROBOT_MAX_Y_VELOCITY * 0.3, 0, 0};  // move forward
  80017a0:	4b5a      	ldr	r3, [pc, #360]	@ (800190c <main+0x54c>)
  80017a2:	643b      	str	r3, [r7, #64]	@ 0x40
  80017a4:	f04f 0300 	mov.w	r3, #0
@@ -2358,7 +2358,7 @@ int main(void)
  80017fa:	7adb      	ldrb	r3, [r3, #11]
  80017fc:	2b00      	cmp	r3, #0
  80017fe:	d016      	beq.n	800182e <main+0x46e>
-        BaseVelocity target_vel = {-ROBOT_MAX_Y_VELOCITY * 0.25, 0, 0};  // move backward
+        BaseVelocity target_vel = {-ROBOT_MAX_Y_VELOCITY * 0.3, 0, 0};  // move backward
  8001800:	4b43      	ldr	r3, [pc, #268]	@ (8001910 <main+0x550>)
  8001802:	637b      	str	r3, [r7, #52]	@ 0x34
  8001804:	f04f 0300 	mov.w	r3, #0
@@ -2456,38 +2456,38 @@ int main(void)
  8001900:	20000090 	.word	0x20000090
  8001904:	200000c0 	.word	0x200000c0
  8001908:	2000008f 	.word	0x2000008f
- 800190c:	3f3f0a3d 	.word	0x3f3f0a3d
- 8001910:	bf3f0a3d 	.word	0xbf3f0a3d
+ 800190c:	3f653f7d 	.word	0x3f653f7d
+ 8001910:	bf653f7d 	.word	0xbf653f7d
  8001914:	40590000 	.word	0x40590000
  8001918:	3fe00000 	.word	0x3fe00000
       } else if (controller_state.r_stick_x == 0 && controller_state.r_stick_y == 0 && !controller_state.r1 && !controller_state.l1) {  // move fastly
- 800191c:	4bb4      	ldr	r3, [pc, #720]	@ (8001bf0 <main+0x830>)
+ 800191c:	4bb2      	ldr	r3, [pc, #712]	@ (8001be8 <main+0x828>)
  800191e:	f993 3010 	ldrsb.w	r3, [r3, #16]
  8001922:	2b00      	cmp	r3, #0
  8001924:	f040 8081 	bne.w	8001a2a <main+0x66a>
- 8001928:	4bb1      	ldr	r3, [pc, #708]	@ (8001bf0 <main+0x830>)
+ 8001928:	4baf      	ldr	r3, [pc, #700]	@ (8001be8 <main+0x828>)
  800192a:	f993 3011 	ldrsb.w	r3, [r3, #17]
  800192e:	2b00      	cmp	r3, #0
  8001930:	d17b      	bne.n	8001a2a <main+0x66a>
- 8001932:	4baf      	ldr	r3, [pc, #700]	@ (8001bf0 <main+0x830>)
+ 8001932:	4bad      	ldr	r3, [pc, #692]	@ (8001be8 <main+0x828>)
  8001934:	781b      	ldrb	r3, [r3, #0]
  8001936:	f083 0301 	eor.w	r3, r3, #1
  800193a:	b2db      	uxtb	r3, r3
  800193c:	2b00      	cmp	r3, #0
  800193e:	d074      	beq.n	8001a2a <main+0x66a>
- 8001940:	4bab      	ldr	r3, [pc, #684]	@ (8001bf0 <main+0x830>)
+ 8001940:	4ba9      	ldr	r3, [pc, #676]	@ (8001be8 <main+0x828>)
  8001942:	78db      	ldrb	r3, [r3, #3]
  8001944:	f083 0301 	eor.w	r3, r3, #1
  8001948:	b2db      	uxtb	r3, r3
  800194a:	2b00      	cmp	r3, #0
  800194c:	d06d      	beq.n	8001a2a <main+0x66a>
-        BaseVelocity target_vel = {controller_state.l_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.65,
- 800194e:	4ba8      	ldr	r3, [pc, #672]	@ (8001bf0 <main+0x830>)
+        BaseVelocity target_vel = {controller_state.l_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.75,
+ 800194e:	4ba6      	ldr	r3, [pc, #664]	@ (8001be8 <main+0x828>)
  8001950:	f993 300f 	ldrsb.w	r3, [r3, #15]
  8001954:	4618      	mov	r0, r3
  8001956:	f7fe fe0d 	bl	8000574 <__aeabi_i2d>
  800195a:	f04f 0200 	mov.w	r2, #0
- 800195e:	4ba5      	ldr	r3, [pc, #660]	@ (8001bf4 <main+0x834>)
+ 800195e:	4ba3      	ldr	r3, [pc, #652]	@ (8001bec <main+0x82c>)
  8001960:	f7fe ff9c 	bl	800089c <__aeabi_ddiv>
  8001964:	4602      	mov	r2, r0
  8001966:	460b      	mov	r3, r1
@@ -2507,8 +2507,8 @@ int main(void)
  800198a:	460b      	mov	r3, r1
  800198c:	4610      	mov	r0, r2
  800198e:	4619      	mov	r1, r3
- 8001990:	a395      	add	r3, pc, #596	@ (adr r3, 8001be8 <main+0x828>)
- 8001992:	e9d3 2300 	ldrd	r2, r3, [r3]
+ 8001990:	f04f 0200 	mov.w	r2, #0
+ 8001994:	4b96      	ldr	r3, [pc, #600]	@ (8001bf0 <main+0x830>)
  8001996:	f7fe fe57 	bl	8000648 <__aeabi_dmul>
  800199a:	4602      	mov	r2, r0
  800199c:	460b      	mov	r3, r1
@@ -2517,13 +2517,13 @@ int main(void)
  80019a2:	f7ff f88b 	bl	8000abc <__aeabi_d2f>
  80019a6:	4603      	mov	r3, r0
  80019a8:	61fb      	str	r3, [r7, #28]
-                                   controller_state.l_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.65,
- 80019aa:	4b91      	ldr	r3, [pc, #580]	@ (8001bf0 <main+0x830>)
+                                   controller_state.l_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.75,
+ 80019aa:	4b8f      	ldr	r3, [pc, #572]	@ (8001be8 <main+0x828>)
  80019ac:	f993 300e 	ldrsb.w	r3, [r3, #14]
  80019b0:	4618      	mov	r0, r3
  80019b2:	f7fe fddf 	bl	8000574 <__aeabi_i2d>
  80019b6:	f04f 0200 	mov.w	r2, #0
- 80019ba:	4b8e      	ldr	r3, [pc, #568]	@ (8001bf4 <main+0x834>)
+ 80019ba:	4b8c      	ldr	r3, [pc, #560]	@ (8001bec <main+0x82c>)
  80019bc:	f7fe ff6e 	bl	800089c <__aeabi_ddiv>
  80019c0:	4602      	mov	r2, r0
  80019c2:	460b      	mov	r3, r1
@@ -2543,8 +2543,8 @@ int main(void)
  80019e6:	460b      	mov	r3, r1
  80019e8:	4610      	mov	r0, r2
  80019ea:	4619      	mov	r1, r3
- 80019ec:	a37e      	add	r3, pc, #504	@ (adr r3, 8001be8 <main+0x828>)
- 80019ee:	e9d3 2300 	ldrd	r2, r3, [r3]
+ 80019ec:	f04f 0200 	mov.w	r2, #0
+ 80019f0:	4b7f      	ldr	r3, [pc, #508]	@ (8001bf0 <main+0x830>)
  80019f2:	f7fe fe29 	bl	8000648 <__aeabi_dmul>
  80019f6:	4602      	mov	r2, r0
  80019f8:	460b      	mov	r3, r1
@@ -2552,7 +2552,7 @@ int main(void)
  80019fc:	4619      	mov	r1, r3
  80019fe:	f7ff f85d 	bl	8000abc <__aeabi_d2f>
  8001a02:	4603      	mov	r3, r0
-        BaseVelocity target_vel = {controller_state.l_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.65,
+        BaseVelocity target_vel = {controller_state.l_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.75,
  8001a04:	623b      	str	r3, [r7, #32]
  8001a06:	f04f 0300 	mov.w	r3, #0
  8001a0a:	627b      	str	r3, [r7, #36]	@ 0x24
@@ -2568,25 +2568,25 @@ int main(void)
       } else if (controller_state.r_stick_x == 0 && controller_state.r_stick_y == 0 && !controller_state.r1 && !controller_state.l1) {  // move fastly
  8001a28:	e0a7      	b.n	8001b7a <main+0x7ba>
       } else if (!controller_state.r1 && !controller_state.l1) {  // move slowly
- 8001a2a:	4b71      	ldr	r3, [pc, #452]	@ (8001bf0 <main+0x830>)
+ 8001a2a:	4b6f      	ldr	r3, [pc, #444]	@ (8001be8 <main+0x828>)
  8001a2c:	781b      	ldrb	r3, [r3, #0]
  8001a2e:	f083 0301 	eor.w	r3, r3, #1
  8001a32:	b2db      	uxtb	r3, r3
  8001a34:	2b00      	cmp	r3, #0
  8001a36:	d074      	beq.n	8001b22 <main+0x762>
- 8001a38:	4b6d      	ldr	r3, [pc, #436]	@ (8001bf0 <main+0x830>)
+ 8001a38:	4b6b      	ldr	r3, [pc, #428]	@ (8001be8 <main+0x828>)
  8001a3a:	78db      	ldrb	r3, [r3, #3]
  8001a3c:	f083 0301 	eor.w	r3, r3, #1
  8001a40:	b2db      	uxtb	r3, r3
  8001a42:	2b00      	cmp	r3, #0
  8001a44:	d06d      	beq.n	8001b22 <main+0x762>
-        BaseVelocity target_vel = {controller_state.r_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.4,
- 8001a46:	4b6a      	ldr	r3, [pc, #424]	@ (8001bf0 <main+0x830>)
+        BaseVelocity target_vel = {controller_state.r_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.5,
+ 8001a46:	4b68      	ldr	r3, [pc, #416]	@ (8001be8 <main+0x828>)
  8001a48:	f993 3011 	ldrsb.w	r3, [r3, #17]
  8001a4c:	4618      	mov	r0, r3
  8001a4e:	f7fe fd91 	bl	8000574 <__aeabi_i2d>
  8001a52:	f04f 0200 	mov.w	r2, #0
- 8001a56:	4b67      	ldr	r3, [pc, #412]	@ (8001bf4 <main+0x834>)
+ 8001a56:	4b65      	ldr	r3, [pc, #404]	@ (8001bec <main+0x82c>)
  8001a58:	f7fe ff20 	bl	800089c <__aeabi_ddiv>
  8001a5c:	4602      	mov	r2, r0
  8001a5e:	460b      	mov	r3, r1
@@ -2606,8 +2606,8 @@ int main(void)
  8001a82:	460b      	mov	r3, r1
  8001a84:	4610      	mov	r0, r2
  8001a86:	4619      	mov	r1, r3
- 8001a88:	a355      	add	r3, pc, #340	@ (adr r3, 8001be0 <main+0x820>)
- 8001a8a:	e9d3 2300 	ldrd	r2, r3, [r3]
+ 8001a88:	f04f 0200 	mov.w	r2, #0
+ 8001a8c:	4b59      	ldr	r3, [pc, #356]	@ (8001bf4 <main+0x834>)
  8001a8e:	f7fe fddb 	bl	8000648 <__aeabi_dmul>
  8001a92:	4602      	mov	r2, r0
  8001a94:	460b      	mov	r3, r1
@@ -2616,13 +2616,13 @@ int main(void)
  8001a9a:	f7ff f80f 	bl	8000abc <__aeabi_d2f>
  8001a9e:	4603      	mov	r3, r0
  8001aa0:	613b      	str	r3, [r7, #16]
-                                   controller_state.r_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.4,
- 8001aa2:	4b53      	ldr	r3, [pc, #332]	@ (8001bf0 <main+0x830>)
+                                   controller_state.r_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.5,
+ 8001aa2:	4b51      	ldr	r3, [pc, #324]	@ (8001be8 <main+0x828>)
  8001aa4:	f993 3010 	ldrsb.w	r3, [r3, #16]
  8001aa8:	4618      	mov	r0, r3
  8001aaa:	f7fe fd63 	bl	8000574 <__aeabi_i2d>
  8001aae:	f04f 0200 	mov.w	r2, #0
- 8001ab2:	4b50      	ldr	r3, [pc, #320]	@ (8001bf4 <main+0x834>)
+ 8001ab2:	4b4e      	ldr	r3, [pc, #312]	@ (8001bec <main+0x82c>)
  8001ab4:	f7fe fef2 	bl	800089c <__aeabi_ddiv>
  8001ab8:	4602      	mov	r2, r0
  8001aba:	460b      	mov	r3, r1
@@ -2642,8 +2642,8 @@ int main(void)
  8001ade:	460b      	mov	r3, r1
  8001ae0:	4610      	mov	r0, r2
  8001ae2:	4619      	mov	r1, r3
- 8001ae4:	a33e      	add	r3, pc, #248	@ (adr r3, 8001be0 <main+0x820>)
- 8001ae6:	e9d3 2300 	ldrd	r2, r3, [r3]
+ 8001ae4:	f04f 0200 	mov.w	r2, #0
+ 8001ae8:	4b42      	ldr	r3, [pc, #264]	@ (8001bf4 <main+0x834>)
  8001aea:	f7fe fdad 	bl	8000648 <__aeabi_dmul>
  8001aee:	4602      	mov	r2, r0
  8001af0:	460b      	mov	r3, r1
@@ -2651,7 +2651,7 @@ int main(void)
  8001af4:	4619      	mov	r1, r3
  8001af6:	f7fe ffe1 	bl	8000abc <__aeabi_d2f>
  8001afa:	4603      	mov	r3, r0
-        BaseVelocity target_vel = {controller_state.r_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.4,
+        BaseVelocity target_vel = {controller_state.r_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.5,
  8001afc:	617b      	str	r3, [r7, #20]
  8001afe:	f04f 0300 	mov.w	r3, #0
  8001b02:	61bb      	str	r3, [r7, #24]
@@ -2667,11 +2667,11 @@ int main(void)
       } else if (!controller_state.r1 && !controller_state.l1) {  // move slowly
  8001b20:	e02b      	b.n	8001b7a <main+0x7ba>
       } else if (controller_state.l1 || controller_state.r1) {  // rotate slowly
- 8001b22:	4b33      	ldr	r3, [pc, #204]	@ (8001bf0 <main+0x830>)
+ 8001b22:	4b31      	ldr	r3, [pc, #196]	@ (8001be8 <main+0x828>)
  8001b24:	78db      	ldrb	r3, [r3, #3]
  8001b26:	2b00      	cmp	r3, #0
  8001b28:	d103      	bne.n	8001b32 <main+0x772>
- 8001b2a:	4b31      	ldr	r3, [pc, #196]	@ (8001bf0 <main+0x830>)
+ 8001b2a:	4b2f      	ldr	r3, [pc, #188]	@ (8001be8 <main+0x828>)
  8001b2c:	781b      	ldrb	r3, [r3, #0]
  8001b2e:	2b00      	cmp	r3, #0
  8001b30:	d023      	beq.n	8001b7a <main+0x7ba>
@@ -2683,7 +2683,7 @@ int main(void)
  8001b3e:	f04f 0300 	mov.w	r3, #0
  8001b42:	60fb      	str	r3, [r7, #12]
         if (controller_state.l1)
- 8001b44:	4b2a      	ldr	r3, [pc, #168]	@ (8001bf0 <main+0x830>)
+ 8001b44:	4b28      	ldr	r3, [pc, #160]	@ (8001be8 <main+0x828>)
  8001b46:	78db      	ldrb	r3, [r3, #3]
  8001b48:	2b00      	cmp	r3, #0
  8001b4a:	d002      	beq.n	8001b52 <main+0x792>
@@ -2692,7 +2692,7 @@ int main(void)
  8001b4e:	60fb      	str	r3, [r7, #12]
  8001b50:	e005      	b.n	8001b5e <main+0x79e>
         else if (controller_state.r1)
- 8001b52:	4b27      	ldr	r3, [pc, #156]	@ (8001bf0 <main+0x830>)
+ 8001b52:	4b25      	ldr	r3, [pc, #148]	@ (8001be8 <main+0x828>)
  8001b54:	781b      	ldrb	r3, [r3, #0]
  8001b56:	2b00      	cmp	r3, #0
  8001b58:	d001      	beq.n	8001b5e <main+0x79e>
@@ -2710,7 +2710,7 @@ int main(void)
       }
 
       if (controller_state.triangle) 
- 8001b7a:	4b1d      	ldr	r3, [pc, #116]	@ (8001bf0 <main+0x830>)
+ 8001b7a:	4b1b      	ldr	r3, [pc, #108]	@ (8001be8 <main+0x828>)
  8001b7c:	7a1b      	ldrb	r3, [r3, #8]
  8001b7e:	2b00      	cmp	r3, #0
  8001b80:	d004      	beq.n	8001b8c <main+0x7cc>
@@ -2720,7 +2720,7 @@ int main(void)
  8001b86:	f000 f885 	bl	8001c94 <linear_actuator_operation>
  8001b8a:	e00c      	b.n	8001ba6 <main+0x7e6>
       else if (controller_state.cross)
- 8001b8c:	4b18      	ldr	r3, [pc, #96]	@ (8001bf0 <main+0x830>)
+ 8001b8c:	4b16      	ldr	r3, [pc, #88]	@ (8001be8 <main+0x828>)
  8001b8e:	799b      	ldrb	r3, [r3, #6]
  8001b90:	2b00      	cmp	r3, #0
  8001b92:	d004      	beq.n	8001b9e <main+0x7de>
@@ -2736,7 +2736,7 @@ int main(void)
  8001ba2:	f000 f877 	bl	8001c94 <linear_actuator_operation>
 
       if (controller_state.square) 
- 8001ba6:	4b12      	ldr	r3, [pc, #72]	@ (8001bf0 <main+0x830>)
+ 8001ba6:	4b10      	ldr	r3, [pc, #64]	@ (8001be8 <main+0x828>)
  8001ba8:	7a5b      	ldrb	r3, [r3, #9]
  8001baa:	2b00      	cmp	r3, #0
  8001bac:	d004      	beq.n	8001bb8 <main+0x7f8>
@@ -2746,7 +2746,7 @@ int main(void)
  8001bb2:	f000 f86f 	bl	8001c94 <linear_actuator_operation>
  8001bb6:	e45d      	b.n	8001474 <main+0xb4>
       else if (controller_state.circle)
- 8001bb8:	4b0d      	ldr	r3, [pc, #52]	@ (8001bf0 <main+0x830>)
+ 8001bb8:	4b0b      	ldr	r3, [pc, #44]	@ (8001be8 <main+0x828>)
  8001bba:	79db      	ldrb	r3, [r3, #7]
  8001bbc:	2b00      	cmp	r3, #0
  8001bbe:	d004      	beq.n	8001bca <main+0x80a>
@@ -2767,10 +2767,10 @@ int main(void)
  8001bdc:	401dd999 	.word	0x401dd999
  8001be0:	9999999a 	.word	0x9999999a
  8001be4:	3fd99999 	.word	0x3fd99999
- 8001be8:	cccccccd 	.word	0xcccccccd
- 8001bec:	3fe4cccc 	.word	0x3fe4cccc
- 8001bf0:	200000c0 	.word	0x200000c0
- 8001bf4:	40590000 	.word	0x40590000
+ 8001be8:	200000c0 	.word	0x200000c0
+ 8001bec:	40590000 	.word	0x40590000
+ 8001bf0:	3fe80000 	.word	0x3fe80000
+ 8001bf4:	3fe00000 	.word	0x3fe00000
  8001bf8:	4066c083 	.word	0x4066c083
  8001bfc:	c066c083 	.word	0xc066c083
  8001c00:	20000004 	.word	0x20000004

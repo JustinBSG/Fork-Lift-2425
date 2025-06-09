@@ -13,7 +13,7 @@
  * in the root directory of this software component.
  * If no LICENSE file comes with this software, it is provided AS-IS.
  *
- ******************************************************************************
+ ********************************************************************** ********
  */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
@@ -177,28 +177,28 @@ int main(void)
       prev_auto_path_switch = controller_state.share_button;
 
       if (controller_state.left && !controller_state.right && !controller_state.up && !controller_state.down) {
-        BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.25, 0};  // move to the left
+        BaseVelocity target_vel = {0, ROBOT_MAX_X_VELOCITY * 0.3, 0};  // move to the left
         movement_control(target_vel);
       } else if (!controller_state.left && controller_state.right && !controller_state.up && !controller_state.down) {
-        BaseVelocity target_vel = {0, -ROBOT_MAX_X_VELOCITY * 0.25, 0};  // move to the right
+        BaseVelocity target_vel = {0, -ROBOT_MAX_X_VELOCITY * 0.3, 0};  // move to the right
         movement_control(target_vel);
       } else if (!controller_state.left && !controller_state.right && controller_state.up && !controller_state.down) {
-        BaseVelocity target_vel = {ROBOT_MAX_Y_VELOCITY * 0.25, 0, 0};  // move forward
+        BaseVelocity target_vel = {ROBOT_MAX_Y_VELOCITY * 0.3, 0, 0};  // move forward
         movement_control(target_vel);
       } else if (!controller_state.left && !controller_state.right && !controller_state.up && controller_state.down) {
-        BaseVelocity target_vel = {-ROBOT_MAX_Y_VELOCITY * 0.25, 0, 0};  // move backward
+        BaseVelocity target_vel = {-ROBOT_MAX_Y_VELOCITY * 0.3, 0, 0};  // move backward
         movement_control(target_vel);
       } else if (controller_state.l_stick_x == 0 && controller_state.l_stick_y == 0 && rotation_vel != 0 && !controller_state.r1 && !controller_state.l1) {  // rotate
         BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY * 0.5};
         movement_control(target_vel);
       } else if (controller_state.r_stick_x == 0 && controller_state.r_stick_y == 0 && !controller_state.r1 && !controller_state.l1) {  // move fastly
-        BaseVelocity target_vel = {controller_state.l_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.65,
-                                   controller_state.l_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.65,
+        BaseVelocity target_vel = {controller_state.l_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.75,
+                                   controller_state.l_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.75,
                                    0};
         movement_control(target_vel);
       } else if (!controller_state.r1 && !controller_state.l1) {  // move slowly
-        BaseVelocity target_vel = {controller_state.r_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.4,
-                                   controller_state.r_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.4,
+        BaseVelocity target_vel = {controller_state.r_stick_y / 100.0 * ROBOT_MAX_Y_VELOCITY * 0.5,
+                                   controller_state.r_stick_x / 100.0 * ROBOT_MAX_X_VELOCITY * 0.5,
                                    0};
         movement_control(target_vel);
       } else if (controller_state.l1 || controller_state.r1) {  // rotate slowly

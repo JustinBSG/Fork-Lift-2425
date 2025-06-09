@@ -1,8 +1,5 @@
 #include "movement.h"
 
-extern WheelVelocity test_vel;
-extern WheelPWM test_pwm;
-
 WheelVelocity base2wheel(BaseVelocity base_vel) {
   float front_left = 0, front_right = 0, rear_left = 0, rear_right = 0;
   if (base_vel.z_vel == 0) {
@@ -151,10 +148,6 @@ void wheels_control(WheelPWM pwm) {
   wheel_control(FRONT_RIGHT, pwm.front_right);
   wheel_control(REAR_LEFT, pwm.rear_left);
   wheel_control(REAR_RIGHT, pwm.rear_right);
-  test_pwm.front_left = pwm.front_left;
-  test_pwm.front_right = pwm.front_right;
-  test_pwm.rear_left = pwm.rear_left;
-  test_pwm.rear_right = pwm.rear_right;
 }
 
 void rotate_motor(BaseVelocity base_vel) {
@@ -210,10 +203,6 @@ void movement_control(BaseVelocity base_vel) {
   }
 
   WheelVelocity target_vel = base2wheel(base_vel);
-  test_vel.front_left = target_vel.front_left;
-  test_vel.front_right = target_vel.front_right;
-  test_vel.rear_left = target_vel.rear_left;
-  test_vel.rear_right = target_vel.rear_right;
 if (direction_encoder == LEFT_RIGHT) {
   target_vel.front_left *= -1;
   target_vel.rear_left *= -1;

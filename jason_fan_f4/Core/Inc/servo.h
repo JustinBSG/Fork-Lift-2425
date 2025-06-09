@@ -13,7 +13,7 @@ typedef struct {
 
 extern HTD45H_Servo servos[4];
 
-extern UART_HandleTypeDef huart4;
+extern UART_HandleTypeDef huart5;
 
 #define GET_LOW_BYTE(x) ((uint8_t)((x) & 0x00FF))
 #define GET_HIGH_BYTE(x) ((uint8_t)(((x) >> 8) & 0x00FF))

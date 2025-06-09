@@ -5,6 +5,7 @@
 
 #include "movement.h"
 
+// TODO: need to slightly reduce the time
 #define LEFT_PATH_TIME_1 2000
 #define LEFT_PATH_TIME_2 1100
 #define MID_PATH_TIME_1 3000 

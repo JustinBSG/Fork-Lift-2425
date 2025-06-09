@@ -29,5 +29,5 @@
 ### Kitty Car
 1. [x] update pin config
 2. [x] update macro for pin
-3. [ ] auto mode code
+3. [x] auto mode code
   - tune the time

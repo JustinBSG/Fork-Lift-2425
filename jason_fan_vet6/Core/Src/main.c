@@ -55,6 +55,7 @@ int time_stamp = 0;
 BaseVelocity test_base_vel = {0, 0, 0};
 WheelPWM test_pwm = {0, 0, 0, 0};
 WheelVelocity test_wheel_vel = {0, 0, 0, 0};
+int test_var = 0;
 
 /* USER CODE END PV */
 
@@ -106,12 +107,17 @@ int main(void)
   MX_TIM8_Init();
   MX_UART4_Init();
   MX_USART1_UART_Init();
+  MX_TIM9_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
+  HAL_TIM_PWM_Start(&htim9, TIM_CHANNEL_1);
 
   HAL_TIM_Base_Start_IT(&htim1);
   HAL_TIM_Encoder_Start_IT(&htim1, TIM_CHANNEL_ALL);
@@ -127,18 +133,18 @@ int main(void)
   HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
 
+  TIM3->CCR2 = 400;
+  TIM3->CCR3 = 400;
+  TIM3->CCR4 = 400;
+  TIM9->CCR1 = 400;
+
   // TIM2->CCR1 = 10000 / 4;
   // TIM2->CCR2 = 10000 / 4;
   // TIM2->CCR3 = 10000 / 4;
   // TIM2->CCR4 = 10000 / 4;
 
-  TIM3->CCR1 = 1500;
-  HAL_Delay(1000);
-
-  test_base_vel.x_vel = 0;
-  test_base_vel.y_vel = ROBOT_MAX_Y_VELOCITY / 4;
-  test_base_vel.z_vel = 0;
-  movement_control(test_base_vel);
+  // TIM3->CCR1 = 1500;
+  // HAL_Delay(1000);
 
   // servo_reset_all();
   // HAL_Delay(1000);
@@ -155,29 +161,37 @@ int main(void)
     read_current_velocity(encoders);
 #if (TEST == 0)
 #else
-    if (HAL_GetTick() - time_stamp > 5000) {
-      time_stamp = HAL_GetTick();
-      // HAL_GPIO_TogglePin(C_IN1_GPIO_Port, C_IN1_Pin);
-      // HAL_GPIO_TogglePin(C_IN2_GPIO_Port, C_IN2_Pin);
-      // HAL_GPIO_TogglePin(D_IN1_GPIO_Port, D_IN1_Pin);
-      // HAL_GPIO_TogglePin(D_IN2_GPIO_Port, D_IN2_Pin);
-      // HAL_GPIO_TogglePin(A_IN1_GPIO_Port, A_IN1_Pin);
-      // HAL_GPIO_TogglePin(A_IN2_GPIO_Port, A_IN2_Pin);
-      // HAL_GPIO_TogglePin(B_IN1_GPIO_Port, B_IN1_Pin);
-      // HAL_GPIO_TogglePin(B_IN2_GPIO_Port, B_IN2_Pin);
-      uint8_t send_buffer[10];
-      send_buffer[0] = send_buffer[1] = 0x55;
-      send_buffer[2] = 0x08;
-      send_buffer[3] = 0x03;
-      send_buffer[4] = 0x01;
-      send_buffer[5] = 0xE8;
-      send_buffer[6] = 0x03;
-      send_buffer[7] = 0x01;
-      send_buffer[8] = 0x20;
-      send_buffer[9] = 0x03;
-      HAL_UART_Transmit(&huart4, send_buffer, sizeof(send_buffer), 0xFFFF);
-    }
+    // if (HAL_GetTick() - time_stamp > 5000) {
+    //   time_stamp = HAL_GetTick();
+    //   // HAL_GPIO_TogglePin(C_IN1_GPIO_Port, C_IN1_Pin);
+    //   // HAL_GPIO_TogglePin(C_IN2_GPIO_Port, C_IN2_Pin);
+    //   // HAL_GPIO_TogglePin(D_IN1_GPIO_Port, D_IN1_Pin);
+    //   // HAL_GPIO_TogglePin(D_IN2_GPIO_Port, D_IN2_Pin);
+    //   // HAL_GPIO_TogglePin(A_IN1_GPIO_Port, A_IN1_Pin);
+    //   // HAL_GPIO_TogglePin(A_IN2_GPIO_Port, A_IN2_Pin);
+    //   // HAL_GPIO_TogglePin(B_IN1_GPIO_Port, B_IN1_Pin);
+    //   // HAL_GPIO_TogglePin(B_IN2_GPIO_Port, B_IN2_Pin);
+    //   uint8_t send_buffer[10];
+    //   send_buffer[0] = send_buffer[1] = 0x55;
+    //   send_buffer[2] = 0x08;
+    //   send_buffer[3] = 0x03;
+    //   send_buffer[4] = 0x01;
+    //   send_buffer[5] = 0xE8;
+    //   send_buffer[6] = 0x03;
+    //   send_buffer[7] = 0x01;
+    //   send_buffer[8] = 0x20;
+    //   send_buffer[9] = 0x03;
+    //   HAL_UART_Transmit(&huart4, send_buffer, sizeof(send_buffer), 0xFFFF);
+    // }
+    // if (HAL_GetTick() - time_stamp > 500) {
+    //   time_stamp = HAL_GetTick();
+    //   test_var += 50;
+    // }
 
+    // TIM3->CCR2 = test_var; // PB5
+    // TIM3->CCR3 = test_var; // PC8
+    // TIM3->CCR4 = test_var; // PC9
+    // TIM9->CCR1 = test_var; // PE5
 #endif
   }
   /* USER CODE END 3 */

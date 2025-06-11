@@ -182,10 +182,10 @@ int main(void) {
       prev_auto_path_switch = controller_state.square;
 
       if (controller_state.r1) {
-        BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * 0.35};
+        BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * -0.35};
         movement_control(target_vel);
       } else if (controller_state.l1) {
-        BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * -0.35};
+        BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * 0.35};
         movement_control(target_vel);
       } else if (controller_state.up) {
         BaseVelocity target_vel = {0,
@@ -198,12 +198,12 @@ int main(void) {
                                    0};
         movement_control(target_vel);
       } else if (controller_state.left) {
-        BaseVelocity target_vel = {ROBOT_MAX_X_VELOCITY * -0.5,
+        BaseVelocity target_vel = {ROBOT_MAX_X_VELOCITY * 0.5,
                                    0,
                                    0};
         movement_control(target_vel);
       } else if (controller_state.right) {
-        BaseVelocity target_vel = {ROBOT_MAX_X_VELOCITY * 0.5,
+        BaseVelocity target_vel = {ROBOT_MAX_X_VELOCITY * -0.5,
                                    0,
                                    0};
         movement_control(target_vel);

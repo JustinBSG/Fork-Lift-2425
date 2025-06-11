@@ -46,12 +46,12 @@ void wheel_control(Wheel wheel, int speed) {
 
   switch (wheel) {
     case FRONT_LEFT:
-      if (speed > 0) {
+      if (speed < 0) {
         // FL_MOTOR_A_CCR = 0;
         // FL_MOTOR_B_CCR = speed;
         HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(C_IN2_GPIO_Port, C_IN2_Pin, GPIO_PIN_SET);
-      } else if (speed < 0) {
+      } else if (speed > 0) {
         // FL_MOTOR_A_CCR = -speed;
         // FL_MOTOR_B_CCR = 0;
         HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_SET);
@@ -65,12 +65,12 @@ void wheel_control(Wheel wheel, int speed) {
       FL_MOTOR_CCR = abs(speed);
       break;
     case FRONT_RIGHT:
-      if (speed < 0) {
+      if (speed > 0) {
         // FR_MOTOR_B_CCR = speed;
         // FR_MOTOR_A_CCR = 0;
         HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_SET);
-      } else if (speed > 0) {
+      } else if (speed < 0) {
         // FR_MOTOR_B_CCR = 0;
         // FR_MOTOR_A_CCR = -speed;
         HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_SET);
@@ -84,12 +84,12 @@ void wheel_control(Wheel wheel, int speed) {
       FR_MOTOR_CCR = abs(speed);
       break;
     case REAR_LEFT:
-      if (speed > 0) {
+      if (speed < 0) {
         // RL_MOTOR_B_CCR = 0;
         // RL_MOTOR_A_CCR = speed;
         HAL_GPIO_WritePin(D_IN1_GPIO_Port, D_IN1_Pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(D_IN2_GPIO_Port, D_IN2_Pin, GPIO_PIN_RESET);
-      } else if (speed < 0) {
+      } else if (speed > 0) {
         // RL_MOTOR_B_CCR = -speed;
         // RL_MOTOR_A_CCR = 0;
         HAL_GPIO_WritePin(D_IN1_GPIO_Port, D_IN1_Pin, GPIO_PIN_RESET);
@@ -103,12 +103,12 @@ void wheel_control(Wheel wheel, int speed) {
       RL_MOTOR_CCR = abs(speed);
       break;
     case REAR_RIGHT:
-      if (speed < 0) {
+      if (speed > 0) {
         // RR_MOTOR_A_CCR = speed;
         // RR_MOTOR_B_CCR = 0;
         HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_RESET);
-      } else if (speed > 0) {
+      } else if (speed < 0) {
         // RR_MOTOR_A_CCR = 0;
         // RR_MOTOR_B_CCR = -speed;
         HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_RESET);
@@ -122,12 +122,12 @@ void wheel_control(Wheel wheel, int speed) {
       RR_MOTOR_CCR = abs(speed);
       break;
     default:
-      if (speed > 0) {
+      if (speed < 0) {
         // FL_MOTOR_A_CCR = 0;
         // FL_MOTOR_B_CCR = speed;
         HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(C_IN2_GPIO_Port, C_IN2_Pin, GPIO_PIN_SET);
-      } else if (speed < 0) {
+      } else if (speed > 0) {
         // FL_MOTOR_A_CCR = -speed;
         // FL_MOTOR_B_CCR = 0;
         HAL_GPIO_WritePin(C_IN1_GPIO_Port, C_IN1_Pin, GPIO_PIN_SET);

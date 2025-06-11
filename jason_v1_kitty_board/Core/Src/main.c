@@ -230,6 +230,10 @@ int main(void) {
       prev_container_down = controller_state.circle;
     }
 #else
+    BaseVelocity target_vel = {0,
+                                   ROBOT_MAX_Y_VELOCITY * 0.5,
+                                   0};
+    movement_control(target_vel);
     // if (HAL_GetTick() - time_stamp > 10000) {
     //   time_stamp = HAL_GetTick();
     //   stage++;

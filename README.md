@@ -18,7 +18,7 @@
 2. [x] update macro for pin
 3. [x] test previous code
 4. [x] write controller manual
-5. [ ] fix problem that the RR wheel dont move
+5. [x] fix problem that the RR wheel dont move
 5. [ ] auto mode code
    - tune the time
 

@@ -167,8 +167,8 @@ void rotate_motor(BaseVelocity base_vel) {
     servo_move(&(servos[2]), INITIAL_POS, SHORTEST_TIME_ROTATE(3, 90));
     servo_move(&(servos[3]), INITIAL_POS, SHORTEST_TIME_ROTATE(4, 90));
   } else if (base_vel.x_vel != 0 && base_vel.y_vel == 0) {  // angle = 0 or 180
-    servo_move(&(servos[0]), SERVO_ID1_MIN_POS, SHORTEST_TIME_ROTATE(1, 90));
-    servo_move(&(servos[1]), SERVO_ID2_MAX_POS, SHORTEST_TIME_ROTATE(2, 90));
+    servo_move(&(servos[0]), SERVO_ID1_MAX_POS, SHORTEST_TIME_ROTATE(1, 90));
+    servo_move(&(servos[1]), SERVO_ID2_MIN_POS, SHORTEST_TIME_ROTATE(2, 90));
     servo_move(&(servos[2]), SERVO_ID3_MIN_POS, SHORTEST_TIME_ROTATE(3, 90));
     servo_move(&(servos[3]), SERVO_ID4_MAX_POS, SHORTEST_TIME_ROTATE(4, 90));
   } else if (base_vel.x_vel < 0 && base_vel.y_vel > 0 || base_vel.x_vel > 0 && base_vel.y_vel < 0) {  // quadrant 2 or 4
@@ -197,17 +197,18 @@ void movement_control(BaseVelocity base_vel) {
   if (base_vel.x_vel != 0 && direction_encoder != LEFT_RIGHT || base_vel.y_vel != 0 && direction_encoder != FRONT_BACK) {
     rotate_motor(base_vel);
     direction_encoder = base_vel.x_vel != 0 ? LEFT_RIGHT : FRONT_BACK;
+    HAL_Delay(250);
   } else if (base_vel.z_vel != 0 && direction_encoder != ROTATE) {
     rotate_motor(base_vel);
     direction_encoder = ROTATE;
+    HAL_Delay(250);
   }
 
   WheelVelocity target_vel = base2wheel(base_vel);
-if (direction_encoder == LEFT_RIGHT) {
-  target_vel.front_left *= -1;
-  target_vel.rear_left *= -1;
-}
-
+  if (direction_encoder == LEFT_RIGHT) {
+    target_vel.rear_left *= -1;
+    target_vel.front_right *= -1;
+  }
 
   WheelPWM target_pwm = wheel2pwm(target_vel);
   wheels_control(target_pwm);

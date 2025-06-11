@@ -181,11 +181,14 @@ int main(void) {
       }  // auto, choose path, toggle left / right / straight forward
       prev_auto_path_switch = controller_state.square;
 
-      if (controller_state.r1) {
-        BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * -0.35};
+      if (controller_state.r2 || controller_state.l2) {
+        BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY * 0.35};
+        movement_control(target_vel);
+      } else if (controller_state.r1) {
+        BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * -0.2};
         movement_control(target_vel);
       } else if (controller_state.l1) {
-        BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * 0.35};
+        BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * 0.2};
         movement_control(target_vel);
       } else if (controller_state.up) {
         BaseVelocity target_vel = {0,
@@ -231,8 +234,8 @@ int main(void) {
     }
 #else
     BaseVelocity target_vel = {0,
-                                   ROBOT_MAX_Y_VELOCITY * 0.5,
-                                   0};
+                               ROBOT_MAX_X_VELOCITY * -0.5,
+                               0};
     movement_control(target_vel);
     // if (HAL_GetTick() - time_stamp > 10000) {
     //   time_stamp = HAL_GetTick();

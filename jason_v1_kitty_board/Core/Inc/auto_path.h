@@ -5,11 +5,13 @@
 
 #include "movement.h"
 
-#define LEFT_PATH_TIME_1 1000
-#define LEFT_PATH_TIME_2 1000
-#define MID_PATH_TIME_1 1000 
-#define RIGHT_PATH_TIME_1 1000
-#define RIGHT_PATH_TIME_2 1000
+#define LEFT_PATH_TIME_1 950
+#define LEFT_PATH_TIME_2 200
+#define LEFT_PATH_TIME_3 700
+#define MID_PATH_TIME_1 1500 
+#define RIGHT_PATH_TIME_1 950
+#define RIGHT_PATH_TIME_2 200
+#define RIGHT_PATH_TIME_3 700
 
 typedef enum {
   LEFT_PATH,

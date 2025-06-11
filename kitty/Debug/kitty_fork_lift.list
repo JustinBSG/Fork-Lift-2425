@@ -37,11 +37,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  00022e55  00000000  00000000  00023942  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00017179  00000000  00000000  00046797  2**0
+ 17 .debug_line   00017177  00000000  00000000  00046797  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000db8ed  00000000  00000000  0005d910  2**0
+ 18 .debug_str    000db8ed  00000000  00000000  0005d90e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  001391fd  2**0
+ 19 .comment      00000043  00000000  00000000  001391fb  2**0
                   CONTENTS, READONLY
  20 .debug_frame  00005420  00000000  00000000  00139240  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -2124,12 +2124,12 @@ void MX_GPIO_Init(void)
  80015ec:	48000c00 	.word	0x48000c00
 
 080015f0 <main>:
+
 /**
-  * @brief  The application entry point.
-  * @retval int
-  */
-int main(void)
-{
+ * @brief  The application entry point.
+ * @retval int
+ */
+int main(void) {
  80015f0:	b5b0      	push	{r4, r5, r7, lr}
  80015f2:	b09a      	sub	sp, #104	@ 0x68
  80015f4:	af00      	add	r7, sp, #0
@@ -2973,7 +2973,7 @@ int main(void)
  8001d48:	78db      	ldrb	r3, [r3, #3]
  8001d4a:	2b00      	cmp	r3, #0
  8001d4c:	d002      	beq.n	8001d54 <main+0x764>
-          target_vel.z_vel = ROBOT_MAX_Z_VELOCITY * 0.25;
+          target_vel.z_vel = ROBOT_MAX_Z_VELOCITY * 0.15;
  8001d4e:	4b3a      	ldr	r3, [pc, #232]	@ (8001e38 <main+0x848>)
  8001d50:	60fb      	str	r3, [r7, #12]
  8001d52:	e005      	b.n	8001d60 <main+0x770>
@@ -2982,7 +2982,7 @@ int main(void)
  8001d56:	781b      	ldrb	r3, [r3, #0]
  8001d58:	2b00      	cmp	r3, #0
  8001d5a:	d001      	beq.n	8001d60 <main+0x770>
-          target_vel.z_vel = ROBOT_MAX_Z_VELOCITY * -0.25;
+          target_vel.z_vel = ROBOT_MAX_Z_VELOCITY * -0.15;
  8001d5c:	4b37      	ldr	r3, [pc, #220]	@ (8001e3c <main+0x84c>)
  8001d5e:	60fb      	str	r3, [r7, #12]
         movement_control(target_vel);
@@ -3089,8 +3089,8 @@ int main(void)
  8001e2c:	40590000 	.word	0x40590000
  8001e30:	3fe00000 	.word	0x3fe00000
  8001e34:	3fd00000 	.word	0x3fd00000
- 8001e38:	3ffa3d71 	.word	0x3ffa3d71
- 8001e3c:	bffa3d71 	.word	0xbffa3d71
+ 8001e38:	3f9624dd 	.word	0x3f9624dd
+ 8001e3c:	bf9624dd 	.word	0xbf9624dd
  8001e40:	20000137 	.word	0x20000137
  8001e44:	20000136 	.word	0x20000136
  8001e48:	20000060 	.word	0x20000060
@@ -3127,12 +3127,12 @@ int main(void)
  8001e80:	20000000 	.word	0x20000000
 
 08001e84 <SystemClock_Config>:
+
 /**
-  * @brief System Clock Configuration
-  * @retval None
-  */
-void SystemClock_Config(void)
-{
+ * @brief System Clock Configuration
+ * @retval None
+ */
+void SystemClock_Config(void) {
  8001e84:	b580      	push	{r7, lr}
  8001e86:	b094      	sub	sp, #80	@ 0x50
  8001e88:	af00      	add	r7, sp, #0
@@ -3152,14 +3152,14 @@ void SystemClock_Config(void)
  8001ea4:	611a      	str	r2, [r3, #16]
 
   /** Configure the main internal regulator output voltage
-  */
+   */
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST);
  8001ea6:	2000      	movs	r0, #0
  8001ea8:	f001 fd0c 	bl	80038c4 <HAL_PWREx_ControlVoltageScaling>
 
   /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
+   * in the RCC_OscInitTypeDef structure.
+   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
  8001eac:	2301      	movs	r3, #1
  8001eae:	61bb      	str	r3, [r7, #24]
@@ -3187,24 +3187,22 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
  8001ece:	2302      	movs	r3, #2
  8001ed0:	64fb      	str	r3, [r7, #76]	@ 0x4c
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
  8001ed2:	f107 0318 	add.w	r3, r7, #24
  8001ed6:	4618      	mov	r0, r3
  8001ed8:	f001 fda8 	bl	8003a2c <HAL_RCC_OscConfig>
  8001edc:	4603      	mov	r3, r0
  8001ede:	2b00      	cmp	r3, #0
  8001ee0:	d001      	beq.n	8001ee6 <SystemClock_Config+0x62>
-  {
     Error_Handler();
  8001ee2:	f000 f818 	bl	8001f16 <Error_Handler>
   }
 
   /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+   */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
  8001ee6:	230f      	movs	r3, #15
  8001ee8:	607b      	str	r3, [r7, #4]
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
  8001eea:	2303      	movs	r3, #3
  8001eec:	60bb      	str	r3, [r7, #8]
@@ -3218,7 +3216,7 @@ void SystemClock_Config(void)
  8001ef6:	2300      	movs	r3, #0
  8001ef8:	617b      	str	r3, [r7, #20]
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK) {
  8001efa:	1d3b      	adds	r3, r7, #4
  8001efc:	2104      	movs	r1, #4
  8001efe:	4618      	mov	r0, r3
@@ -3226,7 +3224,6 @@ void SystemClock_Config(void)
  8001f04:	4603      	mov	r3, r0
  8001f06:	2b00      	cmp	r3, #0
  8001f08:	d001      	beq.n	8001f0e <SystemClock_Config+0x8a>
-  {
     Error_Handler();
  8001f0a:	f000 f804 	bl	8001f16 <Error_Handler>
   }
@@ -3237,12 +3234,12 @@ void SystemClock_Config(void)
  8001f14:	bd80      	pop	{r7, pc}
 
 08001f16 <Error_Handler>:
+
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
-void Error_Handler(void)
-{
+ * @brief  This function is executed in case of error occurrence.
+ * @retval None
+ */
+void Error_Handler(void) {
  8001f16:	b480      	push	{r7}
  8001f18:	af00      	add	r7, sp, #0
   \details Disables IRQ interrupts by setting the I-bit in the CPSR.

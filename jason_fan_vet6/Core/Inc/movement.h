@@ -117,6 +117,6 @@ void movement_control(BaseVelocity base_vel);
  */
 void movement_rotation(int degree);
 
-#include "encoder.h"
+// #include "encoder.h"
 
 #endif /* __MOVEMENT_H__ */

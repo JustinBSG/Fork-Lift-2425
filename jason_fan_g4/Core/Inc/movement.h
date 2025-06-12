@@ -9,9 +9,9 @@
 #include "servo.h"
 #include "mech.h"
 
-#define FL_MOTOR_TIMER TIM2
+#define FL_MOTOR_TIMER TIM1
 #define FR_MOTOR_TIMER TIM2
-#define RL_MOTOR_TIMER TIM2
+#define RL_MOTOR_TIMER TIM1
 #define RR_MOTOR_TIMER TIM2
 
 #define FL_MOTOR_ARR FL_MOTOR_TIMER->ARR
@@ -117,6 +117,6 @@ void movement_control(BaseVelocity base_vel);
  */
 void movement_rotation(int degree);
 
-#include "encoder.h"
+// #include "encoder.h"
 
 #endif /* __MOVEMENT_H__ */

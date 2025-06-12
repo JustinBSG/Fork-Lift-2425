@@ -15,10 +15,10 @@ extern HTD45H_Servo servos[4];
 
 extern UART_HandleTypeDef huart4;
 
-#define FL_SERVO_TIMER TIM12
-#define FR_SERVO_TIMER TIM3
-#define RL_SERVO_TIMER TIM3
-#define RR_SERVO_TIMER TIM3
+#define FL_SERVO_TIMER TIM3
+#define FR_SERVO_TIMER TIM4
+#define RL_SERVO_TIMER TIM4
+#define RR_SERVO_TIMER TIM4
 
 #define FL_SERVO_ARR FL_SERVO_TIMER->ARR
 #define FR_SERVO_ARR FR_SERVO_TIMER->ARR
@@ -26,8 +26,8 @@ extern UART_HandleTypeDef huart4;
 #define RR_SERVO_ARR RR_SERVO_TIMER->ARR
 
 #define FL_SERVO_CCR FL_SERVO_TIMER->CCR1
-#define FR_SERVO_CCR FR_SERVO_TIMER->CCR3
-#define RL_SERVO_CCR RL_SERVO_TIMER->CCR2
+#define FR_SERVO_CCR FR_SERVO_TIMER->CCR1
+#define RL_SERVO_CCR RL_SERVO_TIMER->CCR3
 #define RR_SERVO_CCR RR_SERVO_TIMER->CCR4
 
 // #define SHORTEST_TIME_ROTATE(id, degree) (180 / 60.0 * abs((servos[id - 1].current_degree + 90) - (degree + 90)))

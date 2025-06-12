@@ -7,7 +7,7 @@ bool prev_turn_on_fan = false;
 
 void fan_operation(bool turn_on) {
     if (turn_on)
-      TIM9->CCR1 = 1450;
+      TIM15->CCR1 = 1450;
     else
-      TIM9->CCR1 = 1500;
+      TIM15->CCR1 = 1500;
 }

@@ -2,10 +2,10 @@
 
 ### Motor
 
-1. TIM2->CCR1 => PA5 (FL) (PWM) (C)
+1. TIM1->CCR1 => PC0 (FL) (PWM) (C)
    - Prescale = 42-1
    - ARR = 10000-1
-2. TIM2->CCR2 => PB3 (RL) (PWM) (D)
+2. TIM1->CCR2 => PC1 (RL) (PWM) (D)
    - Prescale = 42-1
    - ARR = 10000-1
 3. TIM2->CCR3 => PA2 (FR) (PWM) (A)
@@ -64,22 +64,22 @@
 
 ### PMW Servo
 
-1. TIM12->CCR1 => PB14 (FL) (PWM) (C)
+1. TIM3->CCR1 => PE5 (FL) (PWM) (C)
    - Prescale = 42-1
    - ARR = 10000-1
-1. TIM3->CCR2 => PB5 (RL) (PWM) (D)
+1. TIM4->CCR1 => PD12 (RL) (PWM) (D)
    - Prescale = 42-1
    - ARR = 10000-1
-1. TIM3->CCR3 => PC8 (FR) (PWM) (A)
+1. TIM4->CCR3 => PD13 (FR) (PWM) (A)
    - Prescale = 42-1
    - ARR = 10000-1
-1. TIM3->CCR4 => PC9 (RR) (PWM) (B)
+1. TIM4->CCR4 => PD14 (RR) (PWM) (B)
    - Prescale = 42-1
    - ARR = 10000-1
 
 ### Fan
 
-1. TIM9->CCR1 => PE5 (PWM)
+1. TIM15->CCR1 => PE5 (PWM)
    - Prescale = 42-1
    - ARR = 20000-1
 

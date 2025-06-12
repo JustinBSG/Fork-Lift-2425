@@ -1,4 +1,4 @@
-## Jason's Car with Fan (VET6)
+## Jason's Car with Fan (G4)
 
 ### Motor
 
@@ -33,7 +33,7 @@
 ### External TB6612 Module (for left motor)
 
 1. EN_L => 3.3V / 5V (shorted)
-2. C_IN1 => PA7 (GPIO)
+2. C_IN1 => PB13 (GPIO)
    - GPIO Output
    - Pull Down
 3. C_IN2 => PC4 (GPIO)
@@ -64,24 +64,24 @@
 
 ### PMW Servo
 
-1. TIM3->CCR2 => PB5 (FL) (PWM) (C)
+1. TIM12->CCR1 => PB14 (FL) (PWM) (C)
    - Prescale = 42-1
    - ARR = 10000-1
-1. TIM3->CCR3 => PC8 (RL) (PWM) (D)
+1. TIM3->CCR2 => PB5 (RL) (PWM) (D)
    - Prescale = 42-1
    - ARR = 10000-1
-1. TIM3->CCR4 => PC9 (FR) (PWM) (A)
+1. TIM3->CCR3 => PC8 (FR) (PWM) (A)
    - Prescale = 42-1
    - ARR = 10000-1
-1. TIM9->CCR1 => PE5 (RR) (PWM) (B)
+1. TIM3->CCR4 => PC9 (RR) (PWM) (B)
    - Prescale = 42-1
    - ARR = 10000-1
 
 ### Fan
 
-1. TIM3->CCR1 => PA6 (PWM)
+1. TIM9->CCR1 => PE5 (PWM)
    - Prescale = 42-1
-   - ARR = 10000-1
+   - ARR = 20000-1
 
 ### Remote Controller
 

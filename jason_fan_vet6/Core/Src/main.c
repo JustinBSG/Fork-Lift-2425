@@ -18,17 +18,20 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "auto_path.h"
 #include "controller.h"
 #include "mech.h"
 #include "movement.h"
 #include "robot.h"
 #include "servo.h"
+#include "test.h"
 
 /* USER CODE END Includes */
 
@@ -56,6 +59,7 @@ BaseVelocity test_base_vel = {0, 0, 0};
 WheelPWM test_pwm = {0, 0, 0, 0};
 WheelVelocity test_wheel_vel = {0, 0, 0, 0};
 int test_var = 0;
+uint8_t test_buffer[3] = {0, 0, 0};
 
 /* USER CODE END PV */
 
@@ -108,6 +112,8 @@ int main(void)
   MX_UART4_Init();
   MX_USART1_UART_Init();
   MX_TIM9_Init();
+  MX_TIM12_Init();
+  MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
@@ -118,6 +124,7 @@ int main(void)
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
   HAL_TIM_PWM_Start(&htim9, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim12, TIM_CHANNEL_1);
 
   HAL_TIM_Base_Start_IT(&htim1);
   HAL_TIM_Encoder_Start_IT(&htim1, TIM_CHANNEL_ALL);
@@ -128,22 +135,29 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim8);
   HAL_TIM_Encoder_Start_IT(&htim8, TIM_CHANNEL_ALL);
 
-  HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_RESET);
+  // HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
+  // HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
 
-  TIM3->CCR2 = 400; // FL
-  TIM3->CCR3 = 400; // RL
-  TIM3->CCR4 = 400; // FR
-  TIM9->CCR1 = 400; // RR
+  hmc5883l_init();
+  HAL_Delay(10);
 
-  // TIM2->CCR1 = 10000 / 4;
-  // TIM2->CCR2 = 10000 / 4;
-  // TIM2->CCR3 = 10000 / 4;
-  // TIM2->CCR4 = 10000 / 4;
+  hmc5883l_read(HMC5883L_REG_ADDR_IDA, &(test_buffer[0]));
+  hmc5883l_read(HMC5883L_REG_ADDR_IDB, &(test_buffer[1]));
+  hmc5883l_read(HMC5883L_REG_ADDR_IDC, &(test_buffer[2]));
 
-  // TIM3->CCR1 = 1500;
+  // BaseVelocity target_vel = {ROBOT_MAX_X_VELOCITY * 0.5,
+  //                            0,
+  //                            0};
+  // rotate_motor(target_vel);
+
+  // servo_move(&(servos[0]), SERVO_ID1_INITIAL_POS);
+  // servo_move(&(servos[1]), SERVO_ID2_INITIAL_POS);
+  // servo_move(&(servos[2]), SERVO_ID3_INITIAL_POS);
+  // servo_move(&(servos[3]), SERVO_ID4_INITIAL_POS);
+
+  // fan_operation(false);
   // HAL_Delay(1000);
 
   // servo_reset_all();
@@ -160,7 +174,109 @@ int main(void)
     HAL_Delay(1);
     read_current_velocity(encoders);
 #if (TEST == 0)
+    HAL_UART_Receive(&huart1, controller_buffer, sizeof(controller_buffer), 0xFFFF);
+    parse_controller_data(controller_buffer, &controller_state);
+    if (controller_state.options_button && !prev_turn_on) {  // turn on/off the robot
+      turn_on = !turn_on;
+      // HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, turn_on ? GPIO_PIN_RESET : GPIO_PIN_SET);
+      if (!turn_on) {
+        HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_RESET);
+      } else {
+        HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
+      }
+    }
+    prev_turn_on = controller_state.options_button;
+
+    if (turn_on) {
+      if (auto_path_selection == LEFT_PATH) {
+        HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
+      } else if (auto_path_selection == MID_PATH) {
+        HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_RESET);
+      } else if (auto_path_selection == RIGHT_PATH) {
+        HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
+      }
+
+      float rotation_vel = (controller_state.l2_pressure / 1024.0 + controller_state.r2_pressure / -1024.0) * 100.0;
+
+      if (controller_state.ps_button && !prev_auto_path_enable) {  // auto, line following
+        auto_path_enable = !auto_path_enable;
+        if (auto_path_enable)
+          follow_auto_path(auto_path_selection);
+      }
+      prev_auto_path_enable = controller_state.ps_button;
+
+      if (controller_state.square && !prev_auto_path_switch) {
+        auto_path_switch = !auto_path_switch;
+        if (auto_path_selection == LEFT_PATH)
+          auto_path_selection = MID_PATH;
+        else if (auto_path_selection == MID_PATH)
+          auto_path_selection = RIGHT_PATH;
+        else if (auto_path_selection == RIGHT_PATH)
+          auto_path_selection = LEFT_PATH;
+      }  // auto, choose path, toggle left / right / straight forward
+      prev_auto_path_switch = controller_state.square;
+
+      if (controller_state.r2 || controller_state.l2) {
+        BaseVelocity target_vel = {0, 0, rotation_vel / 100.0 * ROBOT_MAX_Z_VELOCITY * 0.35};
+        movement_control(target_vel);
+      } else if (controller_state.r1) {
+        BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * -0.2};
+        movement_control(target_vel);
+      } else if (controller_state.l1) {
+        BaseVelocity target_vel = {0, 0, ROBOT_MAX_Z_VELOCITY * 0.2};
+        movement_control(target_vel);
+      } else if (controller_state.up) {
+        BaseVelocity target_vel = {0,
+                                   ROBOT_MAX_Y_VELOCITY * 0.5,
+                                   0};
+        movement_control(target_vel);
+      } else if (controller_state.down) {
+        BaseVelocity target_vel = {0,
+                                   ROBOT_MAX_Y_VELOCITY * -0.5,
+                                   0};
+        movement_control(target_vel);
+      } else if (controller_state.left) {
+        BaseVelocity target_vel = {ROBOT_MAX_X_VELOCITY * 0.5,
+                                   0,
+                                   0};
+        movement_control(target_vel);
+      } else if (controller_state.right) {
+        BaseVelocity target_vel = {ROBOT_MAX_X_VELOCITY * -0.5,
+                                   0,
+                                   0};
+        movement_control(target_vel);
+      } else {
+        WheelPWM target_pwm = {0, 0, 0, 0};
+        wheels_control(target_pwm);
+      }
+
+      if (controller_state.triangle && !prev_turn_on_fan) {
+        turn_on_fan = !turn_on_fan;
+        fan_operation(turn_on_fan);
+      }
+      prev_turn_on_fan = controller_state.triangle;
+    }
 #else
+    HAL_UART_Receive(&huart1, controller_buffer, sizeof(controller_buffer), 0xFFFF);
+    parse_controller_data(controller_buffer, &controller_state);
+    if (controller_state.options_button && !prev_turn_on) {  // turn on/off the robot
+      turn_on = !turn_on;
+      // HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, turn_on ? GPIO_PIN_RESET : GPIO_PIN_SET);
+      if (!turn_on) {
+        HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_RESET);
+      } else {
+        HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
+      }
+    }
+    prev_turn_on = controller_state.options_button;
+
     // if (HAL_GetTick() - time_stamp > 5000) {
     //   time_stamp = HAL_GetTick();
     //   // HAL_GPIO_TogglePin(C_IN1_GPIO_Port, C_IN1_Pin);

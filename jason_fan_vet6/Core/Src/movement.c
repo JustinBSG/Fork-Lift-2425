@@ -71,18 +71,18 @@ void wheel_control(Wheel wheel, int speed) {
       if (speed > 0) {
         // FR_MOTOR_B_CCR = speed;
         // FR_MOTOR_A_CCR = 0;
-        HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_RESET);
       } else if (speed < 0) {
         // FR_MOTOR_B_CCR = 0;
         // FR_MOTOR_A_CCR = -speed;
-        HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_SET);
       } else {
         // FR_MOTOR_A_CCR = 0;
         // FR_MOTOR_B_CCR = 0;
-        HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_RESET);
       }
       FR_MOTOR_CCR = abs(speed);
       break;
@@ -109,18 +109,18 @@ void wheel_control(Wheel wheel, int speed) {
       if (speed > 0) {
         // RR_MOTOR_A_CCR = speed;
         // RR_MOTOR_B_CCR = 0;
-        HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_SET);
       } else if (speed < 0) {
         // RR_MOTOR_A_CCR = 0;
         // RR_MOTOR_B_CCR = -speed;
-        HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_RESET);
       } else {
         // RR_MOTOR_A_CCR = 0;
         // RR_MOTOR_B_CCR = 0;
-        HAL_GPIO_WritePin(A_IN1_GPIO_Port, A_IN1_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(A_IN2_GPIO_Port, A_IN2_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(B_IN1_GPIO_Port, B_IN1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(B_IN2_GPIO_Port, B_IN2_Pin, GPIO_PIN_RESET);
       }
       RR_MOTOR_CCR = abs(speed);
       break;
@@ -155,44 +155,44 @@ void wheels_control(WheelPWM pwm) {
 
 void rotate_motor(BaseVelocity base_vel) {
   if (base_vel.z_vel != 0) {
-    servo_move(&(servos[0]), SERVO_ID1_ANGLE_TO_POS(45), SHORTEST_TIME_ROTATE(1, 45));
-    servo_move(&(servos[1]), SERVO_ID2_ANGLE_TO_POS(-45), SHORTEST_TIME_ROTATE(2, -45));
-    servo_move(&(servos[3]), SERVO_ID4_ANGLE_TO_POS(45), SHORTEST_TIME_ROTATE(3, 45));
-    servo_move(&(servos[2]), SERVO_ID3_ANGLE_TO_POS(-45), SHORTEST_TIME_ROTATE(4, -45));
+    servo_move(&(servos[0]), SERVO_ID1_ANGLE_TO_POS(45));
+    servo_move(&(servos[1]), SERVO_ID2_ANGLE_TO_POS(-45));
+    servo_move(&(servos[3]), SERVO_ID4_ANGLE_TO_POS(45));
+    servo_move(&(servos[2]), SERVO_ID3_ANGLE_TO_POS(-45));
     return;
   }
 
   float angle = atan2(base_vel.y_vel, base_vel.x_vel) * 180 / M_PI;
 
   if (base_vel.x_vel == 0 && base_vel.y_vel != 0) {  // angle = 90 or 270
-    servo_move(&(servos[0]), INITIAL_POS, SHORTEST_TIME_ROTATE(1, 90));
-    servo_move(&(servos[1]), INITIAL_POS, SHORTEST_TIME_ROTATE(2, 90));
-    servo_move(&(servos[2]), INITIAL_POS, SHORTEST_TIME_ROTATE(3, 90));
-    servo_move(&(servos[3]), INITIAL_POS, SHORTEST_TIME_ROTATE(4, 90));
+    servo_move(&(servos[0]), SERVO_ID1_INITIAL_POS);
+    servo_move(&(servos[1]), SERVO_ID2_INITIAL_POS);
+    servo_move(&(servos[2]), SERVO_ID3_INITIAL_POS);
+    servo_move(&(servos[3]), SERVO_ID4_INITIAL_POS);
   } else if (base_vel.x_vel != 0 && base_vel.y_vel == 0) {  // angle = 0 or 180
-    servo_move(&(servos[0]), SERVO_ID1_MIN_POS, SHORTEST_TIME_ROTATE(1, 90));
-    servo_move(&(servos[1]), SERVO_ID2_MAX_POS, SHORTEST_TIME_ROTATE(2, 90));
-    servo_move(&(servos[2]), SERVO_ID3_MIN_POS, SHORTEST_TIME_ROTATE(3, 90));
-    servo_move(&(servos[3]), SERVO_ID4_MAX_POS, SHORTEST_TIME_ROTATE(4, 90));
+    servo_move(&(servos[0]), SERVO_ID1_MIN_POS);
+    servo_move(&(servos[1]), SERVO_ID2_MAX_POS);
+    servo_move(&(servos[2]), SERVO_ID3_MIN_POS);
+    servo_move(&(servos[3]), SERVO_ID4_MAX_POS);
   } else if (base_vel.x_vel < 0 && base_vel.y_vel > 0 || base_vel.x_vel > 0 && base_vel.y_vel < 0) {  // quadrant 2 or 4
     if (angle < 0)
       angle += 180;
     angle -= 90;
     angle *= -1;
 
-    servo_move(&(servos[0]), SERVO_ID1_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(1, angle));
-    servo_move(&(servos[1]), SERVO_ID2_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(2, angle));
-    servo_move(&(servos[2]), SERVO_ID3_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(3, angle));
-    servo_move(&(servos[3]), SERVO_ID4_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(4, angle));
+    // servo_move(&(servos[0]), SERVO_ID1_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(1, angle));
+    // servo_move(&(servos[1]), SERVO_ID2_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(2, angle));
+    // servo_move(&(servos[2]), SERVO_ID3_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(3, angle));
+    // servo_move(&(servos[3]), SERVO_ID4_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(4, angle));
   } else if (base_vel.x_vel < 0 && base_vel.y_vel < 0 || base_vel.x_vel > 0 && base_vel.y_vel > 0) {  // quadrant 1 or 3
     if (angle < 0)
       angle += 180;
     angle = 90 - angle;
 
-    servo_move(&(servos[0]), SERVO_ID1_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(1, angle));
-    servo_move(&(servos[1]), SERVO_ID2_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(2, angle));
-    servo_move(&(servos[2]), SERVO_ID3_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(3, angle));
-    servo_move(&(servos[3]), SERVO_ID4_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(4, angle));
+    // servo_move(&(servos[0]), SERVO_ID1_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(1, angle));
+    // servo_move(&(servos[1]), SERVO_ID2_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(2, angle));
+    // servo_move(&(servos[2]), SERVO_ID3_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(3, angle));
+    // servo_move(&(servos[3]), SERVO_ID4_ANGLE_TO_POS(angle), SHORTEST_TIME_ROTATE(4, angle));
   }
 }
 

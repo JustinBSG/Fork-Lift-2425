@@ -59,8 +59,8 @@ void servo_move(HTD45H_Servo* target_servo, uint16_t target_pos) {
 }
 
 void servo_reset_all(void) {
-  servo_move(&(servo[0]), SERVO_ID1_INITIAL_POS);
-  servo_move(&(servo[1]), SERVO_ID2_INITIAL_POS);
-  servo_move(&(servo[2]), SERVO_ID3_INITIAL_POS);
-  servo_move(&(servo[3]), SERVO_ID4_INITIAL_POS);
+  servo_move(&(servos[0]), SERVO_ID1_INITIAL_POS);
+  servo_move(&(servos[1]), SERVO_ID2_INITIAL_POS);
+  servo_move(&(servos[2]), SERVO_ID3_INITIAL_POS);
+  servo_move(&(servos[3]), SERVO_ID4_INITIAL_POS);
 }

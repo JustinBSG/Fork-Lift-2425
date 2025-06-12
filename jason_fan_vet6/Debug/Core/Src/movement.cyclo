@@ -3,6 +3,6 @@
 ../Core/Src/movement.c:36:10:wheel2pwm	1
 ../Core/Src/movement.c:44:6:wheel_control	17
 ../Core/Src/movement.c:149:6:wheels_control	1
-../Core/Src/movement.c:156:6:rotate_motor	24
+../Core/Src/movement.c:156:6:rotate_motor	16
 ../Core/Src/movement.c:199:6:movement_control	8
 ../Core/Src/movement.c:227:6:movement_rotation	1

@@ -1661,21 +1661,21 @@ int main(void)
  800116e:	4814      	ldr	r0, [pc, #80]	@ (80011c0 <main+0x130>)
  8001170:	f001 fa20 	bl	80025b4 <HAL_GPIO_WritePin>
 
-  TIM3->CCR2 = 400;
+  TIM3->CCR2 = 400; // FL
  8001174:	4b13      	ldr	r3, [pc, #76]	@ (80011c4 <main+0x134>)
  8001176:	f44f 72c8 	mov.w	r2, #400	@ 0x190
  800117a:	639a      	str	r2, [r3, #56]	@ 0x38
-  TIM3->CCR3 = 400;
+  TIM3->CCR3 = 400; // RL
  800117c:	4b11      	ldr	r3, [pc, #68]	@ (80011c4 <main+0x134>)
  800117e:	f44f 72c8 	mov.w	r2, #400	@ 0x190
  8001182:	63da      	str	r2, [r3, #60]	@ 0x3c
-  TIM3->CCR4 = 400;
+  TIM3->CCR4 = 400 + 220; // FR
  8001184:	4b0f      	ldr	r3, [pc, #60]	@ (80011c4 <main+0x134>)
- 8001186:	f44f 72c8 	mov.w	r2, #400	@ 0x190
+ 8001186:	f44f 721b 	mov.w	r2, #620	@ 0x26c
  800118a:	641a      	str	r2, [r3, #64]	@ 0x40
-  TIM9->CCR1 = 400;
+  TIM9->CCR1 = 400 + 220; // RR
  800118c:	4b0e      	ldr	r3, [pc, #56]	@ (80011c8 <main+0x138>)
- 800118e:	f44f 72c8 	mov.w	r2, #400	@ 0x190
+ 800118e:	f44f 721b 	mov.w	r2, #620	@ 0x26c
  8001192:	635a      	str	r2, [r3, #52]	@ 0x34
   /* USER CODE BEGIN WHILE */
   while (1) {

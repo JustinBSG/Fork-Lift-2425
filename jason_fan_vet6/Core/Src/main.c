@@ -133,10 +133,10 @@ int main(void)
   HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, GPIO_PIN_SET);
 
-  TIM3->CCR2 = 400;
-  TIM3->CCR3 = 400;
-  TIM3->CCR4 = 400;
-  TIM9->CCR1 = 400;
+  TIM3->CCR2 = 400; // FL
+  TIM3->CCR3 = 400; // RL
+  TIM3->CCR4 = 400; // FR
+  TIM9->CCR1 = 400; // RR
 
   // TIM2->CCR1 = 10000 / 4;
   // TIM2->CCR2 = 10000 / 4;

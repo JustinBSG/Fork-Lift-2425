@@ -33,16 +33,16 @@
 ### External TB6612 Module (for left motor)
 
 1. EN_L => 3.3V / 5V (shorted)
-2. C_IN1 => PA7 (GPIO) 
+2. C_IN1 => PA7 (GPIO)
    - GPIO Output
    - Pull Down
-3. C_IN2 => PC4 (GPIO) 
+3. C_IN2 => PC4 (GPIO)
    - GPIO Output
    - Pull Down
 4. D_IN1 => PC5 (GPIO)
    - GPIO Output
    - Pull Down
-5. D_IN2 => PB0 (GPIO) 
+5. D_IN2 => PB0 (GPIO)
    - GPIO Output
    - Pull Down
 
@@ -52,30 +52,36 @@
 2. A_IN1 => PB1 (GPIO)
    - GPIO Output
    - Pull Down
-3. A_IN2 => PE12 (GPIO) 
+3. A_IN2 => PE12 (GPIO)
    - GPIO Output
    - Pull Down
-4. B_IN1 => PE7 (GPIO) 
+4. B_IN1 => PE7 (GPIO)
    - GPIO Output
    - Pull Down
-5. B_IN2 => PE8 (GPIO) 
+5. B_IN2 => PE8 (GPIO)
    - GPIO Output
    - Pull Down
 
-### 
+### PMW Servo
+
+1. TIM3->CCR2 => PB5 (FL) (PWM) (C)
+   - Prescale = 42-1
+   - ARR = 10000-1
+1. TIM3->CCR3 => PC8 (RL) (PWM) (D)
+   - Prescale = 42-1
+   - ARR = 10000-1
+1. TIM3->CCR4 => PC9 (FR) (PWM) (A)
+   - Prescale = 42-1
+   - ARR = 10000-1
+1. TIM9->CCR1 => PE5 (RR) (PWM) (B)
+   - Prescale = 42-1
+   - ARR = 10000-1
 
 ### Fan
 
 1. TIM3->CCR1 => PA6 (PWM)
    - Prescale = 42-1
    - ARR = 10000-1
-
-### Hiwonder Board
-
-1. UART4_TX => PC10 (UART)
-   - 9600 Bits/s
-2. UART4_RX => PC11 (UART)
-   - 9600 Bits/s
 
 ### Remote Controller
 
@@ -149,6 +155,7 @@
    - Pull Down
 
 ### Hiwonder Board
+
 1. UART4_TX => PC10 (UART)
    - 9600 Bits/s
 2. UART4_RX => PC11 (UART)
@@ -196,16 +203,16 @@
 ### External TB6612 Module (for left motor)
 
 1. EN_L => 3.3V / 5V (shorted)
-2. C_IN1 => PA4 (GPIO) 
+2. C_IN1 => PA4 (GPIO)
    - GPIO Output
    - Pull Down
-3. C_IN2 => PA6 (GPIO) 
+3. C_IN2 => PA6 (GPIO)
    - GPIO Output
    - Pull Down
 4. D_IN1 => PA7 (GPIO)
    - GPIO Output
    - Pull Down
-5. D_IN2 => PC4 (GPIO) 
+5. D_IN2 => PC4 (GPIO)
    - GPIO Output
    - Pull Down
 
@@ -215,13 +222,13 @@
 2. A_IN1 => PC5 (GPIO)
    - GPIO Output
    - Pull Down
-3. A_IN2 => PB0 (GPIO) 
+3. A_IN2 => PB0 (GPIO)
    - GPIO Output
    - Pull Down
-4. B_IN1 => PB1 (GPIO) 
+4. B_IN1 => PB1 (GPIO)
    - GPIO Output
    - Pull Down
-5. B_IN2 => PB2 (GPIO) 
+5. B_IN2 => PB2 (GPIO)
    - GPIO Output
    - Pull Down
 

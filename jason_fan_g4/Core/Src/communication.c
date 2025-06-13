@@ -1,6 +1,6 @@
 #include "communication.h"
 
-char communication_buffer[25] = "";
+char communication_buffer[24] = "";
 
 CommunicationState communication_state = {
   .servo_id1_ccr = 0,

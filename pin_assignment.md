@@ -8,7 +8,7 @@
 2. TIM1->CCR2 => PC1 (RL) (PWM) (D)
    - Prescale = 42-1
    - ARR = 10000-1
-3. TIM2->CCR3 => PA2 (FR) (PWM) (A) 
+3. TIM2->CCR3 => PA2 (FR) (PWM) (A)
    - Prescale = 42-1
    - ARR = 10000-1
 4. TIM2->CCR4 => PA3 (RR) (PWM) (B) /
@@ -64,13 +64,13 @@
 
 ### PMW Servo
 
-1. TIM1->CCR1 => PC0 (FL) (PWM) (C)
+1. TIM2->CCR1 => PA0 (FL) (PWM) (C)
    - Prescale = 42-1
    - ARR = 10000-1
-2. TIM1->CCR2 => PC1 (RL) (PWM) (D)
+2. TIM2->CCR2 => PA1 (RL) (PWM) (D)
    - Prescale = 42-1
    - ARR = 10000-1
-3. TIM2->CCR3 => PA2 (FR) (PWM) (A) 
+3. TIM2->CCR3 => PA2 (FR) (PWM) (A)
    - Prescale = 42-1
    - ARR = 10000-1
 4. TIM2->CCR4 => PA3 (RR) (PWM) (B) /
@@ -88,6 +88,13 @@
 1. UART1_TX => PA9 (UART)
    - 115200 Bits/s
 2. UART1_RX => PA10 (UART)
+   - 115200 Bits/s
+
+### Communication
+
+1. UART4_TX => PC10 (UART)
+   - 115200 Bits/s
+2. UART4_RX => PC11 (UART)
    - 115200 Bits/s
 
 ## Jason without Fan (Kitty Board)

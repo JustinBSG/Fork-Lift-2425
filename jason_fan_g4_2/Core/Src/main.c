@@ -1,20 +1,20 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2025 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : Main program body
+ ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2025 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -24,6 +24,14 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "auto_path.h"
+#include "communication.h"
+#include "controller.h"
+#include "mech.h"
+#include "movement.h"
+#include "robot.h"
+#include "servo.h"
+#include "string.h"
 
 /* USER CODE END Includes */
 
@@ -34,7 +42,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define TEST 1
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -45,7 +53,9 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+int time_stamp = 0;
+int test_var = 0;
+char testing = 'r';
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -88,22 +98,51 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_TIM1_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
   MX_USART1_UART_Init();
   MX_UART4_Init();
   /* USER CODE BEGIN 2 */
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+  while (1) {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    HAL_Delay(1);
+#if (TEST == 0)
+#else
+    // TIM2->CCR1 = 10000 / 2; // 1.65V // PC0
+    // TIM2->CCR2 = 10000 / 2; // 1.65V // PC1
+    // TIM2->CCR3 = 10000 / 2; // 1.65V // PA2
+    // TIM2->CCR4 = 10000 / 2; // 1.65V // PA3
+
+    HAL_UART_Receive(&huart4, &testing, 1, HAL_MAX_DELAY);
+    HAL_UART_Transmit(&huart1, &testing, 1, HAL_MAX_DELAY);
+    // communication_receive_data(&communication_state);
+    // if (communication_state.servo_id1_ccr == 0 &&
+    //     communication_state.servo_id2_ccr == 0 &&
+    //     communication_state.servo_id3_ccr == 0 &&
+    //     communication_state.servo_id4_ccr == 0) {
+    //   TIM1->CCR1 = 0;
+    //   TIM1->CCR2 = 0;
+    //   TIM2->CCR3 = 0;
+    //   TIM2->CCR4 = 0;
+    // } else {
+    //   TIM1->CCR1 = 10000/2;
+    //   TIM1->CCR2 = 10000/2;
+    //   TIM2->CCR3 = 10000/2;
+    //   TIM2->CCR4 = 10000/2;
+    // }
+#endif
   }
   /* USER CODE END 3 */
 }
@@ -166,8 +205,7 @@ void Error_Handler(void)
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
-  while (1)
-  {
+  while (1) {
   }
   /* USER CODE END Error_Handler_Debug */
 }

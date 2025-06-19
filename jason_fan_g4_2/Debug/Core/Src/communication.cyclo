@@ -1,2 +1,0 @@
-../Core/Src/communication.c:11:6:communication_send_data	2
-../Core/Src/communication.c:25:6:communication_receive_data	3

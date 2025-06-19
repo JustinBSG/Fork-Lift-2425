@@ -1,40 +1,30 @@
 # Fork-Lift-2425
 
-## TODO List
+## Table of Contents
 
-### Jason Car with Fan
+- [Getting Started](#getting-started)
+  - [Requirement](#requirement)
+  - [Installation](#installation)
+- [Roadmap](#roadmap)
+- [Team Member](#team-member)
+- [Acknowledgments](#acknowledgments)
+- [License](#license)
 
-1. [x] update pin config
-2. [ ] update macro for pin
-3. [ ] test previous code
-4. [ ] write program for controlling pwm servo and repace it with bus servo
-4. [ ] write controller manual
-5. [ ] auto mode code
-   - tune the time
+## Getting Started
 
-### Jason Car without Fan
+### Requirement
 
-1. [x] update pin config
-2. [x] update macro for pin
-3. [x] test previous code
-4. [x] write controller manual
-5. [x] fix problem that the RR wheel dont move
-5. [ ] auto mode code
-   - tune the time
+### Installation
 
-### Tommy Car
+## Roadmap
 
-1. [x] update pin config
-2. [x] update macro for pin
-3. [x] test previous code
-4. [x] slider control code
-5. [ ] write controller manual
-6. [ ] auto mode code
-   - tune the time
+1. [ ] refactorize jason_v1
+2. [ ] refactorize jason_v2
+3. [ ] refactorize kitty
+4. [ ] refactorize tommy
 
-### Kitty Car
+## Team Member
 
-1. [x] update pin config
-2. [x] update macro for pin
-3. [x] auto mode code
-   - tune the time
+## Acknowledgments
+
+## License
